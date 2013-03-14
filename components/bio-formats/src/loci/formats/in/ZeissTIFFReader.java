@@ -399,12 +399,12 @@ public class ZeissTIFFReader extends BaseZeissReader {
       else
         np.filename = new CaseInsensitiveLocation(tiffInfo.basedir + "/" + tiffInfo.prefix + "_" + p.basename + ".tif").getAbsolutePath();
 
-      int tileid = parseInt(np.tags.get("ImageTile Index"));
-      int channelid = parseInt(np.tags.get("Image Channel Index"));
-      int sliceid = parseInt(np.tags.get("Image Index Z"));
-      int timepointid = parseInt(np.tags.get("Image Index T"));
-      int xsize = parseInt(np.tags.get("Camera Frame Width"));
-      int ysize = parseInt(np.tags.get("Camera Frame Height"));
+      int tileid = parseInt(np.tags.get("ImageTileIndex"));
+      int channelid = parseInt(np.tags.get("ImageIndexC"));
+      int sliceid = parseInt(np.tags.get("ImageIndexZ"));
+      int timepointid = parseInt(np.tags.get("ImageIndexT"));
+      int xsize = parseInt(np.tags.get("CameraFrameWidth"));
+      int ysize = parseInt(np.tags.get("CameraFrameHeight"));
 
       np.site = tileid;
       tileIndices.add(tileid);
@@ -454,9 +454,9 @@ public class ZeissTIFFReader extends BaseZeissReader {
 
     for (int i = 0; i < planes.size(); i++) {
       Plane plane = planes.get(i);
-      int channelid = parseInt(plane.tags.get("Image Channel Index"));
-      int sliceid = parseInt(plane.tags.get("Image Index Z"));
-      int timepointid = parseInt(plane.tags.get("Image Index T"));
+      int channelid = parseInt(plane.tags.get("ImageIndexC"));
+      int sliceid = parseInt(plane.tags.get("ImageIndexZ"));
+      int timepointid = parseInt(plane.tags.get("ImageIndexT"));
 
       coordinates[i][0] = sliceid;
       coordinates[i][1] = channelid;
