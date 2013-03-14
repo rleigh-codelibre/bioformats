@@ -786,7 +786,7 @@ public abstract class BaseZeissReader extends FormatReader {
       String value = t.getValue();
 
       try {
-        if (key.equals("Image Channel Index")) {
+        if (key.equals("ImageIndexC")) {
           cIndex = Integer.parseInt(value);
           int v = 0;
           while (getGlobalMeta(key + " " + v) != null) v++;
@@ -795,14 +795,14 @@ public abstract class BaseZeissReader extends FormatReader {
           }
           continue;
         }
-        else if (key.equals("ImageWidth")) {
+        else if (key.equals("ImageWidth[pixel]")) {
           int v = Integer.parseInt(value);
           if (getSizeX() == 0 || v < getSizeX()) {
             core[0].sizeX = v;
           }
           if (realWidth == 0 && v > realWidth) realWidth = v;
         }
-        else if (key.equals("ImageHeight")) {
+        else if (key.equals("ImageHeight[pixel]")) {
           int v = Integer.parseInt(value);
           if (getSizeY() == 0 || v < getSizeY()) core[0].sizeY = v;
           if (realHeight == 0 || v > realHeight) realHeight = v;
@@ -821,7 +821,7 @@ public abstract class BaseZeissReader extends FormatReader {
           }
         }
 
-        if (key.startsWith("MultiChannel Color")) {
+        if (key.startsWith("MultichannelColour")) {
           if (cIndex >= 0 && cIndex < effectiveSizeC) {
             if (channelColors == null ||
                 effectiveSizeC > channelColors.length)
@@ -839,31 +839,31 @@ public abstract class BaseZeissReader extends FormatReader {
               channelColors, 1, channelColors, 0, channelColors.length - 1);
             channelColors[cIndex - 1] = Integer.parseInt(value);          }
         }
-        else if (key.startsWith("Scale Factor for X") && physicalSizeX == null)
+        else if (key.startsWith("ScaleFactorForX") && physicalSizeX == null)
         {
           physicalSizeX = Double.parseDouble(value);
         }
-        else if (key.startsWith("Scale Factor for Y") && physicalSizeY == null)
+        else if (key.startsWith("ScaleFactorForY") && physicalSizeY == null)
         {
           physicalSizeY = Double.parseDouble(value);
         }
-        else if (key.startsWith("Scale Factor for Z") && physicalSizeZ == null)
+        else if (key.startsWith("ScaleFactorForZ") && physicalSizeZ == null)
         {
           physicalSizeZ = Double.parseDouble(value);
         }
-        else if (key.startsWith("Number Rows") && rowCount == 0)
+        else if (key.startsWith("ImageCountU") && rowCount == 0)
         {
           rowCount = parseInt(value);
         }
-        else if (key.startsWith("Number Columns") && colCount == 0)
+        else if (key.startsWith("ImageCountV") && colCount == 0)
         {
           colCount = parseInt(value);
         }
-        else if (key.startsWith("NumberOfRawImages") && rawCount == 0)
+        else if (key.startsWith("NumberRawImages") && rawCount == 0)
         {
           rawCount = parseInt(value);
         }
-        else if (key.startsWith("Emission Wavelength")) {
+        else if (key.startsWith("EmissionWavelength")) {
           if (cIndex != -1) {
             Integer wave = new Integer(value);
             if (wave.intValue() > 0) {
@@ -875,7 +875,7 @@ public abstract class BaseZeissReader extends FormatReader {
             }
           }
         }
-        else if (key.startsWith("Excitation Wavelength")) {
+        else if (key.startsWith("ExcitationWavelength")) {
           if (cIndex != -1) {
             Integer wave = new Integer((int) Double.parseDouble(value));
             if (wave.intValue() > 0) {
@@ -888,18 +888,18 @@ public abstract class BaseZeissReader extends FormatReader {
             }
           }
         }
-        else if (key.startsWith("Channel Name")) {
+        else if (key.startsWith("ChannelName")) {
           if (cIndex != -1) {
             channelName.put(cIndex, value);
           }
         }
-        else if (key.startsWith("Exposure Time [ms]")) {
+        else if (key.startsWith("ExposureTime[ms]")) {
           if (exposureTime.get(new Integer(cIndex)) == null) {
             double exp = Double.parseDouble(value) / 1000;
             exposureTime.put(new Integer(cIndex), String.valueOf(exp));
           }
         }
-        else if (key.startsWith("User Name")) {
+        else if (key.startsWith("UserName")) {
           String[] username = value.split(" ");
           if (username.length >= 2) {
             String id = MetadataTools.createLSID("Experimenter", 0);
@@ -908,12 +908,12 @@ public abstract class BaseZeissReader extends FormatReader {
             store.setExperimenterLastName(username[username.length - 1], 0);
           }
         }
-        else if (key.equals("User company")) {
+        else if (key.equals("UserCompany")) {
           String id = MetadataTools.createLSID("Experimenter", 0);
           store.setExperimenterID(id, 0);
           store.setExperimenterInstitution(value, 0);
         }
-        else if (key.startsWith("Objective Magnification")) {
+        else if (key.startsWith("ObjectiveMagnification")) {
           int magnification = (int) Double.parseDouble(value);
           if (magnification > 0) {
             store.setObjectiveNominalMagnification(
@@ -925,15 +925,15 @@ public abstract class BaseZeissReader extends FormatReader {
                 magnification);
           }
         }
-        else if (key.startsWith("Objective ID")) {
+        else if (key.startsWith("ObjectiveID")) {
           store.setObjectiveID("Objective:" + value, 0, 0);
           store.setObjectiveCorrection(getCorrection("Other"), 0, 0);
           store.setObjectiveImmersion(getImmersion("Other"), 0, 0);
         }
-        else if (key.startsWith("Objective N.A.")) {
+        else if (key.startsWith("ObjectiveN.A.")) {
           store.setObjectiveLensNA(new Double(value), 0, 0);
         }
-        else if (key.startsWith("Objective Name")) {
+        else if (key.startsWith("ObjectiveName")) {
           String[] tokens = value.split(" ");
           for (int q=0; q<tokens.length; q++) {
             int slash = tokens[q].indexOf("/");
@@ -956,10 +956,10 @@ public abstract class BaseZeissReader extends FormatReader {
             }
           }
         }
-        else if (key.startsWith("Objective Working Distance")) {
+        else if (key.startsWith("ObjectiveWorkingDistance")) {
           store.setObjectiveWorkingDistance(new Double(value), 0, 0);
         }
-        else if (key.startsWith("Objective Immersion Type")) {
+        else if (key.startsWith("ObjectiveImmersionType")) {
           String immersion = "Other";
           switch (Integer.parseInt(value)) {
             // case 1: no immersion
@@ -972,24 +972,24 @@ public abstract class BaseZeissReader extends FormatReader {
           }
           store.setObjectiveImmersion(getImmersion(immersion), 0, 0);
         }
-        else if (key.startsWith("Stage Position X")) {
+        else if (key.startsWith("StagePositionX")) {
           stageX.put(image, new Double(value));
           addGlobalMeta("X position for position #" + stageX.size(), value);
         }
-        else if (key.startsWith("Stage Position Y")) {
+        else if (key.startsWith("StagePositionY")) {
           stageY.put(image, new Double(value));
           addGlobalMeta("Y position for position #" + stageY.size(), value);
         }
-        else if (key.startsWith("Orca Analog Gain")) {
+        else if (key.startsWith("OrcaAnalogGain")) {
           detectorGain.put(cIndex, new Double(value));
         }
-        else if (key.startsWith("Orca Analog Offset")) {
+        else if (key.startsWith("OrcaAnalogOffset")) {
           detectorOffset.put(cIndex, new Double(value));
         }
         else if (key.startsWith("Comments")) {
           imageDescription = value;
         }
-        else if (key.startsWith("Acquisition Date")) {
+        else if (key.startsWith("CameraImageAcquisitionTime")) {
           if (timepoint > 0) {
             timestamps.put(new Integer(timepoint - 1), value);
             addGlobalMeta("Timestamp " + timepoint, value);
@@ -1178,7 +1178,7 @@ public abstract class BaseZeissReader extends FormatReader {
         case 258: return "BlackValue"; // "Black Value"
         case 259: return "WhiteValue"; // "White Value"
         case 260: return "ImageDataMappingAutoRange";
-        case 261: return "Thumbnail"; // "Image Thumbnail"
+        case 261: return "ImageThumbnail"; // "Image Thumbnail"
         case 262: return "GammaValue"; // "Gamma Value"
         case 264: return "ImageOverExposure";
         case 265: return "ImageRelativeTime1";
@@ -1189,40 +1189,40 @@ public abstract class BaseZeissReader extends FormatReader {
         case 301: return "ImageBaseTime1"; // Also "ImageBaseTimeFirst"
         case 302: return "ImageBaseTime2";
         case 303: return "ImageBaseTime3";
-        case 305: return "ImageBaseTime4";
+        case 304: return "ImageBaseTime4";
         case 333: return "RelFocusPosition1";
         case 334: return "RelFocusPosition2";
         case 513: return "ObjectType";
-        case 515: return "ImageWidth"; // "Image Width (Pixel)"
-        case 516: return "ImageHeight"; // "Image Height (Pixel)"
-        case 517: return "Number Raw Count"; // "ImageCountRaw"
+        case 515: return "ImageWidth[pixel]"; // "Image Width (Pixel)", "ImageWidth", "ImageWidth_Pixel"
+        case 516: return "ImageHeight[pixel]"; // "Image Height (Pixel)", "ImageHeight", "ImageHeight_Pixel"
+        case 517: return "ImageCountRaw"; // Also "Number Raw Count"
         case 518: return "PixelType"; // "Pixel Type"
-        case 519: return "NumberOfRawImages"; // "Number Raw Images"
+        case 519: return "NumberRawImages"; // "Number of Raw Images"
         case 520: return "ImageSize"; // "Image Size"
         case 521: return "CompressionFactorForSave";
         case 522: return "DocumentSaveFlags";
-        case 523: return "Acquisition pause annotation";
-        case 530: return "Document Subtype";
-        case 531: return "Acquisition Bit Depth";
-        case 532: return "Image Memory Usage (RAM)";
-        case 534: return "Z-Stack single representative";
-        case 769: return "Scale Factor for X";
-        case 770: return "Scale Unit for X";
-        case 771: return "Scale Width";
-        case 772: return "Scale Factor for Y";
-        case 773: return "Scale Unit for Y";
-        case 774: return "Scale Height";
-        case 775: return "Scale Factor for Z";
-        case 776: return "Scale Unit for Z";
-        case 777: return "Scale Depth";
-        case 778: return "Scaling Parent";
+        case 523: return "AcquisitionPauseAnnotation"; // "Acquisition pause annotation"
+        case 530: return "DocumentSubtype"; // "Document Subtype"
+        case 531: return "AcquisitionBitDepth"; // "Acquisition Bit Depth"
+        case 532: return "ImageMemoryUsage[RAM]"; // "Image Memory Usage (RAM)"
+        case 534: return "Z-Stacksinglerepresentative"; // "Z-Stack single representative"
+        case 769: return "ScaleFactorForX"; // "Scale Factor for X"
+        case 770: return "ScaleUnitforX"; // "Scale Unit for X"
+        case 771: return "ScaleWidth"; // "Scale Width"
+        case 772: return "ScaleFactorForY"; // "Scale Factor for Y"
+        case 773: return "ScaleUnitforY"; // "Scale Unit for Y"
+        case 774: return "ScaleHeight"; // "Scale Height"
+        case 775: return "ScaleFactorForZ"; // "Scale Factor for Z"
+        case 776: return "ScaleUnitforZ"; // "Scale Unit for Z"
+        case 777: return "ScaleDepth"; // "Scale Depth"
+        case 778: return "ScalingParent"; // "Scaling Parent"
         case 1001: return "Date";
         case 1002: return "Code";
         case 1003: return "Source";
         case 1004: return "Message";
-        case 1025: return "Acquisition Date"; // Also "Camera Acquisition Time" in latest AxioVision, which more closely matches its per-plane meaning. and "CameraImageAcquisitionTime" in the spec
-        case 1026: return "8-bit Acquisition";
-        case 1027: return "Camera Bit Depth";
+        case 1025: return "CameraImageAcquisitionTime";  // Also previously "Acquisition Date" in older AxioVision versions
+        case 1026: return "8-bitAcquisition"; // "8-bit Acquisition"
+        case 1027: return "CameraBitDepth"; // "Camera Bit Depth"
         case 1029: return "MonoReferenceLow";
         case 1030: return "MonoReferenceHigh";
         case 1031: return "RedReferenceLow";
@@ -1231,19 +1231,20 @@ public abstract class BaseZeissReader extends FormatReader {
         case 1034: return "GreenReferenceHigh";
         case 1035: return "BlueReferenceLow";
         case 1036: return "BlueReferenceHigh";
-        case 1041: return "FrameGrabber Name"; // "Framegrabber Name" in spec.
+        case 1041: return "FramegrabberName"; // "Framegrabber Name" in spec.
         case 1042: return "Camera";
+        case 1043: return "UnknownCameraSomething";
         case 1044: return "CameraTriggerSignalType";
         case 1045: return "CameraTriggerEnable";
         case 1046: return "GrabberTimeout";
         case 1047: return "tag_ID_1047"; // Undocumented in spec.
         case 1281: return "MultiChannelEnabled";
-        case 1282: return "MultiChannel Color"; // False colour for the channel; "Multichannel Colour" in spec.
-        case 1283: return "MultiChannel Weight"; // False colour weighting; "Multichannel Weight" in spec.
-        case 1284: return "Channel Name";
+        case 1282: return "MultichannelColour"; // False colour for the channel; "Multichannel Colour" in spec., "MultichannelColor"
+        case 1283: return "MultichannelWeight"; // False colour weighting; "Multichannel Weight" in spec.
+        case 1284: return "ChannelName"; // "Channel Name"
         case 1536: return "DocumentInformationGroup";
         case 1537: if (context == Context.SCALING)
-          return "Scale Unit for Z"; // Only within a Scalings block.
+          return "ScaleUnitforZ"; // "Scale Unit for Z". NOTE: Only within a Scalings block.
         else
           return "Title";
         case 1538: return "Author";
@@ -1252,84 +1253,85 @@ public abstract class BaseZeissReader extends FormatReader {
         case 1541: return "SampleID";
         case 1542: return "Subject";
         case 1543: return "RevisionNumber";
-        case 1544: return "Save Folder";
+        case 1544: return "SaveFolder"; // "Save Folder"
         case 1545: return "FileLink";
-        case 1546: return "Document Type";
-        case 1547: return "Storage Media";
-        case 1548: return "File ID";
+        case 1546: return "DocumentType"; // "Document Type"
+        case 1547: return "StorageMedia"; // "Storage Media"
+        case 1548: return "FileID"; // "File ID"
         case 1549: return "Reference";
-        case 1550: return "File Date";
-        case 1551: return "File Size";
+        case 1550: return "FileDate"; // "File Date"
+        case 1551: return "FileSize"; // "File Size"
         case 1553: return "Filename";
+        case 1554: return "FileAttributes";
         case 1792: return "ProjectGroup";
-        case 1793: return "Acquisition Date";
-        case 1794: return "Last modified by";
-        case 1795: return "User Company";
-        case 1796: return "User Company Logo";
+        case 1793: return "AcquisitionDate"; // "Acquisition Date"
+        case 1794: return "Lastmodifiedby"; // "Last modified by"
+        case 1795: return "UserCompany"; // "User Company"
+        case 1796: return "UserCompanyLogo"; // "User Company Logo"
         case 1797: return "Image";
-        case 1800: return "User ID";
-        case 1801: return "User Name";
-        case 1802: return "User City";
-        case 1803: return "User Address";
-        case 1804: return "User Country";
-        case 1805: return "User Phone";
-        case 1806: return "User Fax";
-        case 2049: return "Objective Name";
+        case 1800: return "UserID"; // "User ID"
+        case 1801: return "UserName"; // "User Name"
+        case 1802: return "UserCity"; // "User City"
+        case 1803: return "UserAddress"; // "User Address"
+        case 1804: return "UserCountry"; // "User Country"
+        case 1805: return "UserPhone"; // "User Phone"
+        case 1806: return "UserFax"; // "User Fax"
+        case 2049: return "ObjectiveName"; // "Objective Name"
         case 2050: return "Optovar";
         case 2051: return "Reflector";
-        case 2052: return "Condenser Contrast";
-        case 2053: return "Transmitted Light Filter 1";
-        case 2054: return "Transmitted Light Filter 2";
-        case 2055: return "Reflected Light Shutter";
-        case 2056: return "Condenser Front Lens";
-        case 2057: return "Excitation Filter Name"; // "Excitation Filer Name" in the spec, but must be a typo.
-        case 2060: return "Transmitted Light Fieldstop Aperture";
-        case 2061: return "Reflected Light Aperture";
-        case 2062: return "Condenser N.A.";
-        case 2063: return "Light Path";
+        case 2052: return "CondenserContrast"; // "Condenser Contrast"
+        case 2053: return "TransmittedLightFilter1"; // "Transmitted Light Filter 1"
+        case 2054: return "TransmittedLightFilter2"; // "Transmitted Light Filter 2"
+        case 2055: return "ReflectedLightShutter"; // "Reflected Light Shutter"
+        case 2056: return "CondenserFrontLens"; // "Condenser Front Lens"
+        case 2057: return "ExcitationFilterName"; // "Excitation Filer Name" in the spec, but must be a typo.
+        case 2060: return "TransmittedLightFieldstopAperture"; // "Transmitted Light Fieldstop Aperture"
+        case 2061: return "ReflectedLightAperture"; // "Reflected Light Aperture"
+        case 2062: return "CondenserN.A."; // "Condenser N.A."
+        case 2063: return "LightPath"; // "Light Path"
         case 2064: return "HalogenLampOn";
-        case 2065: return "Halogen Lamp Mode";
-        case 2066: return "Halogen Lamp Voltage";
-        case 2068: return "Fluorescence Lamp Level";
-        case 2069: return "Fluorescence Lamp Intensity";
-        case 2070: return "LightManagerEnabled"; // "Light Manager is Enabled" in spec.
+        case 2065: return "HalogenLampMode"; // "Halogen Lamp Mode"
+        case 2066: return "HalogenLampVoltage"; // "Halogen Lamp Voltage"
+        case 2068: return "FluorescenceLampLevel"; // "Fluorescence Lamp Level"
+        case 2069: return "FluorescenceLampIntensity"; // "Fluorescence Lamp Intensity"
+        case 2070: return "LightManagerEnabled"; // "Light Manager is Enabled" in spec, "LightManagerisEnabled"
         case 2071: return "tag_ID_2071"; // Undocumented in spec.
-        case 2072: return "Focus Position";
-        case 2073: return "Stage Position X";
-        case 2074: return "Stage Position Y";
-        case 2075: return "Microscope Name";
-        case 2076: return "Objective Magnification";
-        case 2077: return "Objective N.A.";
+        case 2072: return "FocusPosition"; // "Focus Position"
+        case 2073: return "StagePositionX"; // "Stage Position X"
+        case 2074: return "StagePositionY"; // "Stage Position Y"
+        case 2075: return "MicroscopeName"; // "Microscope Name"
+        case 2076: return "ObjectiveMagnification"; // "Objective Magnification"
+        case 2077: return "ObjectiveN.A."; // "Objective N.A."
         case 2078: return "MicroscopeIllumination"; // "Microscope Illumination" in spec.
-        case 2079: return "External Shutter 1";
-        case 2080: return "External Shutter 2";
-        case 2081: return "External Shutter 3";
-        case 2082: return "External Filter Wheel 1 Name";
-        case 2083: return "External Filter Wheel 2 Name";
-        case 2084: return "Parfocal Correction";
-        case 2086: return "External Shutter 4";
-        case 2087: return "External Shutter 5";
-        case 2088: return "External Shutter 6";
-        case 2089: return "External Filter Wheel 3 Name";
-        case 2090: return "External Filter Wheel 4 Name";
-        case 2103: return "Objective Turret Position";
-        case 2104: return "Objective Contrast Method";
-        case 2105: return "Objective Immersion Type";
-        case 2107: return "Reflector Position";
-        case 2109: return "Transmitted Light Filter 1 Position";
-        case 2110: return "Transmitted Light Filter 2 Position";
-        case 2112: return "Excitation Filter Position";
-        case 2113: return "Lamp Mirror Position";
-        case 2114: return "External Filter Wheel 1 Position";
-        case 2115: return "External Filter Wheel 2 Position";
-        case 2116: return "External Filter Wheel 3 Position";
-        case 2117: return "External Filter Wheel 4 Position";
-        case 2118: return "Lightmanager Mode";
-        case 2119: return "Halogen Lamp Calibration";
+        case 2079: return "ExternalShutter1"; // "External Shutter 1"
+        case 2080: return "ExternalShutter2"; // "External Shutter 2"
+        case 2081: return "ExternalShutter3"; // "External Shutter 3"
+        case 2082: return "ExternalFilterWheel1Name"; // "External Filter Wheel 1 Name"
+        case 2083: return "ExternalFilterWheel2Name"; // "External Filter Wheel 2 Name"
+        case 2084: return "ParfocalCorrection"; // "Parfocal Correction"
+        case 2086: return "ExternalShutter4"; // "External Shutter 4"
+        case 2087: return "ExternalShutter5"; // "External Shutter 5"
+        case 2088: return "ExternalShutter6"; // "External Shutter 6"
+        case 2089: return "ExternalFilterWheel3Name"; // "External Filter Wheel 3 Name"
+        case 2090: return "ExternalFilterWheel4Name"; // "External Filter Wheel 4 Name"
+        case 2103: return "ObjectiveTurretPosition"; // "Objective Turret Position"
+        case 2104: return "ObjectiveContrastMethod"; // "Objective Contrast Method"
+        case 2105: return "ObjectiveImmersionType"; // "Objective Immersion Type"
+        case 2107: return "ReflectorPosition"; // "Reflector Position"
+        case 2109: return "TransmittedLightFilter1Position"; // "Transmitted Light Filter 1 Position"
+        case 2110: return "TransmittedLightFilter2Position"; // "Transmitted Light Filter 2 Position"
+        case 2112: return "ExcitationFilterPosition"; // "Excitation Filter Position"
+        case 2113: return "LampMirrorPosition"; // "Lamp Mirror Position", "LampMirrorPosition_ERSETZTDURCH241!"
+        case 2114: return "ExternalFilterWheel1Position"; // "External Filter Wheel 1 Position"
+        case 2115: return "ExternalFilterWheel2Position"; // "External Filter Wheel 2 Position"
+        case 2116: return "ExternalFilterWheel3Position"; // "External Filter Wheel 3 Position"
+        case 2117: return "ExternalFilterWheel4Position"; // "External Filter Wheel 4 Position"
+        case 2118: return "LightmanagerMode"; // "Lightmanager Mode"
+        case 2119: return "HalogenLampCalibration"; // "Halogen Lamp Calibration"
         case 2120: return "CondenserNAGoSpeed";
         case 2121: return "TransmittedLightFieldstopGoSpeed";
         case 2122: return "OptovarGoSpeed";
-        case 2123: return "Focus calibrated";
+        case 2123: return "FocusCalibrated"; // "Focus calibrated"
         case 2124: return "FocusBasicPosition";
         case 2125: return "FocusPower";
         case 2126: return "FocusBacklash";
@@ -1339,7 +1341,7 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2130: return "FocusGoSpeed";
         case 2131: return "FocusDistance"; // "Focus Distance" in spec
         case 2132: return "FocusInitPosition";
-        case 2133: return "Stage calibrated";
+        case 2133: return "Stagecalibrated"; // "Stage calibrated"
         case 2134: return "StagePower";
         case 2135: return "StageXBacklash";
         case 2136: return "StageYBacklash";
@@ -1357,21 +1359,21 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2148: return "LampMirrorPosition"; // "Lamp Mirror Position"
         case 2149: return "FocusDepth";
         case 2150: return "MicroscopeType"; // "Microscope Type"
-        case 2151: return "Objective Working Distance";
+        case 2151: return "ObjectiveWorkingDistance"; // "Objective Working Distance"
         case 2152: return "ReflectedLightApertureGoSpeed";
-        case 2153: return "External Shutter";
+        case 2153: return "ExternalShutter"; // "External Shutter"
         case 2154: return "ObjectiveImmersionStop"; // "Objective Immersion Stop"
-        case 2155: return "Focus Start Speed";
-        case 2156: return "Focus Acceleration";
+        case 2155: return "FocusStartSpeed"; // "Focus Start Speed"
+        case 2156: return "FocusAcceleration"; // "Focus Acceleration"
         case 2157: return "ReflectedLightFieldstop"; // "Reflected Light Fieldstop"
         case 2158: return "ReflectedLightFieldstopGoSpeed";
-        case 2159: return "ReflectedLightFilter 1"; // "Reflected Light Filter 1"
-        case 2160: return "ReflectedLightFilter 2"; // "Reflected Light Filter 2"
+        case 2159: return "ReflectedLightFilter1"; // "Reflected Light Filter 1", "ReflectedLightFilter 1"
+        case 2160: return "ReflectedLightFilter2"; // "Reflected Light Filter 2", "ReflectedLightFilter 2"
         case 2161: return "ReflectedLightFilter1Position"; // "Reflected Light Filter 1 Position"
         case 2162: return "ReflectedLightFilter2Position"; // "Reflected Light Filter 2 Position"
         case 2163: return "TransmittedLightAttenuator"; // "Transmitted Light Attenuator"
         case 2164: return "ReflectedLightAttenuator"; // "Reflected Light Attenuator"
-        case 2165: return "Transmitted Light Shutter";
+        case 2165: return "TransmittedLightShutter"; // "Transmitted Light Shutter"
         case 2166: return "TransmittedLightAttenuatorGoSpeed";
         case 2167: return "ReflectedLightAttenuatorGoSpeed";
         case 2176: return "TransmittedLightVirtualFilterPosition";
@@ -1380,47 +1382,47 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2179: return "ReflectedLightVirtualFilter"; // "Reflected Light Virtual Filter"
         case 2180: return "ReflectedLightHalogenLampMode"; // "Reflected Light Halogen Lamp Mode"
         case 2181: return "ReflectedLightHalogenLampVoltage"; // "Reflected Light Halogen Lamp Voltage"
-        case 2182: return "ReflectedLightHalogenLampColorTemperature"; // "Reflected Light Halogen Lamp Colour Temperature" in spec
-        case 2183: return "ContrastManagerMode"; // "Contrastmanager Mode"
-        case 2184: return "Dazzle Protection Active";
+        case 2182: return "ReflectedLightHalogenLampColourTemperature"; // "Reflected Light Halogen Lamp Colour Temperature" in spec, "ReflectedLightHalogenLampColorTemperature"
+        case 2183: return "ContrastManagerMode"; // "Contrastmanager Mode", "ContrastmanagerMode"
+        case 2184: return "DazzleProtectionActive"; // "Dazzle Protection Active"
         case 2195: return "Zoom";
         case 2196: return "ZoomGoSpeed";
         case 2197: return "LightZoom"; // "Light Zoom"
         case 2198: return "LightZoomGoSpeed";
-        case 2199: return "LightZoomCoupled"; // "Lightzoom Coupled", probably "LightZoom Coupled"
+        case 2199: return "LightZoomCoupled"; // "Lightzoom Coupled", probably "LightZoom Coupled", "LightzoomCoupled"
         case 2200: return "TransmittedLightHalogenLampMode"; // "Transmitted Light Halogen Lamp Mode"
         case 2201: return "TransmittedLightHalogenLampVoltage"; // "Transmitted Light Halogen Lamp Voltage"
-        case 2202: return "TransmittedLightHalogenLampColorTemperature"; // "Transmitted Light Halogen Colour Temperature" in spec
-        case 2203: return "Reflected Coldlight Mode";
-        case 2204: return "Reflected Coldlight Intensity";
-        case 2205: return "Reflected Coldlight Color Temperature"; // "Reflected Coldlight Colour Temperature" in spec
-        case 2206: return "Transmitted Coldlight Mode";
-        case 2207: return "Transmitted Coldlight Intensity";
-        case 2208: return "Transmitted Coldlight Color Temperature"; // "Transmitted Coldlight Colour Temperature" in spec
-        case 2209: return "Infinityspace Portchanger Position";
-        case 2210: return "Beamsplitter Infinity Space";
-        case 2211: return "TwoTv VisCamChanger Position";
-        case 2212: return "Beamsplitter Ocular";
-        case 2213: return "TwoTv CamerasChanger Position";
-        case 2214: return "Beamsplitter Cameras";
-        case 2215: return "Ocular Shutter";
-        case 2216: return "TwoTv CamerasChangerCube";
+        case 2202: return "TransmittedLightHalogenLampColourTemperature"; // "Transmitted Light Halogen Colour Temperature" in spec, "TransmittedLightHalogenLampColorTemperature"
+        case 2203: return "ReflectedColdlightMode"; // "Reflected Coldlight Mode"
+        case 2204: return "ReflectedColdlightIntensity"; // "Reflected Coldlight Intensity"
+        case 2205: return "ReflectedColdlightColourTemperature"; // "Reflected Coldlight Colour Temperature" in spec, "Reflected Coldlight Color Temperature"
+        case 2206: return "TransmittedColdlightMode"; // "Transmitted Coldlight Mode"
+        case 2207: return "TransmittedColdlightIntensity"; // "Transmitted Coldlight Intensity"
+        case 2208: return "TransmittedColdlightColourTemperature"; // "Transmitted Coldlight Colour Temperature" in spec
+        case 2209: return "InfinityspacePortchangerPosition"; // "Infinityspace Portchanger Position"
+        case 2210: return "BeamsplitterInfinitySpace"; // "Beamsplitter Infinity Space"
+        case 2211: return "TwoTvVisCamChangerPosition"; // "TwoTv VisCamChanger Position"
+        case 2212: return "BeamsplitterOcular"; // "Beamsplitter Ocular"
+        case 2213: return "TwoTvCamerasChangerPosition"; // "TwoTv CamerasChanger Position"
+        case 2214: return "BeamsplitterCameras"; // "Beamsplitter Cameras"
+        case 2215: return "OcularShutter"; // "Ocular Shutter"
+        case 2216: return "TwoTvCamerasChangerCube"; // "TwoTv CamerasChangerCube"
         case 2217: return "LightWaveLength";
-        case 2218: return "Ocular Magnification";
-        case 2219: return "Camera Adapter Magnification";
-        case 2220: return "Microscope Port";
-        case 2221: return "Ocular Total Magnification";
-        case 2222: return "Field of View";
+        case 2218: return "OcularMagnification"; // "Ocular Magnification"
+        case 2219: return "CameraAdapterMagnification"; // "Camera Adapter Magnification"
+        case 2220: return "MicroscopePort"; // "Microscope Port"
+        case 2221: return "OcularTotalMagnification"; // "Ocular Total Magnification"
+        case 2222: return "FieldofView"; // "Field of View"
         case 2223: return "Ocular";
         case 2224: return "CameraAdapter";
         case 2225: return "StageJoystickEnabled";
-        case 2226: return "ContrastManager Contrast Method"; // "ContrastManagerContrastMethod" in spec
-        case 2229: return "CamerasChanger Beamsplitter Type"; // "CamerasChanger BeamSplitter Type"
-        case 2235: return "Rearport Slider Position";
-        case 2236: return "Rearport Source";
-        case 2237: return "Beamsplitter Type Infinity Space";
-        case 2238: return "Fluorescence Attenuator";
-        case 2239: return "Fluorescence Attenuator Position";
+        case 2226: return "ContrastManagerContrastMethod"; // "ContrastManager Contrast Method", "ContrastmanagerContrastMethod"
+        case 2229: return "CamerasChangerBeamSplitterType"; // "CamerasChanger BeamSplitter Type", "CamerasChanger Beamsplitter Type"
+        case 2235: return "RearportSliderPosition"; // "Rearport Slider Position"
+        case 2236: return "RearportSource"; // "Rearport Source"
+        case 2237: return "BeamsplitterTypeInfinitySpace"; // "Beamsplitter Type Infinity Space"
+        case 2238: return "FluorescenceAttenuator"; // "Fluorescence Attenuator"
+        case 2239: return "FluorescenceAttenuatorPosition"; // "Fluorescence Attenuator Position"
         case 2247: return "tag_ID_2247";
         case 2252: return "tag_ID_2252";
         case 2253: return "tag_ID_2253";
@@ -1431,13 +1433,14 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2258: return "tag_ID_2258";
         case 2259: return "tag_ID_2259";
         case 2260: return "tag_ID_2260";
-        case 2261: return "Objective ID";
-        case 2262: return "Reflector ID";
-        case 2307: return "Camera Framestart Left"; // Camera Frame Left
-        case 2308: return "Camera Framestart Top"; // Camera Frame Top
-        case 2309: return "Camera Frame Width";
-        case 2310: return "Camera Frame Height";
-        case 2311: return "Camera Binning";
+        case 2261: return "ObjectiveID"; // "Objective ID"
+        case 2262: return "ReflectorID"; // "Reflector ID"
+        case 2298: return "tag_ID_2298";
+        case 2307: return "CameraFramestartLeft"; // Camera Frame Left, "Camera Framestart Left"
+        case 2308: return "CameraFramestartTop"; // Camera Frame Top, "Camera Framestart Top"
+        case 2309: return "CameraFrameWidth"; // "Camera Frame Width"
+        case 2310: return "CameraFrameHeight"; // "Camera Frame Height"
+        case 2311: return "CameraBinning"; // "Camera Binning"
         case 2312: return "CameraFrameFull";
         case 2313: return "CameraFramePixelDistance";
         case 2318: return "DataFormatUseScaling";
@@ -1451,19 +1454,19 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2326: return "CameraWhiteBalanceGreen";
         case 2327: return "CameraWhiteBalanceBlue";
         case 2331: return "CameraFrameScalingFactor";
-        case 2562: return "Meteor Camera Type";
-        case 2564: return "Exposure Time [ms]";
+        case 2562: return "MeteorCameraType"; // "Meteor Camera Type"
+        case 2564: return "ExposureTime[ms]"; // "ExposureTime_ms", "ExposureTime (ms)"
         case 2568: return "CameraExposureTimeAutoCalculate";
-        case 2569: return "Meteor Gain Value";
-        case 2571: return "Meteor Gain Automatic";
+        case 2569: return "MeteorGainValue"; // "Meteor Gain Value"
+        case 2571: return "MeteorGainAutomatic"; // "Meteor Gain Automatic"
         case 2572: return "MeteorAdjustHue";
         case 2573: return "MeteorAdjustSaturation";
         case 2574: return "MeteorAdjustRedLow";
         case 2575: return "MeteorAdjustGreenLow";
-        case 2576: return "Meteor Blue Low";
+        case 2576: return "MeteorBlueLow"; // "Meteor Blue Low"
         case 2577: return "MeteorAdjustRedHigh";
         case 2578: return "MeteorAdjustGreenHigh";
-        case 2579: return "MeteorBlue High";
+        case 2579: return "MeteorBlueHigh"; // "Meteor Blue High"
         case 2582: return "CameraExposureTimeCalculationControl";
         case 2585: return "AxioCamFadingCorrectionEnable";
         case 2587: return "CameraLiveImage";
@@ -1484,79 +1487,92 @@ public abstract class BaseZeissReader extends FormatReader {
         case 2602: return "CameraLiveGainValue";
         case 2603: return "CameraLiveExposureTimeValue";
         case 2604: return "CameraLiveScalingFactor";
-        case 2817: return "Image Index U";
-        case 2818: return "Image Index V";
-        case 2819: return "Image Index Z";
-        case 2820: return "Image Channel Index"; // "Image Index C"
-        case 2821: return "Image Index T";
-        case 2822: return "ImageTile Index"; // "Image Index T"
-        case 2823: return "Image acquisition Index";
-        case 2824: return "ImageCount Tiles";
-        case 2825: return "ImageCount A";
-        case 2827: return "Image Index S"; // "Image Index S"
-        case 2828: return "Image Index Raw";
-        case 2832: return "Image Count Z";
-        case 2833: return "Image Count C";
-        case 2834: return "Image Count T";
-        case 2838: return "Number Rows"; // "Image Count U"
-        case 2839: return "Number Columns"; // "Image Count V"
-        case 2840: return "Image Count S";
-        case 2841: return "Original Stage Position X";
-        case 2842: return "Original Stage Position Y";
+        case 2606: return "tag_ID_2606";
+        case 2817: return "ImageIndexU"; // "Image Index U"
+        case 2818: return "ImageIndexV"; // "Image Index V"
+        case 2819: return "ImageIndexZ"; // "Image Index Z"
+        case 2820: return "ImageIndexC"; // "Image Channel Index", "Image Index C"
+        case 2821: return "ImageIndexT"; // "Image Index T"
+        case 2822: return "ImageTileIndex"; // "ImageTile Index"
+        case 2823: return "ImageacquisitionIndex"; // "Image acquisition Index"
+        case 2824: return "ImageCountTiles"; // "ImageCount Tiles"
+        case 2825: return "ImageCountA"; // "ImageCount A", "Image Count A"
+        case 2827: return "ImageIndexS"; // "Image Index S"
+        case 2828: return "ImageIndexRaw"; // "Image Index Raw"
+        case 2832: return "ImageCountZ"; // "Image Count Z"
+        case 2833: return "ImageCountC"; // "Image Count C"
+        case 2834: return "ImageCountT"; // "Image Count T"
+        case 2838: return "ImageCountU"; // "Number Rows", "Image Count U"
+        case 2839: return "ImageCountV"; // "Number Columns", "Image Count V"
+        case 2840: return "ImageCountS"; // "Image Count S"
+        case 2841: return "OriginalStagePositionX"; // "Original Stage Position X"
+        case 2842: return "OriginalStagePositionY"; // "Original Stage Position Y"
         case 3088: return "LayerDrawFlags";
         case 3334: return "RemainingTime"; // "Remaining Time"
-        case 3585: return "User Field 1";
-        case 3586: return "User Field 2";
-        case 3587: return "User Field 3";
-        case 3588: return "User Field 4";
-        case 3589: return "User Field 5";
-        case 3590: return "User Field 6";
-        case 3591: return "User Field 7";
-        case 3592: return "User Field 8";
-        case 3593: return "User Field 9";
-        case 3594: return "User Field 10";
+        case 3585: return "UserField1"; // "User Field 1"
+        case 3586: return "UserField2"; // "User Field 2"
+        case 3587: return "UserField3"; // "User Field 3"
+        case 3588: return "UserField4"; // "User Field 4"
+        case 3589: return "UserField5"; // "User Field 5"
+        case 3590: return "UserField6"; // "User Field 6"
+        case 3591: return "UserField7"; // "User Field 7"
+        case 3592: return "UserField8"; // "User Field 8"
+        case 3593: return "UserField9"; // "User Field 9"
+        case 3594: return "UserField10"; // "User Field 10"
         case 3840: return "ID";
         case 3841: return "Name";
         case 3842: return "Value";
         case 5501: return "PvCamClockingMode";
-        case 8193: return "Autofocus Status Report";
-        case 8194: return "Autofocus Position";
-        case 8195: return "Autofocus Position Offset";
-        case 8196: return "Autofocus Empty Field Threshold";
-        case 8197: return "Autofocus Calibration Name";
-        case 8198: return "Autofocus Current Calibration Item";
+        case 5510: return "tag_ID_5510";
+        case 5512: return "tag_ID_5512";
+        case 5523: return "tag_ID_5523";
+        case 6122: return "tag_ID_6122";
+        case 6131: return "tag_ID_6131";
+        case 8193: return "AutofocusStatusReport"; // "Autofocus Status Report"
+        case 8194: return "AutofocusPosition"; // "Autofocus Position"
+        case 8195: return "AutofocusPositionOffset"; // "Autofocus Position Offset"
+        case 8196: return "AutofocusEmptyFieldThreshold"; // "Autofocus Empty Field Threshold"
+        case 8197: return "AutofocusCalibrationName"; // "Autofocus Calibration Name"
+        case 8198: return "AutofocusCurrentCalibrationItem"; // "Autofocus Current Calibration Item"
+        case 8449: return "tag_ID_8449";
+        case 8450: return "tag_ID_8450";
+        case 8453: return "tag_ID_8453";
+        case 8454: return "tag_ID_8454";
+        case 8455: return "tag_ID_8455";
+        case 8456: return "tag_ID_8456";
+        case 8457: return "tag_ID_8457";
         case 20478: return "tag_ID_20478";
         case 65537: return "CameraFrameFullWidth";
         case 65538: return "CameraFrameFullHeight";
-        case 65541: return "AxioCam Shutter Signal";
-        case 65542: return "AxioCam Delay Time";
-        case 65543: return "AxioCam Shutter Control";
-        case 65544: return "AxioCam BlackRefIsCalculated";
-        case 65545: return "AxioCam Black Reference";
-        case 65547: return "Camera Shading Correction";
-        case 65550: return "AxioCam Enhance Color";
-        case 65551: return "AxioCam NIR Mode";
+        case 65541: return "AxioCamShutterSignal"; // "AxioCam Shutter Signal"
+        case 65542: return "AxioCamDelayTime"; // "AxioCam Delay Time"
+        case 65543: return "AxioCamShutterControl"; // "AxioCam Shutter Control"
+        case 65544: return "AxioCamBlackRefIsCalculated"; // "AxioCam BlackRefIsCalculated"
+        case 65545: return "AxioCamBlackReference"; // "AxioCam Black Reference"
+        case 65547: return "CameraShadingCorrection"; // "Camera Shading Correction"
+        case 65550: return "AxioCamEnhanceColor"; // "AxioCam Enhance Color"
+        case 65551: return "AxioCamNIRMode"; // "AxioCam NIR Mode"
         case 65552: return "CameraShutterCloseDelay";
         case 65553: return "CameraWhiteBalanceAutoCalculate";
-        case 65556: return "AxioCam NIR Mode Available";
-        case 65557: return "AxioCam Fading Correction Available";
-        case 65559: return "AxioCam Enhance Color Available";
+        case 65556: return "AxioCamNIRModeAvailable"; // "AxioCam NIR Mode Available"
+        case 65557: return "AxioCamFadingCorrectionAvailable"; // "AxioCam Fading Correction Available"
+        case 65559: return "AxioCamEnhanceColorAvailable"; // "AxioCam Enhance Color Available"
         case 65565: return "MeteorVideoNorm";
         case 65566: return "MeteorAdjustWhiteReference";
         case 65567: return "MeteorBlackReference";
         case 65568: return "MeteorChannelInputCountMono";
         case 65570: return "MeteorChannelInputCountRGB";
         case 65571: return "MeteorEnableVCR";
-        case 65572: return "Meteor Brightness";
-        case 65573: return "Meteor Contrast";
-        case 65575: return "AxioCam Selector"; // "AxioCamSelector"
-        case 65576: return "AxioCam Type";
-        case 65577: return "AxioCam Info"; // "AxioCamInfo"
-        case 65580: return "AxioCam Resolution";
-        case 65581: return "AxioCam Color Model"; // "AxioCam Colour Model"
-        case 65582: return "AxioCam MicroScanning";
-        case 65585: return "Amplification Index";
-        case 65586: return "Device Command"; // "DeviceCommand"
+        case 65572: return "MeteorBrightness"; // "Meteor Brightness"
+        case 65573: return "MeteorContrast"; // "Meteor Contrast"
+        case 65575: return "AxioCamSelector"; // "AxioCamInfo"
+        case 65576: return "AxioCamType"; // "AxioCam Type"
+        case 65577: return "AxioCamInfo"; // "AxioCam Info"
+        case 65580: return "AxioCamResolution"; // "AxioCam Resolution"
+        case 65581: return "AxioCamColourModel"; // "AxioCam Colour Model", "AxioCam Color Model"
+        case 65582: return "AxioCamMicroScanning"; // "AxioCam MicroScanning"
+        case 65585: return "AmplificationIndex"; // "Amplification Index"
+        case 65586: return "DeviceCommand"; // "Device Command"
         case 65587: return "BeamLocation";
         case 65588: return "ComponentType";
         case 65589: return "ControllerType";
@@ -1569,23 +1585,23 @@ public abstract class BaseZeissReader extends FormatReader {
         case 65596: return "CameraWhiteBalanceSetTargetGreen";
         case 65597: return "CameraWhiteBalanceSetTargetBlue";
         case 65598: return "ApotomeCamCalibrationMode";
-        case 65599: return "ApoTome Grid Position";
+        case 65599: return "ApoTomeGridPosition"; // "ApoTome Grid Position"
         case 65600: return "ApotomeCamScannerPosition";
-        case 65601: return "ApoTome Full Phase Shift";
-        case 65602: return "ApoTome Grid Name";
-        case 65603: return "ApoTome Staining";
-        case 65604: return "ApoTome Processing Mode";
+        case 65601: return "ApoTomeFullPhaseShift"; // "ApoTome Full Phase Shift"
+        case 65602: return "ApoTomeGridName"; // "ApoTome Grid Name"
+        case 65603: return "ApoTomeStaining"; // "ApoTome Staining"
+        case 65604: return "ApoTomeProcessingMode"; // "ApoTome Processing Mode"
         case 65605: return "ApotomeCamLiveCombineMode";
-        case 65606: return "ApoTome Filter Name";
-        case 65607: return "Apotome Filter Strength";
+        case 65606: return "ApoTomeFilterName"; // "ApoTome Filter Name"
+        case 65607: return "ApotomeFilterStrength"; // "Apotome Filter Strength"
         case 65608: return "ApotomeCamFilterHarmonics";
-        case 65609: return "ApoTome Grating Period";
-        case 65610: return "ApoTome Auto Shutter Used";
-        case 65611: return "Apotome Cam Status"; // "ApoTomeCamStatus"
+        case 65609: return "ApoTomeGratingPeriod"; // "ApoTome Grating Period"
+        case 65610: return "ApoTomeAutoShutterUsed"; // "ApoTome Auto Shutter Used"
+        case 65611: return "ApotomeCamStatus"; // "Apotome Cam Status"
         case 65612: return "ApotomeCamNormalize";
         case 65613: return "ApotomeCamSettingsManager";
         case 65614: return "DeepviewCamSupervisorMode";
-        case 65615: return "DeepView Processing";
+        case 65615: return "DeepViewProcessing"; // "DeepView Processing"
         case 65616: return "DeepviewCamFilterName";
         case 65617: return "DeepviewCamStatus";
         case 65618: return "DeepviewCamSettingsManager";
@@ -1595,35 +1611,138 @@ public abstract class BaseZeissReader extends FormatReader {
         case 65622: return "CameraShadingAutoCalculate";
         case 65623: return "CameraTriggerAvailable";
         case 65626: return "CameraShutterAvailable";
-        case 65627: return "AxioCam ShutterMicroScanningEnable"; // "AxioCamShutterMicroScanningEnable"
+        case 65627: return "AxioCamShutterMicroScanningEnable"; // "AxioCam ShutterMicroScanningEnable"
         case 65628: return "ApotomeCamLiveFocus";
         case 65629: return "DeviceInitStatus";
         case 65630: return "DeviceErrorStatus";
         case 65631: return "ApotomeCamSliderInGridPosition";
-        case 65632: return "Orca NIR Mode Used";
-        case 65633: return "Orca Analog Gain";
-        case 65634: return "Orca Analog Offset";
-        case 65635: return "Orca Binning";
-        case 65636: return "Orca Bit Depth";
-        case 65637: return "ApoTome Averaging Count";
-        case 65638: return "DeepView DoF";
-        case 65639: return "DeepView EDoF";
-        case 65643: return "DeepView Slider Name";
-        case 65651: return "tag_ID_65651";
-        case 65652: return "tag_ID_65652";
-        case 65655: return "DeepView Slider Name"; // Also "Camera NIR Mode Enabled"
-        case 65657: return "tag_ID_65657";
-        case 65658: return "tag_ID_65658";
-        case 65661: return "tag_ID_65661";
-        case 65662: return "tag_ID_65662"; // Camera driver?
-
-        case 5439491: return "Acquisition Software";
-        case 16777488: return "Excitation Wavelength";
-        case 16777489: return "Emission Wavelength";
-        case 101515267: return "File Name";
+        case 65632: return "OrcaNIRModeUsed"; // "Orca NIR Mode Used"
+        case 65633: return "OrcaAnalogGain"; // "Orca Analog Gain"
+        case 65634: return "OrcaAnalogOffset"; // "Orca Analog Offset"
+        case 65635: return "OrcaBinning"; // "Orca Binning"
+        case 65636: return "OrcaBitDepth"; // "Orca Bit Depth"
+        case 65637: return "ApoTomeAveragingCount"; // "ApoTome Averaging Count"
+        case 65638: return "DeepViewDoF"; // "DeepView DoF"
+        case 65639: return "DeepViewEDoF"; // "DeepView EDoF"
+        case 65643: return "DeepViewSliderName"; // "DeepView Slider Name"
+        case 65644: return "RoperCamGain";
+        case 65646: return "RoperCamPixelClock";
+        case 65647: return "RoperCamTemperature";
+        case 65648: return "CameraImageMemUnitNames";
+        case 65649: return "ApotomeCamLivePhase";
+        case 65650: return "DualAxioCamAlgorithmType";
+        case 65651: return "ApotomeCamDecay";
+        case 65652: return "ApotomeCamEpsilon";
+        case 65653: return "AxioCamHSBufferNumber";
+        case 65654: return "AxioCamHSFrameTime";
+        case 65655: return "AxioCamAnalogGainEnable";
+        case 65656: return "AxioCamAnalogGainAvailable";
+        case 65657: return "ApotomeCamPhaseAngles";
+        case 65658: return "ApotomeCamImageFormat";
+        case 65659: return "CameraShadingCount";
+        case 65660: return "CameraImageRawSize";
+        case 65661: return "ApotomeCamBurstMode";
+        case 65662: return "ApotomeCamGenericCameraName";
+        case 65663: return "AcquisitionDevice";
+        case 65664: return "ApotomeGratingPeriodMeasured";
+        case 65665: return "CameraLutEnable";
+        case 65666: return "AxioCamSaturation";
+        case 65667: return "CameraColorCorrection";
+        case 65668: return "CameraColorProcessingEnable";
+        case 65669: return "CameraAnalogGain";
+        case 65670: return "CameraWhiteBalanceTargetPosX";
+        case 65671: return "CameraWhiteBalanceTargetPosY";
+        case 65672: return "CameraShutterSignalPort";
+        case 65673: return "AxioCamICSaturation";
+        case 65674: return "ApotomeCamCamCalibMode";
+        case 65675: return "ApotomeCamCamCalibValue";
+        case 65676: return "ApotomeCamAdminCalibMode";
+        case 65677: return "ApotomeCamIsAdmin";
+        case 65678: return "ApotomeCamPw";
+        case 65679: return "ApotomeCamAdminName";
+        case 65680: return "CameraShutterLiveEnable";
+        case 65681: return "CameraExposureTimeAutoLiveEnable";
+        case 65682: return "CameraEMGain";
+        case 65683: return "ApotomeCamHardwareVersion";
+        case 65684: return "ApotomeCamGridPosition";
+        case 65685: return "ApotomeCamAutoGrid";
+        case 65703: return "OrcaCamNumberOfScanMode";
+        case 65704: return "OrcaCamScanMode";
+        case 65705: return "OrcaCamEMCCDMode";
+        case 65706: return "OrcaCamEMCCDGain";
+        case 65707: return "OrcaCamFastAcq";
+        case 65708: return "OrcaCamMinExposureTime";
+        case 65709: return "OrcaCamNumberOfPhotonImagingMode";
+        case 65710: return "OrcaCamPhotonImagingMode";
+        case 65711: return "OrcaCamDirectEMGainAvailable";
+        case 65712: return "OrcaCamDirectEMGain";
+        case 65713: return "OrcaCamEMGainProtectionAvailable";
+        case 65714: return "OrcaCamEMGainProtection";
+        case 65716: return "CameraEMGainMinimum";
+        case 65717: return "CameraEMGainMaximum";
+        case 65718: return "CameraEMGainAvailable";
+        case 65719: return "CameraEMGainEnabled";
+        case 65736: return "YokogawaSynchronize";
+        case 65737: return "YokogawaIsInSync";
+        case 65738: return "YokogawaStatus";
+        case 65739: return "YkogawaKeepInSync";
+        case 65740: return "YokogawaIsBusy";
+        case 65741: return "YokogawaStopDisc";
+        case 65742: return "YokogawaCamExposureTime";
+        case 65743: return "YokogawaMode";
+        case 65744: return "YokogawaDepth";
+        case 65745: return "YokogawaCamReserved12";
+        case 65746: return "YokogawaCamReserved13";
+        case 65747: return "YokogawaCamReserved14";
+        case 65748: return "YokogawaCamReserved15";
+        case 65749: return "YokogawaCamReserved16";
+        case 65750: return "YokogawaCamReserved17";
+        case 65751: return "YokogawaCamReserved18";
+        case 65752: return "YokogawaCamReserved19";
+        case 65753: return "YokogawaCamReserved20";
+        case 65754: return "AuroxCamStatus";
+        case 65755: return "AuroxCamInputMode";
+        case 65756: return "AuroxCamLiveMode";
+        case 65757: return "AuroxCamCalibrationMode";
+        case 65758: return "AuroxCamGenericCameraName";
+        case 65759: return "AuroxCamButtonMode";
+        case 65760: return "AuroxCamDepth";
+        case 65761: return "AuroxCamCenter";
+        case 65762: return "AuroxCamFactor";
+        case 65763: return "AuroxCamCreateRegistration";
+        case 65764: return "AuroxCamRegistrationValid";
+        case 65765: return "AuroxCamRegistrationError";
+        case 65766: return "AuroxCamShadingImageMode";
+        case 65767: return "AuroxCamShadingImageAvailable";
+        case 65768: return "AuroxCamQuality";
+        case 65769: return "AuroxCamCutLeft";
+        case 65770: return "AuroxCamCutTop";
+        case 65771: return "AuroxCamCutRight";
+        case 65772: return "AuroxCamCutBottom";
+        case 65773: return "AuroxCamMean";
+        case 65774: return "AuroxCamNormalize";
+        case 65775: return "AuroxCamUseShading";
+        case 65776: return "AuroxCamShadingValid";
+        case 65777: return "AuroxCamNotification";
+        case 65778: return "AuroxCamCalibrationID";
+        case 65779: return "AuroxCamSimpleCalibMode";
+        case 65780: return "AuroxCamCalibrationName";
+        case 65781: return "AuroxCamCFactor"; // Also "AuroxCamRes6"
+        case 65782: return "AuroxCamRegistrationCenter";
+        case 65783: return "AuroxCamCalibrationID2";
+        case 65784: return "AuroxCamAveraging";
+        case 65785: return "AuroxCamUniqueID";
+        case 65786: return "AuroxCamAutoNormalize";
+        case 65787: return "AuroxCamReserved3";
+        case 65788: return "AuroxCamReserved4";
+        case 65789: return "AuroxCamReserved5";
+        case 5439491: return "AcquisitionSoftware"; // "Acquisition Software"
+        case 16777488: return "ExcitationWavelength"; // "Excitation Wavelength"
+        case 16777489: return "EmissionWavelength"; // "Emission Wavelength"
+        case 101515267: return "FileName"; // "File Name"
         case 101253123:
         case 101777411:
-          return "Image Name";
+          return "ImageName"; // "Image Name"
         default: return "tag_ID_" + tagID;
       }
     }
