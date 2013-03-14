@@ -811,7 +811,7 @@ public abstract class BaseZeissReader extends FormatReader {
         if (cIndex != -1) key += " " + cIndex;
         addGlobalMeta(key, value);
 
-        if (key.startsWith("ImageTile") && !(store instanceof DummyMetadata)) {
+        if (key.equals("ImageTileIndex") && !(store instanceof DummyMetadata)) {
           if (!tiles.containsKey(new Integer(value))) {
             tiles.put(new Integer(value), new Integer(1));
           }
