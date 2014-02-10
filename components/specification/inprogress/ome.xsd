@@ -317,10 +317,10 @@
 				dimension order specified by 'DimensionOrder'.
 
 				All of the values in the Pixels object when present should match the same value
-				stored in any associated TIFF format (e.g. SizeX should be the same). Where there
-				is a mismatch our readers will take the value from the TIFF structure as overriding
-				the value in the OME-XML. This is simply a pragmatic decision as it increases the
-				likelihood of reading data from a slightly incorrect file.
+				stored in any associated TIFF format (e.g. the size of the X dimension should be the
+				same). Where there is a mismatch our readers will take the value from the TIFF structure
+				as overriding the value in the OME-XML. This is simply a pragmatic decision as it
+				increases the likelihood of reading data from a slightly incorrect file.
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -343,20 +343,56 @@
 				</xsd:element>
 			</xsd:sequence>
 			<xsd:attribute name="ID" use="required" type="PixelsID"/>
-			<xsd:attribute name="DimensionOrder" use="required">
+			<xsd:attribute name="DimensionOrder" use="required" type="xsd:string">
 				<xsd:annotation>
 					<xsd:documentation>
 						The order in which the individual planes of data are interleaved.
 					</xsd:documentation>
 				</xsd:annotation>
 				<xsd:simpleType>
-					<xsd:restriction base="xsd:string">
-						<xsd:enumeration value="XYZCT"/>
-						<xsd:enumeration value="XYZTC"/>
-						<xsd:enumeration value="XYCTZ"/>
-						<xsd:enumeration value="XYCZT"/>
-						<xsd:enumeration value="XYTCZ"/>
-						<xsd:enumeration value="XYTZC"/>
+                                        <xsd:restriction base="xsd:string">
+                                                <xs:minLength value="2" />
+                                                <xs:maxLength value="8" />
+                                                <xs:pattern value="XY[ZCTzct]*" />
+                                        </xsd:restriction>
+                                </xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="DimensionExtents" use="required" type="PositiveIntList">
+				<xsd:annotation>
+					<xsd:documentation>
+						The extent (size) of each dimension.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="PositiveIntList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="DimensionScales" use="required" type="PositiveFloatList">
+				<xsd:annotation>
+					<xsd:documentation>
+						The scale factor for each dimension.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="PositiveFloatList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="DimensionUnits" use="required" type="StringList">
+				<xsd:annotation>
+					<xsd:documentation>
+						The scale unit for each dimension.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="PositiveFloatList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:attribute>
@@ -398,55 +434,6 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="SizeX" use="required" type="PositiveInt">
-				<xsd:annotation>
-					<xsd:documentation>Dimensional size of pixel data array [units:none]</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="SizeY" use="required" type="PositiveInt">
-				<xsd:annotation>
-					<xsd:documentation>Dimensional size of pixel data array [units:none]</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="SizeZ" use="required" type="PositiveInt">
-				<xsd:annotation>
-					<xsd:documentation>Dimensional size of pixel data array [units:none]</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="SizeC" use="required" type="PositiveInt">
-				<xsd:annotation>
-					<xsd:documentation>Dimensional size of pixel data array [units:none]</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="SizeT" use="required" type="PositiveInt">
-				<xsd:annotation>
-					<xsd:documentation>Dimensional size of pixel data array [units:none]</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="PhysicalSizeX" use="optional" type="PositiveFloat">
-				<xsd:annotation>
-					<xsd:documentation>Physical size of a pixel in microns[µm].</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="PhysicalSizeY" use="optional" type="PositiveFloat">
-				<xsd:annotation>
-					<xsd:documentation>Physical size of a pixel in microns[µm].</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="PhysicalSizeZ" use="optional" type="PositiveFloat">
-				<xsd:annotation>
-					<xsd:documentation>Physical size of a pixel in microns[µm].</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="TimeIncrement" use="optional" type="xsd:float">
-				<xsd:annotation>
-					<xsd:documentation>
-						TimeIncrement is used for time series that have a global
-						timing specification instead of per-timepoint timing info.
-						For example in a video stream.  The unit is seconds[s].
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="Plane"> <!-- top level definition -->
@@ -475,29 +462,18 @@
 					</xsd:annotation>
 				</xsd:element>
 			</xsd:sequence>
-			<xsd:attribute name="TheZ" use="required" type="NonNegativeInt">
+			<xsd:attribute name="Position" use="required" type="NonNegativeIntList">
 				<xsd:annotation>
 					<xsd:documentation>
-						The Z-section this plane is for. [units:none]
-						This is numbered from 0.
+						Plane dimension coordinate.  Note that X and Y are redundant and could be omitted from the required set here.
 					</xsd:documentation>
 				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="TheT" use="required" type="NonNegativeInt">
-				<xsd:annotation>
-					<xsd:documentation>
-						The timepoint this plane is for. [units:none]
-						This is numbered from 0.
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="TheC" use="required" type="NonNegativeInt">
-				<xsd:annotation>
-					<xsd:documentation>
-						The channel this plane is for. [units:none]
-						This is numbered from 0.
-					</xsd:documentation>
-				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="NonNegativeIntList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
+					</xsd:restriction>
+				</xsd:simpleType>
 			</xsd:attribute>
 			<xsd:attribute name="DeltaT" use="optional" type="xsd:float">
 				<xsd:annotation>
@@ -513,26 +489,18 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="PositionX" use="optional" type="xsd:float">
+			<xsd:attribute name="Position" use="required" type="PositiveFloatList">
 				<xsd:annotation>
 					<xsd:documentation>
-						The X position of the stage. [units are in the microscope reference frame]
+						Position of the sample in all dimensions.  Note that X and Y are redundant and could be omitted from the required set here.
 					</xsd:documentation>
 				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="PositionY" use="optional" type="xsd:float">
-				<xsd:annotation>
-					<xsd:documentation>
-						The Y position of the stage. [units are in the microscope reference frame]
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="PositionZ" use="optional" type="xsd:float">
-				<xsd:annotation>
-					<xsd:documentation>
-						The Z position of the stage. [units are in the microscope reference frame]
-					</xsd:documentation>
-				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="PositiveFloatList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
+					</xsd:restriction>
+				</xsd:simpleType>
 			</xsd:attribute>
 		</xsd:complexType>
 	</xsd:element>
@@ -755,29 +723,18 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-			<xsd:attribute name="FirstZ" type="NonNegativeInt" default="0" use="optional">
+			<xsd:attribute name="FirstPosition" use="required" type="NonNegativeIntList">
 				<xsd:annotation>
 					<xsd:documentation>
-						Gives the Z position of the image plane at the specified IFD. Indexed from 0.
-						Default is 0 (the first Z position). [units:none]
+						First plane dimension coordinate.  Note that X and Y are redundant and could be omitted from the required set here.
 					</xsd:documentation>
 				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="FirstT" type="NonNegativeInt" default="0" use="optional">
-				<xsd:annotation>
-					<xsd:documentation>
-						Gives the T position of the image plane at the specified IFD. Indexed from 0.
-						Default is 0 (the first T position). [units:none]
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="FirstC" type="NonNegativeInt" default="0" use="optional">
-				<xsd:annotation>
-					<xsd:documentation>
-						Gives the C position of the image plane at the specified IFD. Indexed from 0.
-						Default is 0 (the first C position). [units:none]
-					</xsd:documentation>
-				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="NonNegativeIntList">
+                                          <xs:minLength value="2" />
+                                          <xs:maxLength value="8" />
+					</xsd:restriction>
+				</xsd:simpleType>
 			</xsd:attribute>
 			<xsd:attribute name="PlaneCount" use="optional" type="NonNegativeInt">
 				<xsd:annotation>
@@ -1319,6 +1276,14 @@
 			<xsd:minInclusive value="0"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeLongList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of NonNegativeLongs
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="NonNegativeLong"></xsd:list>
+	</xsd:simpleType>
 	<xsd:simpleType name="NonNegativeInt">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -1328,6 +1293,14 @@
 		<xsd:restriction base="xsd:int">
 			<xsd:minInclusive value="0"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of NonNegativeInts
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="NonNegativeInt"></xsd:list>
 	</xsd:simpleType>
 	<xsd:simpleType name="PositiveInt">
 		<xsd:annotation>
@@ -1339,6 +1312,14 @@
 			<xsd:minInclusive value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="PositiveIntList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of PositiveInts
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="PositiveInt"></xsd:list>
+	</xsd:simpleType>
 	<xsd:simpleType name="PositiveFloat">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -1348,6 +1329,14 @@
 		<xsd:restriction base="xsd:float">
 			<xsd:minExclusive value="0.0"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveFloatList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of PositiveFloats
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="PositiveFloat"></xsd:list>
 	</xsd:simpleType>
 	<xsd:simpleType name="PercentFraction">
 		<xsd:annotation>
@@ -1359,6 +1348,22 @@
 			<xsd:maxInclusive value="1.0"/>
 			<xsd:minInclusive value="0.0"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveIntList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of PositiveInts
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="PositiveInt"></xsd:list>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringList">
+		<xsd:annotation>
+			<xsd:documentation>
+				A space separated list of Strings
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="String"></xsd:list>
 	</xsd:simpleType>
 	<xsd:simpleType name="UniversallyUniqueIdentifier">
 		<xsd:annotation>
