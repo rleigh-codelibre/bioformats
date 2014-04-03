@@ -103,7 +103,7 @@ namespace ome
 
       void
       TIFFReader::openBytes(dimension_size_type no,
-                      PixelBufferRaw&     buf) const
+                            PixelBufferRaw&     buf) const
       {
         ::ome::bioformats::detail::FormatReader::openBytes(no, buf);
       }
@@ -114,7 +114,7 @@ namespace ome
                             dimension_size_type /* x */,
                             dimension_size_type /* y */,
                             dimension_size_type /* w */,
-                            dimension_size_type /*h */) const
+                            dimension_size_type /* h */) const
       {
         assertId(currentId, true);
         return;
