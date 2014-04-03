@@ -49,6 +49,32 @@ namespace ome
     namespace in
     {
 
+      class IFD::Impl
+      {
+      public:
+        std::weak_ptr<TIFF> tiff;
+        TIFF::directory_index_type ifd;
+
+        Impl(std::shared_ptr<TIFF>& tiff):
+          tiff(tiff)
+        {
+        }
+
+        ~Impl()
+        {
+        }
+
+      private:
+        /// Copy constructor (deleted).
+        Impl (const Impl&);
+
+        /// Assignment operator (deleted).
+        Impl&
+        operator= (const Impl&);
+
+      public:
+      };
+
       class TIFF::Impl
       {
       public:
@@ -93,6 +119,13 @@ namespace ome
         delete impl;
       }
 
+      std::shared_ptr<TIFF>
+      TIFF::open(const std::string& filename,
+                 const std::string& mode)
+      {
+        return std::make_shared<TIFF>(filename, mode);
+      }
+
       void
       TIFF::close()
       {
@@ -102,6 +135,26 @@ namespace ome
       TIFF::operator bool ()
       {
         return impl && impl->tiff;
+      }
+
+      std::shared_ptr<IFD>
+      TIFF::getDirectoryByIndex(directory_index_type index)
+      {
+      }
+
+      std::shared_ptr<IFD>
+      TIFF::getDirectoryByOffset(offset_type offset)
+      {
+      }
+
+
+      IFD::IFD(std::shared_ptr<TIFF>& tiff):
+        impl(tiff);
+      {
+      }
+
+      IFD::~IFD()
+      {
       }
 
     }

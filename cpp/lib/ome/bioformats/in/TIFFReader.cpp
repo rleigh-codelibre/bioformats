@@ -98,7 +98,9 @@ namespace ome
       {
         ::ome::bioformats::detail::FormatReader::initFile(id);
 
-        tiff = std::make_shared<TIFF>(id, "r");
+        tiff = TIFF::open(id, "r");
+
+        // Read metadata from IFDs.
       }
 
       void

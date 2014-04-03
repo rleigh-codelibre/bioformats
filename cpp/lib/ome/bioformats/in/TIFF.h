@@ -40,6 +40,8 @@
 
 #include <string>
 
+#include <ome/compat/memory.h>
+
 namespace ome
 {
   namespace bioformats
@@ -47,12 +49,36 @@ namespace ome
     namespace in
     {
 
-      class TIFF
+      class IFD
       {
       private:
         class Impl;
         /// Private implementation details.
         Impl *impl;
+
+        /// Copy constructor (deleted).
+        IFD (const IFD&);
+
+        /// Assignment operator (deleted).
+        IFD&
+        operator= (const IFD&);
+
+        IFD(const std::string& filename,
+             const std::string& mode);
+
+        ~IFD();
+      };
+
+      class TIFF : public std::enable_shared_from_this<TIFF>
+      {
+
+      private:
+        class Impl;
+        /// Private implementation details.
+        Impl *impl;
+
+        TIFF(const std::string& filename,
+             const std::string& mode);
 
         /// Copy constructor (deleted).
         TIFF (const TIFF&);
@@ -61,10 +87,9 @@ namespace ome
         TIFF&
         operator= (const TIFF&);
 
-
       public:
-
-        TIFF(const std::string& filename,
+        static std::shared_ptr<TIFF>
+        open(const std::string& filename,
              const std::string& mode);
 
         ~TIFF();
@@ -73,6 +98,15 @@ namespace ome
         close();
 
         operator bool ();
+
+        typedef uint16_t directory_index_type;
+        typedef uint32_t offset_type;
+
+        std::shared_ptr<IFD>
+        getDirectoryByIndex(directory_index_type index);
+
+        std::shared_ptr<IFD>
+        getDirectoryByOffset(offset_type offset);
 
       };
 
