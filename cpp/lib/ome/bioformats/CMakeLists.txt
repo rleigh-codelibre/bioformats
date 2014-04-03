@@ -34,7 +34,8 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${OME_TOPLEVEL_INCLUDES})
+include_directories(${OME_TOPLEVEL_INCLUDES}
+                    ${TIFF_INCLUDE_DIR})
 
 set(OME_BIOFORMATS_SOURCES
     CoreMetadata.cpp
@@ -71,13 +72,29 @@ set(OME_BIOFORMATS_DETAIL_SOURCES
 set(OME_BIOFORMATS_DETAIL_HEADERS
     detail/FormatReader.h)
 
+set(OME_BIOFORMATS_IN_SOURCES
+    in/TIFF.cpp
+    in/TIFFReader.cpp)
+
+set(OME_BIOFORMATS_IN_HEADERS
+    in/TIFF.h
+    in/TIFFReader.h)
+
+set(OME_BIOFORMATS_OUT_SOURCES)
+
+set(OME_BIOFORMATS_OUT_HEADERS)
+
 set(BIOFORMATS_SOURCES
     ${OME_BIOFORMATS_SOURCES}
-    ${OME_BIOFORMATS_DETAIL_SOURCES})
+    ${OME_BIOFORMATS_DETAIL_SOURCES}
+    ${OME_BIOFORMATS_IN_SOURCES}
+    ${OME_BIOFORMATS_OUT_SOURCES})
 
 set(BIOFORMATS_STATIC_HEADERS
     ${OME_BIOFORMATS_HEADERS}
-    ${OME_BIOFORMATS_DETAIL_HEADERS})
+    ${OME_BIOFORMATS_DETAIL_HEADERS}
+    ${OME_BIOFORMATS_IN_HEADERS}
+    ${OME_BIOFORMATS_OUT_HEADERS})
 
 set(BIOFORMATS_GENERATED_HEADERS)
 
@@ -87,7 +104,10 @@ set(BIOFORMATS_HEADERS
 add_library(ome-bioformats SHARED
             ${BIOFORMATS_SOURCES}
             ${BIOFORMATS_HEADERS})
-target_link_libraries(ome-bioformats ome-compat ome-xml ${Boost_FILESYSTEM_LIBRARY_RELEASE} ${Boost_SYSTEM_LIBRARY_RELEASE})
+target_link_libraries(ome-bioformats ome-compat ome-xml
+                      ${Boost_FILESYSTEM_LIBRARY_RELEASE}
+                      ${Boost_SYSTEM_LIBRARY_RELEASE}
+                      ${TIFF_LIBRARIES})
 set_target_properties(ome-bioformats PROPERTIES VERSION ${OME_VERSION_SHORT})
 
 install(TARGETS ome-bioformats LIBRARY
