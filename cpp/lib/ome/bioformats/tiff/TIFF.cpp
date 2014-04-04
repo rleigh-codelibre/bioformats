@@ -39,6 +39,7 @@
 #include <cmath>
 
 #include <ome/bioformats/tiff/TIFF.h>
+#include <ome/bioformats/tiff/Exception.h>
 
 #include <ome/compat/thread.h>
 #include <ome/compat/string.h>
@@ -136,7 +137,7 @@ namespace ome
           {
             this->message = message;
             if (autothrow)
-              throw std::runtime_error(message);
+              throw Exception(message);
           }
 
           std::string const&

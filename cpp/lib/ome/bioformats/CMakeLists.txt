@@ -82,6 +82,7 @@ set(OME_BIOFORMATS_TIFF_SOURCES
     tiff/TIFF.cpp)
 
 set(OME_BIOFORMATS_TIFF_HEADERS
+    tiff/Exception.h
     tiff/TIFF.h)
 
 set(OME_BIOFORMATS_OUT_SOURCES)
