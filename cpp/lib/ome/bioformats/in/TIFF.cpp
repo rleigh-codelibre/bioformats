@@ -49,14 +49,51 @@ namespace ome
     namespace in
     {
 
+      namespace
+      {
+
+        class TIFFConcrete : public TIFF
+        {
+        public:
+          TIFFConcrete(const std::string& filename,
+                       const std::string& mode):
+            TIFF(filename, mode)
+          {
+          }
+
+          virtual
+          ~TIFFConcrete()
+          {
+          }
+        };
+
+        class IFDConcrete : public IFD
+        {
+        public:
+          IFDConcrete(std::shared_ptr<TIFF>&     tiff,
+                      TIFF::directory_index_type index):
+            IFD(tiff, index)
+          {
+          }
+
+          virtual
+          ~IFDConcrete()
+          {
+          }
+        };
+
+      }
+
       class IFD::Impl
       {
       public:
         std::weak_ptr<TIFF> tiff;
-        TIFF::directory_index_type ifd;
+        TIFF::directory_index_type index;
 
-        Impl(std::shared_ptr<TIFF>& tiff):
-          tiff(tiff)
+        Impl(std::shared_ptr<TIFF>&     tiff,
+             TIFF::directory_index_type index):
+          tiff(tiff),
+          index(index)
         {
         }
 
@@ -110,20 +147,19 @@ namespace ome
 
       TIFF::TIFF(const std::string& filename,
                  const std::string& mode):
-        impl(new Impl(filename, mode))
+        impl(std::make_shared<Impl>(filename, mode))
       {
       }
 
       TIFF::~TIFF()
       {
-        delete impl;
       }
 
       std::shared_ptr<TIFF>
       TIFF::open(const std::string& filename,
                  const std::string& mode)
       {
-        return std::make_shared<TIFF>(filename, mode);
+        return std::make_shared<TIFFConcrete>(filename, mode);
       }
 
       void
@@ -140,21 +176,39 @@ namespace ome
       std::shared_ptr<IFD>
       TIFF::getDirectoryByIndex(directory_index_type index)
       {
+        // @todo: Return IFD of correct index.
+        std::shared_ptr<TIFF> t(shared_from_this());
+        return IFD::open(t, directory_index_type(0U));
       }
 
       std::shared_ptr<IFD>
       TIFF::getDirectoryByOffset(offset_type offset)
       {
+        // @todo: Return IFD of correct index.
+        std::shared_ptr<TIFF> t(shared_from_this());
+        return IFD::open(t, directory_index_type(0U));
       }
 
 
-      IFD::IFD(std::shared_ptr<TIFF>& tiff):
-        impl(tiff);
+      IFD::IFD(std::shared_ptr<TIFF>&     tiff,
+               TIFF::directory_index_type index):
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        impl(std::shared_ptr<Impl>(new Impl(tiff, index)))
       {
       }
 
       IFD::~IFD()
       {
+      }
+
+      std::shared_ptr<IFD>
+      IFD::open(std::shared_ptr<TIFF>&     tiff,
+                TIFF::directory_index_type index)
+      {
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        return std::shared_ptr<IFD>(new IFDConcrete(tiff, index));
       }
 
     }

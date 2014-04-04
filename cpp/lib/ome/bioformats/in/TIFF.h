@@ -40,6 +40,7 @@
 
 #include <string>
 
+#include <ome/compat/cstdint.h>
 #include <ome/compat/memory.h>
 
 namespace ome
@@ -49,25 +50,7 @@ namespace ome
     namespace in
     {
 
-      class IFD
-      {
-      private:
-        class Impl;
-        /// Private implementation details.
-        Impl *impl;
-
-        /// Copy constructor (deleted).
-        IFD (const IFD&);
-
-        /// Assignment operator (deleted).
-        IFD&
-        operator= (const IFD&);
-
-        IFD(const std::string& filename,
-             const std::string& mode);
-
-        ~IFD();
-      };
+      class IFD;
 
       class TIFF : public std::enable_shared_from_this<TIFF>
       {
@@ -75,11 +58,13 @@ namespace ome
       private:
         class Impl;
         /// Private implementation details.
-        Impl *impl;
+        std::shared_ptr<Impl> impl;
 
+      protected:
         TIFF(const std::string& filename,
              const std::string& mode);
 
+      private:
         /// Copy constructor (deleted).
         TIFF (const TIFF&);
 
@@ -88,11 +73,12 @@ namespace ome
         operator= (const TIFF&);
 
       public:
+        ~TIFF();
+
         static std::shared_ptr<TIFF>
         open(const std::string& filename,
              const std::string& mode);
 
-        ~TIFF();
 
         void
         close();
@@ -107,7 +93,33 @@ namespace ome
 
         std::shared_ptr<IFD>
         getDirectoryByOffset(offset_type offset);
+      };
 
+      class IFD
+      {
+      private:
+        class Impl;
+        /// Private implementation details.
+        std::shared_ptr<Impl> impl;
+
+      protected:
+        IFD(std::shared_ptr<TIFF>&     tiff,
+            TIFF::directory_index_type index);
+
+      private:
+        /// Copy constructor (deleted).
+        IFD (const IFD&);
+
+        /// Assignment operator (deleted).
+        IFD&
+        operator= (const IFD&);
+
+      public:
+        ~IFD();
+
+        static std::shared_ptr<IFD>
+        open(std::shared_ptr<TIFF>&     tiff,
+             TIFF::directory_index_type index);
       };
 
     }
