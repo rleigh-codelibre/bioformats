@@ -79,11 +79,23 @@ namespace ome
 
       }
 
+      /**
+       * Internal implementation details of TIFF.
+       */
       class TIFF::Impl
       {
       public:
+        /// The libtiff file handle.
         ::TIFF *tiff;
 
+        /**
+         * The constructor.
+         *
+         * Opens the TIFF using TIFFOpen().
+         *
+         * @param filename the filename to open.
+         * @param mode the file open mode.
+         */
         Impl(const std::string& filename,
              const std::string& mode):
           tiff()
@@ -95,9 +107,25 @@ namespace ome
             sentry.error();
         }
 
+        /**
+         * The destructor.
+         *
+         * The open TIFF will be closed if open.
+         */
         ~Impl()
         {
-          close();
+          try
+            {
+              close();
+            }
+          catch (Exception& e)
+            {
+              /// @todo Log the error elsewhere.
+            }
+          catch (...)
+            {
+              // Catch any exception thrown by closing.
+            }
         }
 
       private:
@@ -109,11 +137,22 @@ namespace ome
         operator= (const Impl&);
 
       public:
+        /**
+         * Close the libtiff file handle.
+         *
+         * If open, the file handle will be closed with TIFFClose.
+         */
         void
         close()
         {
           if (tiff)
-            TIFFClose(tiff);
+            {
+              Sentry sentry;
+
+              TIFFClose(tiff);
+              if (!sentry.getMessage().empty())
+                sentry.error();
+            }
         }
       };
 
@@ -121,7 +160,6 @@ namespace ome
                  const std::string& mode):
         impl(std::make_shared<Impl>(filename, mode))
       {
-        Sentry sentry;
       }
 
       TIFF::~TIFF()

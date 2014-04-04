@@ -40,11 +40,10 @@
 
 #include <ome/bioformats/in/TIFFReader.h>
 
-#include <tiffio.h>
-
 using ome::bioformats::detail::ReaderProperties;
 using ome::bioformats::tiff::TIFF;
 using ome::bioformats::tiff::IFD;
+using ome::bioformats::tiff::tag_type;
 
 namespace ome
 {
@@ -81,7 +80,7 @@ namespace ome
         std::vector<std::string> companion_suffixes(companion_suffixes_array,
                                                     companion_suffixes_array + (sizeof(companion_suffixes_array) / sizeof(companion_suffixes_array[0])));
 
-        ttag_t imagej(50839);
+        tag_type imagej(50839);
       }
 
       TIFFReader::TIFFReader():

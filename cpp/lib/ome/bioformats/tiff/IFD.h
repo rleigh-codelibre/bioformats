@@ -54,6 +54,11 @@ namespace ome
 
       class TIFF;
 
+      /**
+       * Image File Directory (IFD).
+       *
+       * An IFD represents a subfile within a TIFF.
+       */
       class IFD
       {
       private:
@@ -62,8 +67,9 @@ namespace ome
         std::shared_ptr<Impl> impl;
 
       protected:
-        IFD(std::shared_ptr<TIFF>&     tiff,
-            directory_index_type index);
+        /// Constructor (not public).
+        IFD(std::shared_ptr<TIFF>& tiff,
+            directory_index_type   index);
 
       private:
         /// Copy constructor (deleted).
@@ -74,8 +80,16 @@ namespace ome
         operator= (const IFD&);
 
       public:
+        /// Destructor.
         ~IFD();
 
+        /**
+         * Open an IFD.
+         *
+         * @param tiff the source TIFF.
+         * @param index the directory index.
+         * @returns the open IFD.
+         */
         static std::shared_ptr<IFD>
         open(std::shared_ptr<TIFF>&     tiff,
              directory_index_type index);

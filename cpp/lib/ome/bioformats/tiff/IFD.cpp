@@ -78,12 +78,23 @@ namespace ome
 
       }
 
+      /**
+       * Internal implementation details of IFD.
+       */
       class IFD::Impl
       {
       public:
+        /// Weak reference to the parent TIFF.
         std::weak_ptr<TIFF> tiff;
+        /// Index of this IFD.
         directory_index_type index;
 
+        /**
+         * Constructor.
+         *
+         * @param tiff the parent TIFF.
+         * @param index the IFD index.
+         */
         Impl(std::shared_ptr<TIFF>& tiff,
              directory_index_type   index):
           tiff(tiff),
@@ -91,6 +102,7 @@ namespace ome
         {
         }
 
+        /// Destructor.
         ~Impl()
         {
         }

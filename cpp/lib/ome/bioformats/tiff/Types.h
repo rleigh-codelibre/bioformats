@@ -50,8 +50,14 @@ namespace ome
     namespace tiff
     {
 
+      /// IFD index.
       typedef uint16_t directory_index_type;
+
+      /// IFD offset.
       typedef uint32_t offset_type;
+
+      /// Tag number.
+      typedef unsigned int tag_type;
 
     }
   }

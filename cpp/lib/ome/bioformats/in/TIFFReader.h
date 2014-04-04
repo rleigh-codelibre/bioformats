@@ -54,7 +54,8 @@ namespace ome
       class TIFFReader : public ::ome::bioformats::detail::FormatReader
       {
       private:
-        std::shared_ptr<::ome::bioformats::tiff::TIFF> tiff;
+        /// Underlying TIFF file.
+        std::shared_ptr<ome::bioformats::tiff::TIFF> tiff;
 
       public:
         /// Constructor.

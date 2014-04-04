@@ -55,7 +55,13 @@ TEST(TIFFTest, Construct)
   ASSERT_NO_THROW(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
 }
 
-TEST(TIFFTest, ConstructFail)
+TEST(TIFFTest, ConstructFailMode)
+{
+  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "XK"),
+               ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, ConstructFailFile)
 {
   ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"), ome::bioformats::tiff::Exception);
 }
