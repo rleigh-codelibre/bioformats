@@ -35,8 +35,8 @@
  * #L%
  */
 
-#ifndef OME_BIOFORMATS_IN_TIFF_H
-#define OME_BIOFORMATS_IN_TIFF_H
+#ifndef OME_BIOFORMATS_TIFF_TIFF_H
+#define OME_BIOFORMATS_TIFF_TIFF_H
 
 #include <string>
 
@@ -47,7 +47,7 @@ namespace ome
 {
   namespace bioformats
   {
-    namespace in
+    namespace tiff
     {
 
       class IFD;
@@ -126,7 +126,7 @@ namespace ome
   }
 }
 
-#endif // OME_BIOFORMATS_IN_TIFF_H
+#endif // OME_BIOFORMATS_TIFF_TIFF_H
 
 /*
  * Local Variables:

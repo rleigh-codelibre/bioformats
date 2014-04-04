@@ -38,19 +38,116 @@
 #include <algorithm>
 #include <cmath>
 
-#include <ome/bioformats/in/TIFF.h>
+#include <ome/bioformats/tiff/TIFF.h>
+
+#include <ome/compat/thread.h>
+#include <ome/compat/string.h>
 
 #include <tiffio.h>
+
+using boost::mutex;
+using boost::lock_guard;
 
 namespace ome
 {
   namespace bioformats
   {
-    namespace in
+    namespace tiff
     {
 
       namespace
       {
+
+        mutex tiff_lock;
+
+        /**
+         * Sentry for saving and restoring libtiff state.
+         *
+         * This acts primarily to save the state of the global error
+         * and warning handlers, which are configured to work with the
+         * currently active TIFF/IFD.  The original state is restored
+         * when destroyed.
+         */
+        class Sentry
+        {
+        private:
+          boost::lock_guard<boost::mutex> lock;
+          TIFFErrorHandler oldErrorHandler;
+          bool autothrow;
+          std::string message;
+
+          static Sentry *currentSentry;
+
+          static void
+          errorHandler(const char *module,
+                       const char *fmt,
+                       va_list ap)
+          {
+            /*
+             * Note that using the internal string buffer directly is
+             * not standards-compliant until C++11 (not guaranteed
+             * contiguous).  However, there are no known
+             * implementations where this will fail.
+             */
+            std::string dest(" ");
+            int length = vsnprintf(&dest[0], 1, fmt, ap);
+            if (length > 0)
+              {
+                dest.resize(length, ' ');
+                length = vsnprintf(&dest[0], 1, fmt, ap);
+              }
+            if (length < 0)
+              dest = "Unknown error (error formatting error message)";
+
+            std::string message(module);
+            message += ": ";
+            message += dest;
+
+          }
+
+          static TIFFErrorHandler
+          setHandler(Sentry           *sentry,
+                     TIFFErrorHandler  handler)
+          {
+            if (sentry)
+              currentSentry = sentry;
+            TIFFErrorHandler old = TIFFSetErrorHandler(handler);
+            if (!sentry)
+              currentSentry = sentry;
+            return old;
+          }
+
+        public:
+          Sentry(bool autothrow = true):
+            lock(tiff_lock),
+            oldErrorHandler(setHandler(this, &Sentry::errorHandler)),
+            autothrow(autothrow),
+            message()
+          {
+          }
+
+          ~Sentry()
+          {
+            setHandler(0, oldErrorHandler);
+          }
+
+          void
+          setMessage(std::string const& message)
+          {
+            this->message = message;
+            if (autothrow)
+              throw std::runtime_error(message);
+          }
+
+          std::string const&
+          getMessage() const
+          {
+            return this->message;
+          }
+
+        };
+
+        Sentry *Sentry::currentSentry = 0;
 
         class TIFFConcrete : public TIFF
         {
@@ -159,6 +256,7 @@ namespace ome
       TIFF::open(const std::string& filename,
                  const std::string& mode)
       {
+        Sentry sentry;
         return std::make_shared<TIFFConcrete>(filename, mode);
       }
 

@@ -39,7 +39,7 @@
 #define OME_BIOFORMATS_IN_TIFFREADER_H
 
 #include <ome/bioformats/detail/FormatReader.h>
-#include <ome/bioformats/in/TIFF.h>
+#include <ome/bioformats/tiff/TIFF.h>
 
 namespace ome
 {
@@ -54,7 +54,7 @@ namespace ome
       class TIFFReader : public ::ome::bioformats::detail::FormatReader
       {
       private:
-        std::shared_ptr<TIFF> tiff;
+        std::shared_ptr<::ome::bioformats::tiff::TIFF> tiff;
 
       public:
         /// Constructor.

@@ -38,12 +38,13 @@
 #include <algorithm>
 #include <cmath>
 
-#include <ome/bioformats/in/TIFF.h>
 #include <ome/bioformats/in/TIFFReader.h>
 
 #include <tiffio.h>
 
 using ome::bioformats::detail::ReaderProperties;
+using ome::bioformats::tiff::TIFF;
+using ome::bioformats::tiff::IFD;
 
 namespace ome
 {
