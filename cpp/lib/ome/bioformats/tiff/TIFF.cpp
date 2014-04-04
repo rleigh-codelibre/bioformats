@@ -37,6 +37,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdarg>
 
 #include <ome/bioformats/tiff/TIFF.h>
 #include <ome/bioformats/tiff/Exception.h>
@@ -83,32 +84,35 @@ namespace ome
                        const char *fmt,
                        va_list ap)
           {
-            /*
-             * Note that using the internal string buffer directly is
-             * not standards-compliant until C++11 (not guaranteed
-             * contiguous).  However, there are no known
-             * implementations where this will fail.
-             */
+            va_list ap2;
+            char *dest = static_cast<char *>(malloc(sizeof(char)));
 
-                std::cerr << "FMT: " << fmt << std::endl;
-            std::string dest(" ");
-            //            vfprintf(stderr, fmt, ap);
-            int length = vsnprintf(&dest[0], 1, fmt, ap);
-            if (length > 0)
+            va_copy(ap2, ap);
+            int length = vsnprintf(dest, 1, fmt, ap2);
+            int oldlength = 0;
+            while (length > 0 && length != oldlength)
               {
-                std::cerr << "BSIZE: " << length<< std::endl;
-                dest.resize(length+1, ' ');
-                length = vsnprintf(&dest[0], length+1, fmt, ap);
+                va_copy(ap2, ap);
+                dest = static_cast<char *>(realloc(dest, length+1));
+                oldlength = length;
+                length = vsnprintf(dest, length+1, fmt, ap2);
               }
             if (length < 0)
-              dest = "Unknown error (error formatting TIFF error message)";
+              {
+                free(dest);
+                dest = 0;
+              }
 
             std::string message(module ? module : "");
             if (!message.empty())
               message += ": ";
-            message += dest;
+            if (dest)
+              message += dest;
+            else
+              message += "Unknown error (error formatting TIFF error message)";
 
-            std::cerr << "ERR TRIGGER: " << message<< std::endl;
+            free(dest);
+
             if (currentSentry)
               currentSentry->setMessage(message);
           }

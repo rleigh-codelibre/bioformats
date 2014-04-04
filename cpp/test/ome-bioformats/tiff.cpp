@@ -55,14 +55,6 @@ TEST(TIFFTest, Construct)
 
 TEST(TIFFTest, ConstructFail)
 {
-  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"), ome::bioformats::tiff::Exception);
-
-  try
-    {
-      TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r");
-    }
-  catch (const ome::bioformats::tiff::Exception& e)
-    {
-      std::cerr << "\nE: " << e.what() << std::endl;
-    }
+  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"),
+               ome::bioformats::tiff::Exception);
 }
