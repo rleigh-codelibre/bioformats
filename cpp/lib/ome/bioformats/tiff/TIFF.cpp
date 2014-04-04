@@ -74,7 +74,6 @@ namespace ome
         private:
           boost::lock_guard<boost::mutex> lock;
           TIFFErrorHandler oldErrorHandler;
-          bool autothrow;
           std::string message;
 
           static Sentry *currentSentry;
@@ -90,20 +89,28 @@ namespace ome
              * contiguous).  However, there are no known
              * implementations where this will fail.
              */
+
+                std::cerr << "FMT: " << fmt << std::endl;
             std::string dest(" ");
+            //            vfprintf(stderr, fmt, ap);
             int length = vsnprintf(&dest[0], 1, fmt, ap);
             if (length > 0)
               {
-                dest.resize(length, ' ');
-                length = vsnprintf(&dest[0], 1, fmt, ap);
+                std::cerr << "BSIZE: " << length<< std::endl;
+                dest.resize(length+1, ' ');
+                length = vsnprintf(&dest[0], length+1, fmt, ap);
               }
             if (length < 0)
-              dest = "Unknown error (error formatting error message)";
+              dest = "Unknown error (error formatting TIFF error message)";
 
-            std::string message(module);
-            message += ": ";
+            std::string message(module ? module : "");
+            if (!message.empty())
+              message += ": ";
             message += dest;
 
+            std::cerr << "ERR TRIGGER: " << message<< std::endl;
+            if (currentSentry)
+              currentSentry->setMessage(message);
           }
 
           static TIFFErrorHandler
@@ -119,10 +126,9 @@ namespace ome
           }
 
         public:
-          Sentry(bool autothrow = true):
+          Sentry():
             lock(tiff_lock),
             oldErrorHandler(setHandler(this, &Sentry::errorHandler)),
-            autothrow(autothrow),
             message()
           {
           }
@@ -136,8 +142,6 @@ namespace ome
           setMessage(std::string const& message)
           {
             this->message = message;
-            if (autothrow)
-              throw Exception(message);
           }
 
           std::string const&
@@ -213,12 +217,17 @@ namespace ome
       class TIFF::Impl
       {
       public:
-        ::TIFF * const tiff;
+        ::TIFF *tiff;
 
         Impl(const std::string& filename,
              const std::string& mode):
-          tiff(TIFFOpen(filename.c_str(), mode.c_str()))
+          tiff()
         {
+          Sentry sentry;
+
+          tiff = TIFFOpen(filename.c_str(), mode.c_str());
+          if (!tiff)
+            throw Exception(sentry.getMessage());
         }
 
         ~Impl()
@@ -247,6 +256,7 @@ namespace ome
                  const std::string& mode):
         impl(std::make_shared<Impl>(filename, mode))
       {
+        Sentry sentry;
       }
 
       TIFF::~TIFF()
@@ -257,7 +267,6 @@ namespace ome
       TIFF::open(const std::string& filename,
                  const std::string& mode)
       {
-        Sentry sentry;
         return std::make_shared<TIFFConcrete>(filename, mode);
       }
 

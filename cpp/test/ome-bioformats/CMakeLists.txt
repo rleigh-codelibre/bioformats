@@ -76,6 +76,12 @@ if(BUILD_TESTS)
 
   add_test(ome-bioformats/pixelproperties pixelproperties)
 
+  add_executable(tiff tiff.cpp)
+  target_link_libraries(tiff ome-bioformats)
+  target_link_libraries(tiff ome-test)
+
+  add_test(ome-bioformats/tiff tiff)
+
   add_executable(tiffreader tiffreader.cpp)
   target_link_libraries(tiffreader ome-bioformats)
   target_link_libraries(tiffreader ome-test)

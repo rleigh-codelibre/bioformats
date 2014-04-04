@@ -79,6 +79,7 @@ set(OME_BIOFORMATS_IN_HEADERS
     in/TIFFReader.h)
 
 set(OME_BIOFORMATS_TIFF_SOURCES
+    tiff/Exception.cpp
     tiff/TIFF.cpp)
 
 set(OME_BIOFORMATS_TIFF_HEADERS
