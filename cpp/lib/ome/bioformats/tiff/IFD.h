@@ -35,29 +35,26 @@
  * #L%
  */
 
-#ifndef OME_BIOFORMATS_TIFF_TIFF_H
-#define OME_BIOFORMATS_TIFF_TIFF_H
+#ifndef OME_BIOFORMATS_TIFF_IFD_H
+#define OME_BIOFORMATS_TIFF_IFD_H
 
 #include <string>
 
-#include <ome/bioformats/tiff/Types.h>
-
 #include <ome/compat/cstdint.h>
 #include <ome/compat/memory.h>
+
+#include <ome/bioformats/tiff/Types.h>
 
 namespace ome
 {
   namespace bioformats
   {
-    /**
-     * TIFF file format (libtiff wrapper).
-     */
     namespace tiff
     {
 
-      class IFD;
+      class TIFF;
 
-      class TIFF : public std::enable_shared_from_this<TIFF>
+      class IFD
       {
       private:
         class Impl;
@@ -65,41 +62,33 @@ namespace ome
         std::shared_ptr<Impl> impl;
 
       protected:
-        TIFF(const std::string& filename,
-             const std::string& mode);
+        IFD(std::shared_ptr<TIFF>&     tiff,
+            directory_index_type index);
 
       private:
         /// Copy constructor (deleted).
-        TIFF (const TIFF&);
+        IFD (const IFD&);
 
         /// Assignment operator (deleted).
-        TIFF&
-        operator= (const TIFF&);
+        IFD&
+        operator= (const IFD&);
 
       public:
-        ~TIFF();
+        ~IFD();
 
-        static std::shared_ptr<TIFF>
-        open(const std::string& filename,
-             const std::string& mode);
+        static std::shared_ptr<IFD>
+        open(std::shared_ptr<TIFF>&     tiff,
+             directory_index_type index);
 
-        void
-        close();
+        /// @todo get index / offset
 
-        operator bool ();
-
-        std::shared_ptr<IFD>
-        getDirectoryByIndex(directory_index_type index);
-
-        std::shared_ptr<IFD>
-        getDirectoryByOffset(offset_type offset);
       };
 
     }
   }
 }
 
-#endif // OME_BIOFORMATS_TIFF_TIFF_H
+#endif // OME_BIOFORMATS_TIFF_IFD_H
 
 /*
  * Local Variables:

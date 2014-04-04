@@ -47,6 +47,8 @@
 #include <gtest/gtest.h>
 
 using ome::bioformats::tiff::TIFF;
+using ome::bioformats::tiff::IFD;
+using ome::bioformats::tiff::directory_index_type;
 
 TEST(TIFFTest, Construct)
 {
@@ -55,6 +57,23 @@ TEST(TIFFTest, Construct)
 
 TEST(TIFFTest, ConstructFail)
 {
-  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"),
-               ome::bioformats::tiff::Exception);
+  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"), ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, IFDsByIndex)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  for (directory_index_type i = 0; i < 10; ++i)
+    {
+      ASSERT_NO_THROW(t->getDirectoryByIndex(i));
+    }
+
+  ASSERT_THROW(t->getDirectoryByIndex(40), ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, IFDsByOffset)
+{
+  /// @todo Add offset tests.
+  ASSERT_TRUE(false);
 }

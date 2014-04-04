@@ -35,12 +35,10 @@
  * #L%
  */
 
-#ifndef OME_BIOFORMATS_TIFF_TIFF_H
-#define OME_BIOFORMATS_TIFF_TIFF_H
+#ifndef OME_BIOFORMATS_TIFF_TYPES_H
+#define OME_BIOFORMATS_TIFF_TYPES_H
 
 #include <string>
-
-#include <ome/bioformats/tiff/Types.h>
 
 #include <ome/compat/cstdint.h>
 #include <ome/compat/memory.h>
@@ -49,57 +47,17 @@ namespace ome
 {
   namespace bioformats
   {
-    /**
-     * TIFF file format (libtiff wrapper).
-     */
     namespace tiff
     {
 
-      class IFD;
-
-      class TIFF : public std::enable_shared_from_this<TIFF>
-      {
-      private:
-        class Impl;
-        /// Private implementation details.
-        std::shared_ptr<Impl> impl;
-
-      protected:
-        TIFF(const std::string& filename,
-             const std::string& mode);
-
-      private:
-        /// Copy constructor (deleted).
-        TIFF (const TIFF&);
-
-        /// Assignment operator (deleted).
-        TIFF&
-        operator= (const TIFF&);
-
-      public:
-        ~TIFF();
-
-        static std::shared_ptr<TIFF>
-        open(const std::string& filename,
-             const std::string& mode);
-
-        void
-        close();
-
-        operator bool ();
-
-        std::shared_ptr<IFD>
-        getDirectoryByIndex(directory_index_type index);
-
-        std::shared_ptr<IFD>
-        getDirectoryByOffset(offset_type offset);
-      };
+      typedef uint16_t directory_index_type;
+      typedef uint32_t offset_type;
 
     }
   }
 }
 
-#endif // OME_BIOFORMATS_TIFF_TIFF_H
+#endif // OME_BIOFORMATS_TIFF_TYPES_H
 
 /*
  * Local Variables:

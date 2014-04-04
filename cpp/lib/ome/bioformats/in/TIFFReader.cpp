@@ -99,7 +99,7 @@ namespace ome
       {
         ::ome::bioformats::detail::FormatReader::initFile(id);
 
-        tiff = TIFF::open(id, "r");
+        tiff = ome::bioformats::tiff::TIFF::open(id, "r");
 
         // Read metadata from IFDs.
       }

@@ -80,11 +80,16 @@ set(OME_BIOFORMATS_IN_HEADERS
 
 set(OME_BIOFORMATS_TIFF_SOURCES
     tiff/Exception.cpp
+    tiff/IFD.cpp
+    tiff/Sentry.cpp
     tiff/TIFF.cpp)
 
 set(OME_BIOFORMATS_TIFF_HEADERS
     tiff/Exception.h
-    tiff/TIFF.h)
+    tiff/IFD.h
+    tiff/Sentry.h
+    tiff/TIFF.h
+    tiff/Types.h)
 
 set(OME_BIOFORMATS_OUT_SOURCES)
 

@@ -41,7 +41,6 @@
 
 #include <ome/bioformats/tiff/TIFF.h>
 #include <ome/bioformats/tiff/IFD.h>
-#include <ome/bioformats/tiff/Sentry.h>
 #include <ome/bioformats/tiff/Exception.h>
 
 #include <ome/compat/thread.h>
@@ -62,42 +61,38 @@ namespace ome
       namespace
       {
 
-        class TIFFConcrete : public TIFF
+        class IFDConcrete : public IFD
         {
         public:
-          TIFFConcrete(const std::string& filename,
-                       const std::string& mode):
-            TIFF(filename, mode)
+          IFDConcrete(std::shared_ptr<TIFF>& tiff,
+                      directory_index_type   index):
+            IFD(tiff, index)
           {
           }
 
           virtual
-          ~TIFFConcrete()
+          ~IFDConcrete()
           {
           }
         };
 
       }
 
-      class TIFF::Impl
+      class IFD::Impl
       {
       public:
-        ::TIFF *tiff;
+        std::weak_ptr<TIFF> tiff;
+        directory_index_type index;
 
-        Impl(const std::string& filename,
-             const std::string& mode):
-          tiff()
+        Impl(std::shared_ptr<TIFF>& tiff,
+             directory_index_type   index):
+          tiff(tiff),
+          index(index)
         {
-          Sentry sentry;
-
-          tiff = TIFFOpen(filename.c_str(), mode.c_str());
-          if (!tiff)
-            sentry.error();
         }
 
         ~Impl()
         {
-          close();
         }
 
       private:
@@ -109,65 +104,27 @@ namespace ome
         operator= (const Impl&);
 
       public:
-        void
-        close()
-        {
-          if (tiff)
-            TIFFClose(tiff);
-        }
       };
-
-      TIFF::TIFF(const std::string& filename,
-                 const std::string& mode):
-        impl(std::make_shared<Impl>(filename, mode))
-      {
-        Sentry sentry;
-      }
-
-      TIFF::~TIFF()
+      
+      IFD::IFD(std::shared_ptr<TIFF>& tiff,
+               directory_index_type   index):
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        impl(std::shared_ptr<Impl>(new Impl(tiff, index)))
       {
       }
 
-      std::shared_ptr<TIFF>
-      TIFF::open(const std::string& filename,
-                 const std::string& mode)
+      IFD::~IFD()
       {
-        return std::make_shared<TIFFConcrete>(filename, mode);
-      }
-
-      void
-      TIFF::close()
-      {
-        impl->close();
-      }
-
-      TIFF::operator bool ()
-      {
-        return impl && impl->tiff;
       }
 
       std::shared_ptr<IFD>
-      TIFF::getDirectoryByIndex(directory_index_type index)
+      IFD::open(std::shared_ptr<TIFF>& tiff,
+                directory_index_type   index)
       {
-        Sentry sentry;
-
-        if (!TIFFSetDirectory(impl->tiff, index))
-          sentry.error();
-
-        std::shared_ptr<TIFF> t(shared_from_this());
-        return IFD::open(t, TIFFCurrentDirectory(impl->tiff));
-      }
-
-      std::shared_ptr<IFD>
-      TIFF::getDirectoryByOffset(offset_type offset)
-      {
-        Sentry sentry;
-
-        if (!TIFFSetSubDirectory(impl->tiff, offset))
-          sentry.error();
-
-        std::shared_ptr<TIFF> t(shared_from_this());
-        return IFD::open(t, TIFFCurrentDirectory(impl->tiff));
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        return std::shared_ptr<IFD>(new IFDConcrete(tiff, index));
       }
 
     }
