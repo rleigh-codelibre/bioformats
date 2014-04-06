@@ -49,9 +49,6 @@
 
 #include <tiffio.h>
 
-using boost::mutex;
-using boost::lock_guard;
-
 namespace ome
 {
   namespace bioformats
@@ -59,20 +56,71 @@ namespace ome
     namespace tiff
     {
 
+      void
+      IFD::getField(tag_type tag,
+                    ...) const
+      {
+        std::shared_ptr<TIFF> tiff = getTIFF();
+        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+
+        Sentry sentry;
+
+        makeCurrent();
+
+        va_list ap;
+        va_start(ap, tag);
+
+        if (!TIFFVGetField(tiffraw, tag, ap))
+          sentry.error();
+      }
+
+      void
+      IFD::setField(tag_type tag,
+                    ...)
+      {
+        std::shared_ptr<TIFF> tiff = getTIFF();
+        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+
+        Sentry sentry;
+
+        makeCurrent();
+
+        va_list ap;
+        va_start(ap, tag);
+
+        if (!TIFFVSetField(tiffraw, tag, ap))
+          sentry.error();
+      }
+
       namespace
       {
 
-        class IFDConcrete : public IFD
+        class IndexIFDConcrete : public IndexIFD
         {
         public:
-          IFDConcrete(std::shared_ptr<TIFF>& tiff,
-                      directory_index_type   index):
-            IFD(tiff, index)
+          IndexIFDConcrete(std::shared_ptr<TIFF>& tiff,
+                           directory_index_type   index):
+            IndexIFD(tiff, index)
           {
           }
 
           virtual
-          ~IFDConcrete()
+          ~IndexIFDConcrete()
+          {
+          }
+        };
+
+        class OffsetIFDConcrete : public OffsetIFD
+        {
+        public:
+          OffsetIFDConcrete(std::shared_ptr<TIFF>& tiff,
+                            offset_type            offset):
+            OffsetIFD(tiff, offset)
+          {
+          }
+
+          virtual
+          ~OffsetIFDConcrete()
           {
           }
         };
@@ -80,9 +128,9 @@ namespace ome
       }
 
       /**
-       * Internal implementation details of IFD.
+       * Internal implementation details of IndexIFD.
        */
-      class IFD::Impl
+      class IndexIFD::Impl
       {
       public:
         /// Weak reference to the parent TIFF.
@@ -119,29 +167,30 @@ namespace ome
       public:
       };
 
-      IFD::IFD(std::shared_ptr<TIFF>& tiff,
-               directory_index_type   index):
+      IndexIFD::IndexIFD(std::shared_ptr<TIFF>& tiff,
+                         directory_index_type   index):
+        IFD(),
         // Note boost::make_shared makes arguments const, so can't use
         // here.
         impl(std::shared_ptr<Impl>(new Impl(tiff, index)))
       {
       }
 
-      IFD::~IFD()
+      IndexIFD::~IndexIFD()
       {
       }
 
       std::shared_ptr<IFD>
-      IFD::open(std::shared_ptr<TIFF>& tiff,
-                directory_index_type   index)
+      IndexIFD::open(std::shared_ptr<TIFF>& tiff,
+                     directory_index_type   index)
       {
         // Note boost::make_shared makes arguments const, so can't use
         // here.
-        return std::shared_ptr<IFD>(new IFDConcrete(tiff, index));
+        return std::shared_ptr<IFD>(new IndexIFDConcrete(tiff, index));
       }
 
       std::shared_ptr<TIFF>
-      IFD::getTIFF() const
+      IndexIFD::getTIFF() const
       {
         std::shared_ptr<TIFF> tiff = std::shared_ptr<TIFF>(impl->tiff);
         if (!tiff)
@@ -151,7 +200,7 @@ namespace ome
       }
 
       void
-      IFD::makeCurrent() const
+      IndexIFD::makeCurrent() const
       {
         std::shared_ptr<TIFF> tiff = getTIFF();
         ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
@@ -162,39 +211,87 @@ namespace ome
           sentry.error();
       }
 
-      void
-      IFD::getField(tag_type tag,
-                    ...) const
+      /**
+       * Internal implementation details of OffsetIFD.
+       */
+      class OffsetIFD::Impl
       {
-        std::shared_ptr<TIFF> tiff = getTIFF();
-        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+      public:
+        /// Weak reference to the parent TIFF.
+        std::weak_ptr<TIFF> tiff;
+        /// Offset of this IFD.
+        offset_type offset;
 
-        Sentry sentry;
+        /**
+         * Constructor.
+         *
+         * @param tiff the parent TIFF.
+         * @param offset the IFD offset.
+         */
+        Impl(std::shared_ptr<TIFF>& tiff,
+             offset_type            offset):
+          tiff(tiff),
+          offset(offset)
+        {
+        }
 
-        makeCurrent();
+        /// Destructor.
+        ~Impl()
+        {
+        }
 
-        va_list ap;
-        va_start(ap, tag);
+      private:
+        /// Copy constructor (deleted).
+        Impl (const Impl&);
 
-        if (!TIFFVGetField(tiffraw, tag, ap))
-          sentry.error();
+        /// Assignment operator (deleted).
+        Impl&
+        operator= (const Impl&);
+
+      public:
+      };
+
+      OffsetIFD::OffsetIFD(std::shared_ptr<TIFF>& tiff,
+                           offset_type            offset):
+        IFD(),
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        impl(std::shared_ptr<Impl>(new Impl(tiff, offset)))
+      {
+      }
+
+      OffsetIFD::~OffsetIFD()
+      {
+      }
+
+      std::shared_ptr<IFD>
+      OffsetIFD::open(std::shared_ptr<TIFF>& tiff,
+                     offset_type             offset)
+      {
+        // Note boost::make_shared makes arguments const, so can't use
+        // here.
+        return std::shared_ptr<IFD>(new OffsetIFDConcrete(tiff, offset));
+      }
+
+      std::shared_ptr<TIFF>
+      OffsetIFD::getTIFF() const
+      {
+        std::shared_ptr<TIFF> tiff = std::shared_ptr<TIFF>(impl->tiff);
+        if (!tiff)
+          throw Exception("IFD reference to TIFF no longer valid");
+
+        return tiff;
       }
 
       void
-      IFD::setField(tag_type tag,
-                    ...)
+      OffsetIFD::makeCurrent() const
       {
         std::shared_ptr<TIFF> tiff = getTIFF();
         ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
 
         Sentry sentry;
 
-        makeCurrent();
-
-        va_list ap;
-        va_start(ap, tag);
-
-        if (!TIFFVSetField(tiffraw, tag, ap))
+        if (!TIFFSetSubDirectory(tiffraw, impl->offset))
           sentry.error();
       }
 

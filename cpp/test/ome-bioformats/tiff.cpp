@@ -97,3 +97,13 @@ TEST(TIFFTest, Field)
   ifd->getField(270, &text);
   std::cerr << text;
 }
+
+TEST(TIFFTest, Field0)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  char *text;
+  ASSERT_THROW(ifd->getField(0, &text), ome::bioformats::tiff::Exception);
+}

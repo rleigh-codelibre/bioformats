@@ -61,18 +61,13 @@ namespace ome
        */
       class IFD
       {
-      private:
-        class Impl;
-        /// Private implementation details.
-        std::shared_ptr<Impl> impl;
-
       protected:
         /// Constructor (not public).
-        IFD(std::shared_ptr<TIFF>& tiff,
-            directory_index_type   index);
+        IFD()
+        {}
 
-        std::shared_ptr<TIFF>
-        getTIFF() const;
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const = 0;
 
       private:
         /// Copy constructor (deleted).
@@ -84,18 +79,8 @@ namespace ome
 
       public:
         /// Destructor.
-        ~IFD();
-
-        /**
-         * Open an IFD.
-         *
-         * @param tiff the source TIFF.
-         * @param index the directory index.
-         * @returns the open IFD.
-         */
-        static std::shared_ptr<IFD>
-        open(std::shared_ptr<TIFF>&     tiff,
-             directory_index_type index);
+        virtual ~IFD()
+        {}
 
         /// @todo get index / offset
 
@@ -104,8 +89,8 @@ namespace ome
          *
          * Internally this is simply a call to TIFFSetDirectory.
          */
-        void
-        makeCurrent() const;
+        virtual void
+        makeCurrent() const = 0;
 
         /**
          * Get a field by its tag number.
@@ -134,7 +119,98 @@ namespace ome
         void
         setField(tag_type tag,
                  ...);
+      };
 
+      /**
+       * IFD referenced by directory index.
+       */
+      class IndexIFD : public IFD
+      {
+      private:
+        class Impl;
+        /// Private implementation details.
+        std::shared_ptr<Impl> impl;
+
+      protected:
+        /// Constructor (not public).
+        IndexIFD(std::shared_ptr<TIFF>& tiff,
+                 directory_index_type   index);
+
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const;
+
+      private:
+        /// Copy constructor (deleted).
+        IndexIFD (const IndexIFD&);
+
+        /// Assignment operator (deleted).
+        IndexIFD&
+        operator= (const IndexIFD&);
+
+      public:
+        /// Destructor.
+        virtual ~IndexIFD();
+
+        /**
+         * Open an IFD.
+         *
+         * @param tiff the source TIFF.
+         * @param index the directory index.
+         * @returns the open IFD.
+         */
+        static std::shared_ptr<IFD>
+        open(std::shared_ptr<TIFF>& tiff,
+             directory_index_type   index);
+
+        // Documented in superclass.
+        void
+        makeCurrent() const;
+      };
+
+      /**
+       * IFD referenced by directory offset.
+       */
+      class OffsetIFD : public IFD
+      {
+      private:
+        class Impl;
+        /// Private implementation details.
+        std::shared_ptr<Impl> impl;
+
+      protected:
+        /// Constructor (not public).
+        OffsetIFD(std::shared_ptr<TIFF>& tiff,
+                  offset_type            offset);
+
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const;
+
+      private:
+        /// Copy constructor (deleted).
+        OffsetIFD (const OffsetIFD&);
+
+        /// Assignment operator (deleted).
+        OffsetIFD&
+        operator= (const OffsetIFD&);
+
+      public:
+        /// Destructor.
+        virtual ~OffsetIFD();
+
+        /**
+         * Open an IFD.
+         *
+         * @param tiff the source TIFF.
+         * @param offset the directory offset.
+         * @returns the open IFD.
+         */
+        static std::shared_ptr<IFD>
+        open(std::shared_ptr<TIFF>& tiff,
+             offset_type            offset);
+
+        // Documented in superclass.
+        void
+        makeCurrent() const;
       };
 
     }

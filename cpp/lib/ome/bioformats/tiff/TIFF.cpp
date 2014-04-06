@@ -199,7 +199,7 @@ namespace ome
           sentry.error();
 
         std::shared_ptr<TIFF> t(shared_from_this());
-        return IFD::open(t, TIFFCurrentDirectory(impl->tiff));
+        return IndexIFD::open(t, index);
       }
 
       std::shared_ptr<IFD>
@@ -211,7 +211,7 @@ namespace ome
           sentry.error();
 
         std::shared_ptr<TIFF> t(shared_from_this());
-        return IFD::open(t, TIFFCurrentDirectory(impl->tiff));
+        return OffsetIFD::open(t, offset);
       }
 
     }
