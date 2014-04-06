@@ -35,13 +35,9 @@
  * #L%
  */
 
-#ifndef OME_BIOFORMATS_TIFF_FIELD_H
-#define OME_BIOFORMATS_TIFF_FIELD_H
-
-#include <string>
-
 #include <ome/bioformats/tiff/Tags.h>
-#include <ome/bioformats/tiff/Exception.h>
+
+#include <tiffio.h>
 
 namespace ome
 {
@@ -50,88 +46,78 @@ namespace ome
     namespace tiff
     {
 
-      class IFD;
-
-      template<typename Tag>
-      class Field;
-
-      template<typename T, typename F>
-      class FieldBase
+      tag_type
+      getWrappedTag(StringTag1 tag)
       {
-      public:
-        typedef F field_type;
-        typedef T tag_category;
-        typedef typename detail::TagProperties<tag_category>::value_type value_type;
-        typedef std::weak_ptr<IFD> ifd_weakref;
-        typedef FieldBase base_type;
+        tag_type ret = 0;
 
-      protected:
-        FieldBase(std::shared_ptr<IFD> ifd,
-                  tag_category         tag):
-          ifd(ifd),
-          tag(tag)
-        {}
+        switch(tag)
+          {
+          case ARTIST:
+#ifdef TIFFTAG_ARTIST
+            ret = TIFFTAG_ARTIST;
+#endif
+            break;
+          case COPYRIGHT:
+#ifdef TIFFTAG_COPYRIGHT
+            ret = TIFFTAG_COPYRIGHT;
+#endif
+            break;
+          case DATETIME:
+#ifdef TIFFTAG_DATETIME
+            ret = TIFFTAG_DATETIME;
+#endif
+            break;
+          case DOCUMENTNAME:
+#ifdef TIFFTAG_DOCUMENTNAME
+            ret = TIFFTAG_DOCUMENTNAME;
+#endif
+            break;
+          case HOSTCOMPUTER:
+#ifdef TIFFTAG_HOSTCOMPUTER
+            ret = TIFFTAG_HOSTCOMPUTER;
+#endif
+            break;
+          case IMAGEDESCRIPTION:
+#ifdef TIFFTAG_IMAGEDESCRIPTION
+            ret = TIFFTAG_IMAGEDESCRIPTION;
+#endif
+            break;
+          case INKNAMES:
+#ifdef TIFFTAG_INKNAMES
+            ret = TIFFTAG_INKNAMES;
+#endif
+            break;
+          case MAKE:
+#ifdef TIFFTAG_MAKE
+            ret = TIFFTAG_MAKE;
+#endif
+            break;
+          case MODEL:
+#ifdef TIFFTAG_MODEL
+            ret = TIFFTAG_MODEL;
+#endif
+            break;
+          case PAGENAME:
+#ifdef TIFFTAG_PAGENAME
+            ret = TIFFTAG_PAGENAME;
+#endif
+            break;
+          case SOFTWARE:
+#ifdef TIFFTAG_SOFTWARE
+            ret = TIFFTAG_SOFTWARE;
+#endif
+            break;
+          case TARGETPRINTER:
+#ifdef TIFFTAG_TARGETPRINTER
+            ret = TIFFTAG_TARGETPRINTER;
+#endif
+            break;
+          }
 
-      std::shared_ptr<IFD>
-      getIFD() const
-      {
-        std::shared_ptr<IFD> ifd = std::shared_ptr<IFD>(this->ifd);
-        if (!ifd)
-          throw Exception("Field reference to IFD no longer valid");
-
-        return ifd;
+        return ret;
       }
-
-      public:
-        virtual ~FieldBase()
-        {}
-
-        field_type&
-        operator=(const field_type& field)
-        {
-          set(field);
-          return static_cast<field_type>(*this);
-        }
-
-        operator value_type()
-        {
-          value_type v;
-          get(v);
-          return v;
-        }
-
-      protected:
-        ifd_weakref ifd;
-        tag_category tag;
-      };
-
-      template<>
-      class Field<StringTag1> : public FieldBase<StringTag1, Field<StringTag1> >
-      {
-      public:
-        Field(std::shared_ptr<IFD> ifd,
-              tag_category         tag):
-          base_type(ifd, tag)
-        {}
-
-        ~Field()
-        {}
-
-        void
-        get(value_type& value) const;
-
-        void
-        set(const value_type& value);
-      };
 
     }
   }
 }
-
-#endif // OME_BIOFORMATS_TIFF_FIELD_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

@@ -454,6 +454,8 @@ namespace ome
 // LZMAPRESET
 // PERSAMPLE
 
+      tag_type
+      getWrappedTag(StringTag1 tag);
 
     }
   }

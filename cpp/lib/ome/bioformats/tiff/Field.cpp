@@ -35,13 +35,10 @@
  * #L%
  */
 
-#ifndef OME_BIOFORMATS_TIFF_FIELD_H
-#define OME_BIOFORMATS_TIFF_FIELD_H
+#include <ome/bioformats/tiff/Field.h>
+#include <ome/bioformats/tiff/IFD.h>
 
-#include <string>
-
-#include <ome/bioformats/tiff/Tags.h>
-#include <ome/bioformats/tiff/Exception.h>
+#include <tiffio.h>
 
 namespace ome
 {
@@ -50,88 +47,20 @@ namespace ome
     namespace tiff
     {
 
-      class IFD;
-
-      template<typename Tag>
-      class Field;
-
-      template<typename T, typename F>
-      class FieldBase
+      void
+      Field<StringTag1>::get(value_type& value) const
       {
-      public:
-        typedef F field_type;
-        typedef T tag_category;
-        typedef typename detail::TagProperties<tag_category>::value_type value_type;
-        typedef std::weak_ptr<IFD> ifd_weakref;
-        typedef FieldBase base_type;
-
-      protected:
-        FieldBase(std::shared_ptr<IFD> ifd,
-                  tag_category         tag):
-          ifd(ifd),
-          tag(tag)
-        {}
-
-      std::shared_ptr<IFD>
-      getIFD() const
-      {
-        std::shared_ptr<IFD> ifd = std::shared_ptr<IFD>(this->ifd);
-        if (!ifd)
-          throw Exception("Field reference to IFD no longer valid");
-
-        return ifd;
+        char *text;
+        getIFD()->getField(getWrappedTag(tag), &text);
+        value = text;
       }
 
-      public:
-        virtual ~FieldBase()
-        {}
-
-        field_type&
-        operator=(const field_type& field)
-        {
-          set(field);
-          return static_cast<field_type>(*this);
-        }
-
-        operator value_type()
-        {
-          value_type v;
-          get(v);
-          return v;
-        }
-
-      protected:
-        ifd_weakref ifd;
-        tag_category tag;
-      };
-
-      template<>
-      class Field<StringTag1> : public FieldBase<StringTag1, Field<StringTag1> >
+      void
+      Field<StringTag1>::set(const value_type& value)
       {
-      public:
-        Field(std::shared_ptr<IFD> ifd,
-              tag_category         tag):
-          base_type(ifd, tag)
-        {}
-
-        ~Field()
-        {}
-
-        void
-        get(value_type& value) const;
-
-        void
-        set(const value_type& value);
-      };
+        getIFD()->getField(getWrappedTag(tag), value.c_str());
+      }
 
     }
   }
 }
-
-#endif // OME_BIOFORMATS_TIFF_FIELD_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

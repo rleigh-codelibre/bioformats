@@ -44,6 +44,7 @@
 #include <ome/compat/memory.h>
 
 #include <ome/bioformats/tiff/Types.h>
+#include <ome/bioformats/tiff/Field.h>
 
 namespace ome
 {
@@ -59,7 +60,7 @@ namespace ome
        *
        * An IFD represents a subfile within a TIFF.
        */
-      class IFD
+      class IFD : public std::enable_shared_from_this<IFD>
       {
       protected:
         /// Constructor (not public).
@@ -119,6 +120,13 @@ namespace ome
         void
         setField(tag_type tag,
                  ...);
+
+        template<typename TagCategory>
+        Field<TagCategory>
+        getField(TagCategory tag)
+        {
+          return Field<TagCategory>(shared_from_this(), tag);
+        }
       };
 
       /**
