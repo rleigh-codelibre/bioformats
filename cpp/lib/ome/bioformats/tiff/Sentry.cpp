@@ -79,7 +79,7 @@ namespace ome
 
       }
 
-      boost::mutex Sentry::tiff_mutex;
+      boost::recursive_mutex Sentry::tiff_mutex;
 
       // This code deliberately formats a nonliteral format string, so
       // disable -Wformat-nonliteral for the duration.

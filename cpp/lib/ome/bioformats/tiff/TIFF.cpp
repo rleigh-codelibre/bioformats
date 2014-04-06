@@ -166,6 +166,12 @@ namespace ome
       {
       }
 
+      TIFF::wrapped_type *
+      TIFF::getWrapped() const
+      {
+        return reinterpret_cast<wrapped_type *>(impl->tiff);
+      }
+
       std::shared_ptr<TIFF>
       TIFF::open(const std::string& filename,
                  const std::string& mode)

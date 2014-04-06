@@ -41,6 +41,7 @@
 
 #include <ome/bioformats/tiff/TIFF.h>
 #include <ome/bioformats/tiff/IFD.h>
+#include <ome/bioformats/tiff/Sentry.h>
 #include <ome/bioformats/tiff/Exception.h>
 
 #include <ome/compat/thread.h>
@@ -117,7 +118,7 @@ namespace ome
 
       public:
       };
-      
+
       IFD::IFD(std::shared_ptr<TIFF>& tiff,
                directory_index_type   index):
         // Note boost::make_shared makes arguments const, so can't use
@@ -137,6 +138,64 @@ namespace ome
         // Note boost::make_shared makes arguments const, so can't use
         // here.
         return std::shared_ptr<IFD>(new IFDConcrete(tiff, index));
+      }
+
+      std::shared_ptr<TIFF>
+      IFD::getTIFF() const
+      {
+        std::shared_ptr<TIFF> tiff = std::shared_ptr<TIFF>(impl->tiff);
+        if (!tiff)
+          throw Exception("IFD reference to TIFF no longer valid");
+
+        return tiff;
+      }
+
+      void
+      IFD::makeCurrent() const
+      {
+        std::shared_ptr<TIFF> tiff = getTIFF();
+        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+
+        Sentry sentry;
+
+        if (!TIFFSetDirectory(tiffraw, impl->index))
+          sentry.error();
+      }
+
+      void
+      IFD::getField(tag_type tag,
+                    ...) const
+      {
+        std::shared_ptr<TIFF> tiff = getTIFF();
+        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+
+        Sentry sentry;
+
+        makeCurrent();
+
+        va_list ap;
+        va_start(ap, tag);
+
+        if (!TIFFVGetField(tiffraw, tag, ap))
+          sentry.error();
+      }
+
+      void
+      IFD::setField(tag_type tag,
+                    ...)
+      {
+        std::shared_ptr<TIFF> tiff = getTIFF();
+        ::TIFF *tiffraw = reinterpret_cast<::TIFF *>(tiff->getWrapped());
+
+        Sentry sentry;
+
+        makeCurrent();
+
+        va_list ap;
+        va_start(ap, tag);
+
+        if (!TIFFVSetField(tiffraw, tag, ap))
+          sentry.error();
       }
 
     }

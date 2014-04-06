@@ -86,8 +86,10 @@ set(OME_BIOFORMATS_TIFF_SOURCES
 
 set(OME_BIOFORMATS_TIFF_HEADERS
     tiff/Exception.h
+    tiff/Field.h
     tiff/IFD.h
     tiff/Sentry.h
+    tiff/Tags.h
     tiff/TIFF.h
     tiff/Types.h)
 

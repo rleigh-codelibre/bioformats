@@ -40,11 +40,14 @@
 #include <vector>
 
 #include <ome/bioformats/tiff/TIFF.h>
+#include <ome/bioformats/tiff/IFD.h>
 #include <ome/bioformats/tiff/Exception.h>
 
 #include <ome/test/config.h>
 
 #include <gtest/gtest.h>
+
+//#include <tiffio.h>
 
 using ome::bioformats::tiff::TIFF;
 using ome::bioformats::tiff::IFD;
@@ -82,4 +85,15 @@ TEST(TIFFTest, IFDsByOffset)
 {
   /// @todo Add offset tests.
   ASSERT_TRUE(false);
+}
+
+TEST(TIFFTest, Field)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  char *text;
+  ifd->getField(270, &text);
+  std::cerr << text;
 }

@@ -71,6 +71,9 @@ namespace ome
         IFD(std::shared_ptr<TIFF>& tiff,
             directory_index_type   index);
 
+        std::shared_ptr<TIFF>
+        getTIFF() const;
+
       private:
         /// Copy constructor (deleted).
         IFD (const IFD&);
@@ -95,6 +98,42 @@ namespace ome
              directory_index_type index);
 
         /// @todo get index / offset
+
+        /**
+         * Make this IFD the current directory.
+         *
+         * Internally this is simply a call to TIFFSetDirectory.
+         */
+        void
+        makeCurrent() const;
+
+        /**
+         * Get a field by its tag number.
+         *
+         * @note This should not be used except internally.  Use
+         * getField(Field) instead which offers a type-safe interface
+         * on top of this lower-level TIFFGetField wrapper.
+         *
+         * @param tag the tag number.
+         * @param ... pointers to variables to store the value(s) in.
+         */
+        void
+        getField(tag_type tag,
+                 ...) const;
+
+        /**
+         * Set a field by its tag number.
+         *
+         * @note This should not be used except internally.  Use
+         * setField(Field) instead which offers a type-safe interface
+         * on top of this lower-level TIFFSetField wrapper.
+         *
+         * @param tag the tag number.
+         * @param ... variables containing the value(s) to set.
+         */
+        void
+        setField(tag_type tag,
+                 ...);
 
       };
 

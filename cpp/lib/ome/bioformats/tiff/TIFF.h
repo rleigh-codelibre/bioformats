@@ -69,6 +69,7 @@ namespace ome
       {
       private:
         class Impl;
+        class wrapped_type;
         /// Private implementation details.
         std::shared_ptr<Impl> impl;
 
@@ -143,6 +144,29 @@ namespace ome
          */
         std::shared_ptr<IFD>
         getDirectoryByOffset(offset_type offset);
+
+        /**
+         * Get the underlying libtiff @c ::TIFF instance.
+         *
+         * If there is any need to use the libtiff C interface to
+         * access any functionality not exposed through these C++
+         * wrapper classes, this will provide a pointer to the handle.
+         *
+         * @note Due to not including the libtiff C headers the ::TIFF
+         * type isn't available here.  After including the main @c
+         * <tiffio.h> header, cast the return value to the correct
+         * type:
+         *
+         * @verbatim
+         * ::TIFF *tiff = reinterpret_cast<::TIFF *>(myfile.getWrapped());
+         * @endverbatim
+         *
+         * @returns an opaque pointer to the wrapped ::TIFF instance.
+         */
+        wrapped_type *
+        getWrapped() const;
+
+        friend class IFD;
       };
 
     }
