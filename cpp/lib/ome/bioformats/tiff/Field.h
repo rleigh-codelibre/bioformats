@@ -124,6 +124,49 @@ namespace ome
         set(const value_type& value);
       };
 
+      template<typename V>
+      class ValueProxy
+      {
+      public:
+        typedef V value_type;
+
+      private:
+        V& value;
+
+      public:
+        explicit
+        ValueProxy(value_type& value):
+          value(value)
+        {}
+
+        ~ValueProxy()
+        {}
+
+        ValueProxy&
+        operator= (const ValueProxy& value)
+        { this->value = value.value; }
+
+        ValueProxy&
+        operator= (const value_type& value)
+        {
+          this->value = value;
+        }
+
+        template<typename F>
+        ValueProxy&
+        operator= (const Field<F>& field)
+        {
+          field.get(value);
+          return *this;
+        }
+
+        const value_type&
+        get() const
+        {
+          return value;
+        }
+      };
+
     }
   }
 }
