@@ -53,44 +53,47 @@ namespace ome
       class IFD;
 
       template<typename Tag>
-      class Field;
-
-      template<typename T, typename F>
-      class FieldBase
+      class Field
       {
       public:
-        typedef F field_type;
-        typedef T tag_category;
+        typedef Tag tag_category;
         typedef typename detail::TagProperties<tag_category>::value_type value_type;
         typedef std::weak_ptr<IFD> ifd_weakref;
-        typedef FieldBase base_type;
+
+        friend class IFD;
 
       protected:
-        FieldBase(std::shared_ptr<IFD> ifd,
-                  tag_category         tag):
+        Field(std::shared_ptr<IFD> ifd,
+              tag_category         tag):
           ifd(ifd),
           tag(tag)
         {}
 
-      std::shared_ptr<IFD>
-      getIFD() const
-      {
-        std::shared_ptr<IFD> ifd = std::shared_ptr<IFD>(this->ifd);
-        if (!ifd)
-          throw Exception("Field reference to IFD no longer valid");
+        std::shared_ptr<IFD>
+        getIFD() const
+        {
+          std::shared_ptr<IFD> ifd = std::shared_ptr<IFD>(this->ifd);
+          if (!ifd)
+            throw Exception("Field reference to IFD no longer valid");
 
-        return ifd;
-      }
+          return ifd;
+        }
 
       public:
-        virtual ~FieldBase()
+        virtual ~Field()
         {}
 
-        field_type&
-        operator=(const field_type& field)
+        void
+        get(value_type& value) const;
+
+        void
+        set(const value_type& value);
+
+        Field&
+        operator=(const Field& field)
         {
           set(field);
-          return static_cast<field_type>(*this);
+          return *this;
         }
 
         operator value_type()
@@ -106,23 +109,13 @@ namespace ome
       };
 
       template<>
-      class Field<StringTag1> : public FieldBase<StringTag1, Field<StringTag1> >
-      {
-      public:
-        Field(std::shared_ptr<IFD> ifd,
-              tag_category         tag):
-          base_type(ifd, tag)
-        {}
+      void
+      Field<StringTag1>::get(value_type& value) const;
 
-        ~Field()
-        {}
+      template<>
+      void
+      Field<StringTag1>::set(const value_type& value);
 
-        void
-        get(value_type& value) const;
-
-        void
-        set(const value_type& value);
-      };
 
       template<typename V>
       class ValueProxy

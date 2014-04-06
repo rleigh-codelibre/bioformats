@@ -47,6 +47,7 @@ namespace ome
     namespace tiff
     {
 
+      template<>
       void
       Field<StringTag1>::get(value_type& value) const
       {
@@ -55,6 +56,7 @@ namespace ome
         value = text;
       }
 
+      template<>
       void
       Field<StringTag1>::set(const value_type& value)
       {
