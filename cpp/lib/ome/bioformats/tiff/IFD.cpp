@@ -70,6 +70,9 @@ namespace ome
         va_list ap;
         va_start(ap, tag);
 
+        if (!tag)
+          throw Exception("Error getting field: Tag is not valid");
+
         if (!TIFFVGetField(tiffraw, tag, ap))
           sentry.error();
       }
@@ -87,6 +90,9 @@ namespace ome
 
         va_list ap;
         va_start(ap, tag);
+
+        if (!tag)
+          throw Exception("Error getting field: Tag is not valid");
 
         if (!TIFFVSetField(tiffraw, tag, ap))
           sentry.error();

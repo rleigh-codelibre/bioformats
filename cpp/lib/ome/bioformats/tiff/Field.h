@@ -84,10 +84,16 @@ namespace ome
         {}
 
         void
-        get(value_type& value) const;
+        get(value_type& value) const
+        {
+          getIFD()->getField(getWrappedTag(tag), &value);
+        }
 
         void
-        set(const value_type& value);
+        set(const value_type& value)
+        {
+          getIFD()->getField(getWrappedTag(tag), value);
+        }
 
         Field&
         operator=(const Field& field)
@@ -115,7 +121,6 @@ namespace ome
       template<>
       void
       Field<StringTag1>::set(const value_type& value);
-
 
       template<typename V>
       class ValueProxy

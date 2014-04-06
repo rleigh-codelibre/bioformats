@@ -107,7 +107,7 @@ TEST(TIFFTest, Field0)
   ASSERT_THROW(ifd->getField(0, &text), ome::bioformats::tiff::Exception);
 }
 
-TEST(TIFFTest, FieldWrap)
+TEST(TIFFTest, FieldWrapString)
 {
   std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
 
@@ -115,8 +115,18 @@ TEST(TIFFTest, FieldWrap)
 
   std::string text;
   ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).get(text);
+}
 
-  std::cerr << text;
+TEST(TIFFTest, FieldWrapUInt16)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  uint16_t value ;
+  ifd->getField(ome::bioformats::tiff::BITSPERSAMPLE).get(value);
+
+  ASSERT_EQ(8, value);
 }
 
 TEST(TIFFTest, ValueProxy)
@@ -128,8 +138,6 @@ TEST(TIFFTest, ValueProxy)
   std::string text;
   ome::bioformats::tiff::ValueProxy<std::string> d(text);
   d = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION);
-
-  std::cerr << text;
 }
 
 TEST(TIFFTest, Value)

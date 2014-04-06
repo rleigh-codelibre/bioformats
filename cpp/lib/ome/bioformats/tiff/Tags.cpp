@@ -135,97 +135,97 @@ namespace ome
           {
           case BITSPERSAMPLE:
 #ifdef TIFFTAG_BITSPERSAMPLE
-            ret = BITSPERSAMPLE;
+            ret = TIFFTAG_BITSPERSAMPLE;
 #endif
             break;
           case CLEANFAXDATA:
 #ifdef TIFFTAG_CLEANFAXDATA
-            ret = CLEANFAXDATA;
+            ret = TIFFTAG_CLEANFAXDATA;
 #endif
             break;
           case COMPRESSION:
 #ifdef TIFFTAG_COMPRESSION
-            ret = COMPRESSION;
+            ret = TIFFTAG_COMPRESSION;
 #endif
             break;
           case DATATYPE:
 #ifdef TIFFTAG_DATATYPE
-            ret = DATATYPE;
+            ret = TIFFTAG_DATATYPE;
 #endif
             break;
           case FILLORDER:
 #ifdef TIFFTAG_FILLORDER
-            ret = FILLORDER;
+            ret = TIFFTAG_FILLORDER;
 #endif
             break;
           case INKSET:
 #ifdef TIFFTAG_INKSET
-            ret = INKSET;
+            ret = TIFFTAG_INKSET;
 #endif
             break;
           case MATTEING:
 #ifdef TIFFTAG_MATTEING
-            ret = MATTEING;
+            ret = TIFFTAG_MATTEING;
 #endif
             break;
           case MAXSAMPLEVALUE:
 #ifdef TIFFTAG_MAXSAMPLEVALUE
-            ret = MAXSAMPLEVALUE;
+            ret = TIFFTAG_MAXSAMPLEVALUE;
 #endif
             break;
           case MINSAMPLEVALUE:
 #ifdef TIFFTAG_MINSAMPLEVALUE
-            ret = MINSAMPLEVALUE;
+            ret = TIFFTAG_MINSAMPLEVALUE;
 #endif
             break;
           case ORIENTATION:
 #ifdef TIFFTAG_ORIENTATION
-            ret = ORIENTATION;
+            ret = TIFFTAG_ORIENTATION;
 #endif
             break;
           case PHOTOMETRIC:
 #ifdef TIFFTAG_PHOTOMETRIC
-            ret = PHOTOMETRIC;
+            ret = TIFFTAG_PHOTOMETRIC;
 #endif
             break;
           case PLANARCONFIG:
 #ifdef TIFFTAG_PLANARCONFIG
-            ret = PLANARCONFIG;
+            ret = TIFFTAG_PLANARCONFIG;
 #endif
             break;
           case PREDICTOR:
 #ifdef TIFFTAG_PREDICTOR
-            ret = PREDICTOR;
+            ret = TIFFTAG_PREDICTOR;
 #endif
             break;
           case RESOLUTIONUNIT:
 #ifdef TIFFTAG_RESOLUTIONUNIT
-            ret = RESOLUTIONUNIT;
+            ret = TIFFTAG_RESOLUTIONUNIT;
 #endif
             break;
           case SAMPLEFORMAT:
 #ifdef TIFFTAG_SAMPLEFORMAT
-            ret = SAMPLEFORMAT;
+            ret = TIFFTAG_SAMPLEFORMAT;
 #endif
             break;
           case SAMPLESPERPIXEL:
 #ifdef TIFFTAG_SAMPLESPERPIXEL
-            ret = SAMPLESPERPIXEL;
+            ret = TIFFTAG_SAMPLESPERPIXEL;
 #endif
             break;
           case THRESHHOLDING:
 #ifdef TIFFTAG_THRESHHOLDING
-            ret = THRESHHOLDING;
+            ret = TIFFTAG_THRESHHOLDING;
 #endif
             break;
           case YCBCRPOSITIONING:
 #ifdef TIFFTAG_YCBCRPOSITIONING
-            ret = YCBCRPOSITIONING;
+            ret = TIFFTAG_YCBCRPOSITIONING;
 #endif
             break;
           case YCBCRSUBSAMPLING:
 #ifdef TIFFTAG_YCBCRSUBSAMPLING
-            ret = YCBCRSUBSAMPLING;
+            ret = TIFFTAG_YCBCRSUBSAMPLING;
 #endif
             break;
           };
@@ -241,17 +241,17 @@ namespace ome
           {
           case DOTRANGE:
 #ifdef TIFFTAG_DOTRANGE
-            ret = DOTRANGE;
+            ret = TIFFTAG_DOTRANGE;
 #endif
             break;
           case HALFTONEHINTS:
 #ifdef TIFFTAG_HALFTONEHINTS
-            ret = HALFTONEHINTS;
+            ret = TIFFTAG_HALFTONEHINTS;
 #endif
             break;
           case PAGENUMBER:
 #ifdef TIFFTAG_PAGENUMBER
-            ret = PAGENUMBER;
+            ret = TIFFTAG_PAGENUMBER;
 #endif
             break;
           };
@@ -267,7 +267,7 @@ namespace ome
           {
           case EXTRASAMPLES:
 #ifdef TIFFTAG_EXTRASAMPLES
-            ret = EXTRASAMPLES;
+            ret = TIFFTAG_EXTRASAMPLES;
 #endif
             break;
           };
@@ -283,7 +283,7 @@ namespace ome
           {
           case SUBIFD:
 #ifdef TIFFTAG_SUBIFD
-            ret = SUBIFD;
+            ret = TIFFTAG_SUBIFD;
 #endif
             break;
           };
@@ -299,12 +299,12 @@ namespace ome
           {
           case COLORMAP:
 #ifdef TIFFTAG_COLORMAP
-            ret = COLORMAP;
+            ret = TIFFTAG_COLORMAP;
 #endif
             break;
           case TRANSFERFUNCTION:
 #ifdef TIFFTAG_TRANSFERFUNCTION
-            ret = TRANSFERFUNCTION;
+            ret = TIFFTAG_TRANSFERFUNCTION;
 #endif
             break;
           };
@@ -320,62 +320,62 @@ namespace ome
           {
           case BADFAXLINES:
 #ifdef TIFFTAG_BADFAXLINES
-            ret = BADFAXLINES;
+            ret = TIFFTAG_BADFAXLINES;
 #endif
             break;
           case CONSECUTIVEBADFAXLINES:
 #ifdef TIFFTAG_CONSECUTIVEBADFAXLINES
-            ret = CONSECUTIVEBADFAXLINES;
+            ret = TIFFTAG_CONSECUTIVEBADFAXLINES;
 #endif
             break;
           case GROUP3OPTIONS:
 #ifdef TIFFTAG_GROUP3OPTIONS
-            ret = GROUP3OPTIONS;
+            ret = TIFFTAG_GROUP3OPTIONS;
 #endif
             break;
           case GROUP4OPTIONS:
 #ifdef TIFFTAG_GROUP4OPTIONS
-            ret = GROUP4OPTIONS;
+            ret = TIFFTAG_GROUP4OPTIONS;
 #endif
             break;
           case IMAGEDEPTH:
 #ifdef TIFFTAG_IMAGEDEPTH
-            ret = IMAGEDEPTH;
+            ret = TIFFTAG_IMAGEDEPTH;
 #endif
             break;
           case IMAGELENGTH:
 #ifdef TIFFTAG_IMAGELENGTH
-            ret = IMAGELENGTH;
+            ret = TIFFTAG_IMAGELENGTH;
 #endif
             break;
           case IMAGEWIDTH:
 #ifdef TIFFTAG_IMAGEWIDTH
-            ret = IMAGEWIDTH;
+            ret = TIFFTAG_IMAGEWIDTH;
 #endif
             break;
           case ROWSPERSTRIP:
 #ifdef TIFFTAG_ROWSPERSTRIP
-            ret = ROWSPERSTRIP;
+            ret = TIFFTAG_ROWSPERSTRIP;
 #endif
             break;
           case SUBFILETYPE:
 #ifdef TIFFTAG_SUBFILETYPE
-            ret = SUBFILETYPE;
+            ret = TIFFTAG_SUBFILETYPE;
 #endif
             break;
           case TILEDEPTH:
 #ifdef TIFFTAG_TILEDEPTH
-            ret = TILEDEPTH;
+            ret = TIFFTAG_TILEDEPTH;
 #endif
             break;
           case TILELENGTH:
 #ifdef TIFFTAG_TILELENGTH
-            ret = TILELENGTH;
+            ret = TIFFTAG_TILELENGTH;
 #endif
             break;
           case TILEWIDTH:
 #ifdef TIFFTAG_TILEWIDTH
-            ret = TILEWIDTH;
+            ret = TIFFTAG_TILEWIDTH;
 #endif
             break;
           };
@@ -391,22 +391,22 @@ namespace ome
           {
           case STRIPBYTECOUNTS:
 #ifdef TIFFTAG_STRIPBYTECOUNTS
-            ret = STRIPBYTECOUNTS;
+            ret = TIFFTAG_STRIPBYTECOUNTS;
 #endif
             break;
           case STRIPOFFSETS:
 #ifdef TIFFTAG_STRIPOFFSETS
-            ret = STRIPOFFSETS;
+            ret = TIFFTAG_STRIPOFFSETS;
 #endif
             break;
           case TILEBYTECOUNTS:
 #ifdef TIFFTAG_TILEBYTECOUNTS
-            ret = TILEBYTECOUNTS;
+            ret = TIFFTAG_TILEBYTECOUNTS;
 #endif
             break;
           case TILEOFFSETS:
 #ifdef TIFFTAG_TILEOFFSETS
-            ret = TILEOFFSETS;
+            ret = TIFFTAG_TILEOFFSETS;
 #endif
             break;
           };
@@ -422,27 +422,27 @@ namespace ome
           {
           case ICCPROFILE:
 #ifdef TIFFTAG_ICCPROFILE
-            ret = ICCPROFILE;
+            ret = TIFFTAG_ICCPROFILE;
 #endif
             break;
           case JPEGTABLES:
 #ifdef TIFFTAG_JPEGTABLES
-            ret = JPEGTABLES;
+            ret = TIFFTAG_JPEGTABLES;
 #endif
             break;
           case PHOTOSHOP:
 #ifdef TIFFTAG_PHOTOSHOP
-            ret = PHOTOSHOP;
+            ret = TIFFTAG_PHOTOSHOP;
 #endif
             break;
           case RICHTIFFIPTC:
 #ifdef TIFFTAG_RICHTIFFIPTC
-            ret = RICHTIFFIPTC;
+            ret = TIFFTAG_RICHTIFFIPTC;
 #endif
             break;
           case XMLPACKET:
 #ifdef TIFFTAG_XMLPACKET
-            ret = XMLPACKET;
+            ret = TIFFTAG_XMLPACKET;
 #endif
             break;
           };
@@ -458,22 +458,22 @@ namespace ome
           {
           case XRESOLUTION:
 #ifdef TIFFTAG_XRESOLUTION
-            ret = XRESOLUTION;
+            ret = TIFFTAG_XRESOLUTION;
 #endif
             break;
           case YRESOLUTION:
 #ifdef TIFFTAG_YRESOLUTION
-            ret = YRESOLUTION;
+            ret = TIFFTAG_YRESOLUTION;
 #endif
             break;
           case XPOSITION:
 #ifdef TIFFTAG_XPOSITION
-            ret = XPOSITION;
+            ret = TIFFTAG_XPOSITION;
 #endif
             break;
           case YPOSITION:
 #ifdef TIFFTAG_YPOSITION
-            ret = YPOSITION;
+            ret = TIFFTAG_YPOSITION;
 #endif
             break;
           };
@@ -489,7 +489,7 @@ namespace ome
           {
           case WHITEPOINT:
 #ifdef TIFFTAG_WHITEPOINT
-            ret = WHITEPOINT;
+            ret = TIFFTAG_WHITEPOINT;
 #endif
             break;
           };
@@ -505,7 +505,7 @@ namespace ome
           {
           case YCBCRCOEFFICIENTS:
 #ifdef TIFFTAG_YCBCRCOEFFICIENTS
-            ret = YCBCRCOEFFICIENTS;
+            ret = TIFFTAG_YCBCRCOEFFICIENTS;
 #endif
             break;
           };
@@ -521,12 +521,12 @@ namespace ome
           {
           case PRIMARYCHROMATICITIES:
 #ifdef TIFFTAG_PRIMARYCHROMATICITIES
-            ret = PRIMARYCHROMATICITIES;
+            ret = TIFFTAG_PRIMARYCHROMATICITIES;
 #endif
             break;
           case REFERENCEBLACKWHITE:
 #ifdef TIFFTAG_REFERENCEBLACKWHITE
-            ret = REFERENCEBLACKWHITE;
+            ret = TIFFTAG_REFERENCEBLACKWHITE;
 #endif
             break;
           };
