@@ -131,3 +131,15 @@ TEST(TIFFTest, ValueProxy)
 
   std::cerr << text;
 }
+
+TEST(TIFFTest, Value)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  ome::bioformats::tiff::Value<std::string> text;
+  text = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION);
+
+  std::cerr << text.get();
+}

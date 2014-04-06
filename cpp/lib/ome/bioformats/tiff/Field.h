@@ -160,6 +160,61 @@ namespace ome
           return *this;
         }
 
+        value_type&
+        get()
+        {
+          return value;
+        }
+
+        const value_type&
+        get() const
+        {
+          return value;
+        }
+      };
+
+      template<typename V>
+      class Value
+      {
+      public:
+        typedef V value_type;
+
+      private:
+        V value;
+
+      public:
+        explicit
+        Value():
+          value()
+        {}
+
+        ~Value()
+        {}
+
+        Value&
+        operator= (const Value& value)
+        { this->value = value.value; }
+
+        Value&
+        operator= (const value_type& value)
+        {
+          this->value = value;
+        }
+
+        template<typename F>
+        Value&
+        operator= (const Field<F>& field)
+        {
+          field.get(value);
+          return *this;
+        }
+
+        value_type&
+        get()
+        {
+          return value;
+        }
+
         const value_type&
         get() const
         {
