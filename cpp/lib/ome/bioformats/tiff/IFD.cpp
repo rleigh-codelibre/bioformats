@@ -35,6 +35,7 @@
  * #L%
  */
 
+#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <cstdarg>
@@ -72,6 +73,8 @@ namespace ome
 
         if (!tag)
           throw Exception("Error getting field: Tag is not valid");
+
+        std::cerr << "GET TAG " << tag << std::endl;
 
         if (!TIFFVGetField(tiffraw, tag, ap))
           sentry.error();

@@ -151,3 +151,27 @@ TEST(TIFFTest, Value)
 
   std::cerr << text.get();
 }
+
+TEST(TIFFTest, FieldName)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string name;
+  name = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).name();
+
+  ASSERT_EQ(std::string("ImageDescription"), name);
+}
+
+TEST(TIFFTest, FieldCount)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string name;
+  bool count = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).count();
+
+  ASSERT_EQ(false, count);
+}

@@ -38,6 +38,9 @@
 #ifndef OME_BIOFORMATS_TIFF_FIELD_H
 #define OME_BIOFORMATS_TIFF_FIELD_H
 
+#include <ome/compat/memory.h>
+
+#include <cassert>
 #include <string>
 
 #include <ome/bioformats/tiff/Tags.h>
@@ -52,32 +55,103 @@ namespace ome
 
       class IFD;
 
+      class FieldBase
+      {
+      protected:
+        FieldBase(std::shared_ptr<IFD> ifd,
+                  tag_type             tag);
+
+      public:
+        virtual
+        ~FieldBase();
+
+        /**
+         * Get field data type.
+         *
+         * @returns the data type used by this field.
+         * @see TIFFFieldDataType().
+         */
+        Type
+        type() const;
+
+        /**
+         * Get field count requirement.
+         *
+         * @returns @c true if a count parameter is needed, @c false
+         * otherwise.
+         * @see TIFFFieldPassCount().
+         */
+        bool
+        count() const;
+
+        /**
+         * Get field read count requirement.
+         *
+         * @todo: Check TIFF_VARIABLE/TIFF_VARIABLE2/TIFF_SPP and
+         * adjust the return value accordingly.
+         *
+         * @returns the number of values to read.
+         * @see TIFFFieldReadCount().
+         */
+        int
+        readCount() const;
+
+        /**
+         * Get field write count requirement.
+         *
+         * @todo: Check TIFF_VARIABLE/TIFF_VARIABLE2/TIFF_SPP and
+         * adjust the return value accordingly.
+         *
+         * @returns the number of values to write.
+         * @see TIFFFieldWriteCount().
+         */
+        int
+        writeCount() const;
+
+        /**
+         * Get field tag number.
+         *
+         * @returns the tag number.
+         * @see TIFFFieldTag().
+         */
+        tag_type
+        tagNumber() const;
+
+        /**
+         * Get field tag name.
+         *
+         * @returns the registered name of the field, or @c Unknown if
+         * not a registered tag.
+         * @see TIFFFieldName().
+         */
+        std::string
+        name() const;
+
+        std::shared_ptr<IFD>
+        getIFD() const;
+
+      protected:
+        class Impl;
+        /// Private implementation details.
+        std::shared_ptr<Impl> impl;
+      };
+
       template<typename Tag>
-      class Field
+      class Field : public FieldBase
       {
       public:
         typedef Tag tag_category;
         typedef typename detail::TagProperties<tag_category>::value_type value_type;
-        typedef std::weak_ptr<IFD> ifd_weakref;
 
         friend class IFD;
 
       protected:
         Field(std::shared_ptr<IFD> ifd,
               tag_category         tag):
-          ifd(ifd),
+          FieldBase(ifd, getWrappedTag(tag)),
           tag(tag)
         {}
 
-        std::shared_ptr<IFD>
-        getIFD() const
-        {
-          std::shared_ptr<IFD> ifd = std::shared_ptr<IFD>(this->ifd);
-          if (!ifd)
-            throw Exception("Field reference to IFD no longer valid");
-
-          return ifd;
-        }
 
       public:
         virtual ~Field()
@@ -86,12 +160,16 @@ namespace ome
         void
         get(value_type& value) const
         {
+          assert(count() == false);
+          assert(readCount() == 1);
           getIFD()->getField(getWrappedTag(tag), &value);
         }
 
         void
         set(const value_type& value)
         {
+          assert(count() == false);
+          assert(writeCount() == 1);
           getIFD()->getField(getWrappedTag(tag), value);
         }
 
@@ -110,7 +188,6 @@ namespace ome
         }
 
       protected:
-        ifd_weakref ifd;
         tag_category tag;
       };
 

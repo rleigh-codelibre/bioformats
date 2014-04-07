@@ -37,6 +37,8 @@
 
 #include <ome/bioformats/tiff/Field.h>
 #include <ome/bioformats/tiff/IFD.h>
+#include <ome/bioformats/tiff/Sentry.h>
+#include <ome/bioformats/tiff/TIFF.h>
 
 #include <tiffio.h>
 
@@ -47,12 +49,155 @@ namespace ome
     namespace tiff
     {
 
+      /**
+       * Internal implementation details of FieldBase.
+       */
+      class FieldBase::Impl
+      {
+      public:
+        /// Weak reference to the parent IFD.
+        std::weak_ptr<IFD>  ifd;
+        tag_type            tag;
+        const ::TIFFField  *fieldinfo;
+
+        /**
+         * Constructor.
+         *
+         * @param tiff the parent TIFF.
+         * @param index the IFD index.
+         */
+        Impl(std::shared_ptr<IFD>& ifd,
+             tag_type              tag):
+          ifd(ifd),
+          tag(tag),
+          fieldinfo()
+        {
+        }
+
+        /// Destructor.
+        ~Impl()
+        {
+        }
+
+        std::shared_ptr<IFD>
+        getIFD() const
+        {
+          std::shared_ptr<IFD> sifd = std::shared_ptr<IFD>(ifd);
+          if (!sifd)
+            throw Exception("Field reference to IFD no longer valid");
+
+          return sifd;
+        }
+
+        /**
+         * @note Needs wrapping in a sentry by the caller.
+         */
+        ::TIFF *
+        getTIFF()
+        {
+          getIFD()->makeCurrent();
+          ::TIFF *tiff = reinterpret_cast<::TIFF *>(getIFD()->getTIFF()->getWrapped());
+          return tiff;
+        }
+
+        const ::TIFFField *
+        getFieldInfo()
+        {
+          if (!fieldinfo)
+            {
+              Sentry sentry;
+
+              fieldinfo = TIFFFindField(getTIFF(), tag, TIFF_ANY);
+              if (!fieldinfo)
+                sentry.error();
+            }
+
+          return fieldinfo;
+        }
+      };
+
+      FieldBase::FieldBase(std::shared_ptr<IFD> ifd,
+                           tag_type             tag):
+        impl(std::shared_ptr<Impl>(new Impl(ifd, tag)))
+      {
+      }
+
+      FieldBase::~FieldBase()
+      {
+      }
+
+      std::string
+      FieldBase::name() const
+      {
+        Sentry sentry;
+
+        const ::TIFFField * field = impl->getFieldInfo();
+        const char *name = TIFFFieldName(field);
+        return name;
+      }
+
+      Type
+      FieldBase::type() const
+      {
+        Sentry sentry;
+
+        const ::TIFFField * field = impl->getFieldInfo();
+        Type t = static_cast<Type>(TIFFFieldDataType(field));
+        return t;
+      }
+
+      bool
+      FieldBase::count() const
+      {
+        Sentry sentry;
+
+        const ::TIFFField * field = impl->getFieldInfo();
+        int count = TIFFFieldPassCount(field);
+        return (count);
+      }
+
+      int
+      FieldBase::readCount() const
+      {
+        Sentry sentry;
+
+        const ::TIFFField * field = impl->getFieldInfo();
+        int count = TIFFFieldReadCount(field);
+        return count;
+      }
+
+      int
+      FieldBase::writeCount() const
+      {
+        Sentry sentry;
+
+        const ::TIFFField * field = impl->getFieldInfo();
+        int count = TIFFFieldWriteCount(field);
+        return count;
+      }
+
+      tag_type
+      FieldBase::tagNumber() const
+      {
+        return impl->tag;
+      }
+
+      std::shared_ptr<IFD>
+      FieldBase::getIFD() const
+      {
+        return impl->getIFD();
+      }
+
       template<>
       void
       Field<StringTag1>::get(value_type& value) const
       {
+        assert(type == ASCII);
+        assert(count() == false);
+        assert(readCount() == TIFF_VARIABLE);
+
         char *text;
-        getIFD()->getField(getWrappedTag(tag), &text);
+        getIFD()->getField(impl->tag, &text);
         value = text;
       }
 
@@ -60,7 +205,11 @@ namespace ome
       void
       Field<StringTag1>::set(const value_type& value)
       {
-        getIFD()->getField(getWrappedTag(tag), value.c_str());
+        assert(type == ASCII);
+        assert(count() == false);
+        assert(writeCount() == TIFF_VARIABLE);
+
+        getIFD()->getField(impl->tag, value.c_str());
       }
 
     }
