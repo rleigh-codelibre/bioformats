@@ -67,9 +67,6 @@ namespace ome
         IFD()
         {}
 
-        virtual std::shared_ptr<TIFF>
-        getTIFF() const = 0;
-
       private:
         /// Copy constructor (deleted).
         IFD (const IFD&);
@@ -82,6 +79,9 @@ namespace ome
         /// Destructor.
         virtual ~IFD()
         {}
+
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const = 0;
 
         /// @todo get index / offset
 
@@ -144,9 +144,6 @@ namespace ome
         IndexIFD(std::shared_ptr<TIFF>& tiff,
                  directory_index_type   index);
 
-        virtual std::shared_ptr<TIFF>
-        getTIFF() const;
-
       private:
         /// Copy constructor (deleted).
         IndexIFD (const IndexIFD&);
@@ -158,6 +155,9 @@ namespace ome
       public:
         /// Destructor.
         virtual ~IndexIFD();
+
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const;
 
         /**
          * Open an IFD.
@@ -190,9 +190,6 @@ namespace ome
         OffsetIFD(std::shared_ptr<TIFF>& tiff,
                   offset_type            offset);
 
-        virtual std::shared_ptr<TIFF>
-        getTIFF() const;
-
       private:
         /// Copy constructor (deleted).
         OffsetIFD (const OffsetIFD&);
@@ -204,6 +201,9 @@ namespace ome
       public:
         /// Destructor.
         virtual ~OffsetIFD();
+
+        virtual std::shared_ptr<TIFF>
+        getTIFF() const;
 
         /**
          * Open an IFD.
