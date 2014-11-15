@@ -1003,7 +1003,7 @@ public class LIFReader extends FormatReader {
     for (int i=0; i<imageNodes.getLength(); i++) {
       Element image = (Element) imageNodes.item(i);
 
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       setSeries(i);

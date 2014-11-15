@@ -63,12 +63,12 @@ public class SwappableMetadata extends CoreMetadata {
   
   // -- Constructors --
   
-  public SwappableMetadata() {
-    super();
+  public SwappableMetadata(IFormatReader owner) {
+    super(owner);
   }
   
-  public SwappableMetadata(IFormatReader r, int seriesNo) {
-    super(r, seriesNo);
+  public SwappableMetadata(IFormatReader owner, IFormatReader r, int seriesNo) {
+    super(owner, r, seriesNo);
     inputOrder = dimensionOrder;
   }
 
@@ -81,8 +81,8 @@ public class SwappableMetadata extends CoreMetadata {
       return super.clone();
   }
 
-  public CoreMetadata clone(IFormatReader r, int coreIndex) {
-      return new SwappableMetadata(r, coreIndex);
+  public CoreMetadata clone(IFormatReader owner, IFormatReader r, int coreIndex) {
+    return new SwappableMetadata(owner, r, coreIndex);
   }
 
   // -- CoreMetadata methods --

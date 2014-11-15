@@ -236,7 +236,7 @@ public class BrukerReader extends FormatReader {
 
     core.clear();
     for (int series=0; series<pixelsFiles.size(); series++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       setSeries(series);

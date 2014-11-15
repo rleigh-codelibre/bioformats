@@ -249,7 +249,7 @@ public class L2DReader extends FormatReader {
 
     core.clear();
     for (int i=0; i<scans.length; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       setSeries(i);
       metadataFiles[i] = new Vector();

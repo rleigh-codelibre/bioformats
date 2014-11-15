@@ -361,7 +361,7 @@ public class APLReader extends FormatReader {
     ifds = new IFDList[seriesCount];
 
     for (int i=0; i<seriesCount; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       int secondRow = seriesIndexes.get(i);

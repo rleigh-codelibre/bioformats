@@ -87,7 +87,7 @@ public class JPKReader extends BaseTiffReader {
     int seriesCount = ifds.size() > 1 ? 2 : 1;
     core.clear();
     for (int s=0; s<seriesCount; s++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       IFD ifd = ifds.get(s);
       tiffParser.fillInIFD(ifd);

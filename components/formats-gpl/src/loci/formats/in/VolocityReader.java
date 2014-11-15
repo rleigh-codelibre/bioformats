@@ -323,7 +323,7 @@ public class VolocityReader extends FormatReader {
 
     for (int i=0; i<parentIDs.size(); i++) {
       Stack stack = new Stack();
-      stack.core = new CoreMetadata();
+      stack.core = new CoreMetadata(this);
       Integer parent = parentIDs.get(i);
 
       int channelIndex = getChildIndex(parent, "Channels");
@@ -507,7 +507,7 @@ public class VolocityReader extends FormatReader {
           Stack newStack = new Stack();
 
           newStack.timestampFile = stack.timestampFile;
-          newStack.core = new CoreMetadata();
+          newStack.core = new CoreMetadata(this);
           newStack.physicalX = stack.physicalX;
           newStack.physicalY = stack.physicalY;
           newStack.physicalZ = stack.physicalZ;

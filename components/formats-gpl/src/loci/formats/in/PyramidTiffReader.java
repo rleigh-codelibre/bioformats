@@ -125,7 +125,7 @@ public class PyramidTiffReader extends BaseTiffReader {
     // repopulate core metadata
     core.clear();
     for (int s=0; s<seriesCount; s++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       if (s == 0) {

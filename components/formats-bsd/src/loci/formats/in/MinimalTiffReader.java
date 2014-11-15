@@ -570,7 +570,7 @@ public class MinimalTiffReader extends FormatReader {
       }
 
       for (IFD ifd : ifds) {
-        CoreMetadata ms =  new CoreMetadata(this, 0);
+	CoreMetadata ms = new CoreMetadata(this, this, 0);
         core.add(ms);
         ms.sizeX = (int) ifd.getImageWidth();
         ms.sizeY = (int) ifd.getImageLength();

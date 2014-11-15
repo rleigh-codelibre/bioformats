@@ -47,6 +47,7 @@ import loci.common.services.ServiceFactory;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
+import loci.formats.IFormatReader;
 import loci.formats.MetadataTools;
 import loci.formats.gui.BufferedImageWriter;
 import loci.formats.meta.IMetadata;
@@ -114,7 +115,7 @@ public class MakeTestOmeTiff {
     }
 
     final String name = args[0];
-    final CoreMetadata info = new CoreMetadata();
+    final CoreMetadata info = new CoreMetadata((IFormatReader) null);
     info.sizeX = Integer.parseInt(args[1]);
     info.sizeY = Integer.parseInt(args[2]);
     info.sizeZ = Integer.parseInt(args[3]);

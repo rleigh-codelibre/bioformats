@@ -36,6 +36,7 @@ import java.util.Vector;
 import loci.common.DateTools;
 import loci.common.xml.BaseHandler;
 import loci.formats.CoreMetadata;
+import loci.formats.IFormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.meta.MetadataStore;
@@ -85,6 +86,8 @@ public class LeicaHandler extends BaseHandler {
 
   // -- Fields --
 
+  private IFormatReader reader;
+
   private Stack<String> nameStack = new Stack<String>();
 
   private String elementName, collection;
@@ -128,8 +131,9 @@ public class LeicaHandler extends BaseHandler {
 
   // -- Constructor --
 
-  public LeicaHandler(MetadataStore store, MetadataLevel level) {
+  public LeicaHandler(IFormatReader reader, MetadataStore store, MetadataLevel level) {
     super();
+    this.reader = reader;
     globalMetadata = new Hashtable();
     lutNames = new Vector<String>();
     this.store = store;
@@ -368,7 +372,7 @@ public class LeicaHandler extends BaseHandler {
         }
       }
 
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(reader));
       numDatasets++;
       laserCount = 0;
       linkedInstruments = false;

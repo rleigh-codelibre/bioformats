@@ -224,7 +224,7 @@ public abstract class BaseZeissReader extends FormatReader {
 
     if (totalTiles > 1) {
       for (int i=1; i<totalTiles; i++) {
-        core.add(new CoreMetadata(this, 0));
+	core.add(new CoreMetadata(this, this, 0));
       }
     }
 
@@ -288,7 +288,7 @@ public abstract class BaseZeissReader extends FormatReader {
     // rather not using the size of core as the series count until
     // it's filled.
     for (int i=1; i<core.size(); i++) {
-      core.set(i, new CoreMetadata(core.get(0)));
+      core.set(i, new CoreMetadata(this, core.get(0)));
     }
   }
 

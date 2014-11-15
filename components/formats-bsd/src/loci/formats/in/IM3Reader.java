@@ -327,7 +327,7 @@ public class IM3Reader extends FormatReader {
 									final ContainerRecord bDataSet = (ContainerRecord) subSubDS;
 									dataSets.add(bDataSet);
 									List<IM3Record> subRecs = bDataSet.parseChunks(is);
-									final CoreMetadata cm = new CoreMetadata();
+									final CoreMetadata cm = new CoreMetadata(this);
 									cm.dimensionOrder = DimensionOrder.XYCZT.getValue();
 									cm.littleEndian = true;
 									// TODO: Detect pixel type

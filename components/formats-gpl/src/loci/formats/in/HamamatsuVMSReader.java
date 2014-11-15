@@ -266,7 +266,7 @@ public class HamamatsuVMSReader extends FormatReader {
       int[] dims = decoder.preprocess(s);
       s.close();
 
-      CoreMetadata m = new CoreMetadata();
+      CoreMetadata m = new CoreMetadata(this);
       m.sizeX = dims[0];
       m.sizeY = dims[1];
       m.sizeZ = 1;

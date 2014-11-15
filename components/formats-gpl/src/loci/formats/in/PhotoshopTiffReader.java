@@ -192,8 +192,7 @@ public class PhotoshopTiffReader extends BaseTiffReader {
           int bottom = tag.readInt();
           int right = tag.readInt();
 
-          CoreMetadata layerCore = new CoreMetadata();
-          layerCore = new CoreMetadata();
+          CoreMetadata layerCore = new CoreMetadata(this);
           layerCore.sizeX = right - left;
           layerCore.sizeY = bottom - top;
           layerCore.pixelType = getPixelType();

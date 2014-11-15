@@ -35,6 +35,7 @@ import loci.common.xml.BaseHandler;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
+import loci.formats.IFormatReader;
 import loci.formats.MetadataTools;
 import loci.formats.meta.MetadataStore;
 
@@ -69,6 +70,7 @@ public class ND2Handler extends BaseHandler {
   private String prevRuntype = null;
   private String prevElement = null;
 
+  private IFormatReader reader;
   private Hashtable<String, Object> metadata = new Hashtable<String, Object>();
   private List<CoreMetadata> core;
 
@@ -118,12 +120,13 @@ public class ND2Handler extends BaseHandler {
 
   // -- Constructor --
 
-  public ND2Handler(List<CoreMetadata> core, int nImages) {
-    this(core, true, nImages);
+  public ND2Handler(IFormatReader reader, List<CoreMetadata> core, int nImages) {
+    this(reader, core, true, nImages);
   }
 
-  public ND2Handler(List<CoreMetadata> core, boolean populateXY, int nImages) {
+  public ND2Handler(IFormatReader reader, List<CoreMetadata> core, boolean populateXY, int nImages) {
     super();
+    this.reader = reader;
     this.populateXY = populateXY;
     this.nImages = nImages;
     this.core = new ArrayList<CoreMetadata>(core);
@@ -801,7 +804,7 @@ public class ND2Handler extends BaseHandler {
               String order = ms0.dimensionOrder;
               core = new ArrayList<CoreMetadata>();
               for (int i=0; i<numSeries; i++) {
-                CoreMetadata ms = new CoreMetadata();
+                CoreMetadata ms = new CoreMetadata(reader);
                 core.add(ms);
                 ms.sizeX = x;
                 ms.sizeY = y;

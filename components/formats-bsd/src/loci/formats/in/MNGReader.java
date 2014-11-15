@@ -223,7 +223,7 @@ public class MNGReader extends BIFormatReader {
 
     seriesInfo.clear();
     for (int i=0; i<seriesCount; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       String[] tokens = keys[i].split("-");
       ms.sizeX = Integer.parseInt(tokens[0]);

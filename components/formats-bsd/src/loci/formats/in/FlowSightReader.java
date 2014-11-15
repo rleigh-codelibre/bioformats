@@ -172,7 +172,7 @@ public class FlowSightReader extends FormatReader {
       final boolean first=(idxOff == 1);
       final IFD ifd = tiffParser.getIFD(offset);
       tiffParser.fillInIFD(ifd);
-      CoreMetadata ms = first ? core.get(0) : new CoreMetadata();
+      CoreMetadata ms = first ? core.get(0) : new CoreMetadata(this);
       ms.rgb = false;
       ms.interleaved = false;
       ms.littleEndian = ifd0.isLittleEndian();

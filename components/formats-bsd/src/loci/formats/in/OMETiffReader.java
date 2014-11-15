@@ -487,7 +487,7 @@ public class OMETiffReader extends FormatReader {
     int seriesCount = meta.getImageCount();
     core.clear();
     for (int i=0; i<seriesCount; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
     }
     info = new OMETiffPlane[seriesCount][];
 

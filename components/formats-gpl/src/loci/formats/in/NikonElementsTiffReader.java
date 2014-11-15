@@ -112,7 +112,7 @@ public class NikonElementsTiffReader extends BaseTiffReader {
     xml = "<NIKON>" + xml + "</NIKON>";
     xml = XMLTools.sanitizeXML(xml);
 
-    handler = new ND2Handler(core, false, getImageCount());
+    handler = new ND2Handler(this, core, false, getImageCount());
     try {
       XMLTools.parseXML(xml, handler);
 

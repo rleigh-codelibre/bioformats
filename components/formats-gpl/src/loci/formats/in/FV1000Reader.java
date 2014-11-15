@@ -562,8 +562,8 @@ public class FV1000Reader extends FormatReader {
       previewNames = v;
       if (previewNames.size() > 0) {
         core.clear();
-        core.add(new CoreMetadata());
-        core.add(new CoreMetadata());
+        core.add(new CoreMetadata(this));
+        core.add(new CoreMetadata(this));
         IFDList ifds = null;
         CoreMetadata ms1 = core.get(1);
         for (String previewName : previewNames) {

@@ -636,7 +636,7 @@ public class MetamorphReader extends BaseTiffReader {
         // Note that core can't be replaced with newCore until the end of this block.
         ArrayList<CoreMetadata> newCore = new ArrayList<CoreMetadata>();
         for (int i=0; i<stks.length; i++) {
-          CoreMetadata ms = new CoreMetadata();
+          CoreMetadata ms = new CoreMetadata(this);
           newCore.add(ms);
           ms.sizeX = getSizeX();
           ms.sizeY = getSizeY();

@@ -51,6 +51,9 @@ public class CoreMetadata implements Cloneable {
   // to avoid doing so -- one alternate approach would be to have this class
   // use getter methods instead of public fields.
 
+  /** Reader owning this series. */
+  IFormatReader reader;
+
   /** Width (in pixels) of images in this series. */
   public int sizeX;
 
@@ -160,11 +163,17 @@ public class CoreMetadata implements Cloneable {
 
   // -- Constructors --
 
-  public CoreMetadata() {
+  private CoreMetadata() {
+  }
+
+  public CoreMetadata(IFormatReader owner) {
+    reader = owner;
     seriesMetadata = new Hashtable<String, Object>();
   }
 
-  public CoreMetadata(IFormatReader r, int coreIndex) {
+  public CoreMetadata(IFormatReader owner, IFormatReader r, int coreIndex) {
+    reader = owner;
+
     int currentIndex = r.getCoreIndex();
     r.setCoreIndex(coreIndex);
 
@@ -198,7 +207,8 @@ public class CoreMetadata implements Cloneable {
     r.setCoreIndex(currentIndex);
   }
 
-  public CoreMetadata(CoreMetadata c) {
+  public CoreMetadata(IFormatReader owner, CoreMetadata c) {
+    reader = owner;
     sizeX = c.sizeX;
     sizeY = c.sizeY;
     sizeZ = c.sizeZ;
@@ -265,8 +275,8 @@ public class CoreMetadata implements Cloneable {
     return super.clone();
   }
 
-  public CoreMetadata clone(IFormatReader r, int coreIndex) {
-      return new CoreMetadata(r, coreIndex);
+  public CoreMetadata clone(IFormatReader owner, IFormatReader r, int coreIndex) {
+    return new CoreMetadata(owner, r, coreIndex);
   }
 
 }

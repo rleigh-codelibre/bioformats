@@ -934,7 +934,7 @@ public class FileStitcher extends ReaderWrapper {
     int oldSeries = getSeries();
     for (int i=0; i<seriesCount; i++) {
       IFormatReader rr = getReader(i, 0);
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       ms.sizeX = rr.getSizeX();

@@ -218,7 +218,7 @@ public class JPXReader extends FormatReader {
       int seriesCount = resolutionLevels + 1;
 
       for (int i = 1; i < seriesCount; i++) {
-        CoreMetadata ms = new CoreMetadata(this, 0);
+	CoreMetadata ms = new CoreMetadata(this, this, 0);
         core.add(ms);
         ms.sizeX = core.get(i - 1).sizeX / 2;
         ms.sizeY = core.get(i - 1).sizeY / 2;

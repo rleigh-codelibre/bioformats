@@ -233,7 +233,7 @@ public abstract class FormatReader extends FormatHandler
     metadata = new Hashtable<String, Object>();
 
     core = new ArrayList<CoreMetadata>();
-    CoreMetadata core0 = new CoreMetadata();
+    CoreMetadata core0 = new CoreMetadata(this);
     core.add(core0);
     core0.orderCertain = true;
 

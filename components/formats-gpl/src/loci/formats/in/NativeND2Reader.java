@@ -580,7 +580,7 @@ public class NativeND2Reader extends FormatReader {
 
                 try {
                   ND2Handler handler =
-                    new ND2Handler(core, imageOffsets.size());
+	            new ND2Handler(this, core, imageOffsets.size());
                   XMLTools.parseXML(xmlString, handler);
                   xmlString = null;
                   core = handler.getCoreMetadataList();
@@ -745,7 +745,7 @@ public class NativeND2Reader extends FormatReader {
 
       core.get(0).dimensionOrder = "";
       ND2Handler handler =
-        new ND2Handler(core, getSizeX() == 0, imageOffsets.size());
+        new ND2Handler(this, core, getSizeX() == 0, imageOffsets.size());
       XMLTools.parseXML(xmlString, handler);
       xmlString = null;
 
@@ -1241,7 +1241,7 @@ public class NativeND2Reader extends FormatReader {
         String order = getDimensionOrder();
         core = new ArrayList<CoreMetadata>();
         for (int i=0; i<offsets.length; i++) {
-          CoreMetadata ms = new CoreMetadata();
+          CoreMetadata ms = new CoreMetadata(this);
           core.add(ms);
           ms.sizeX = x;
           ms.sizeY = y;
@@ -1472,7 +1472,7 @@ public class NativeND2Reader extends FormatReader {
       }
       String xml = sb.substring(offset, len);
       sb = null;
-      handler = new ND2Handler(core, vs.size());
+      handler = new ND2Handler(this, core, vs.size());
       try {
         xml = XMLTools.sanitizeXML(xml);
         XMLTools.parseXML(xml, handler);
@@ -2070,7 +2070,7 @@ public class NativeND2Reader extends FormatReader {
 
   private void parseText(String textString, int offsetCount, boolean useDimensions) {
     try {
-      ND2Handler handler = new ND2Handler(core, offsetCount);
+      ND2Handler handler = new ND2Handler(this, core, offsetCount);
       String xmlString = XMLTools.sanitizeXML(textString);
       int start = xmlString.indexOf("<");
       int end = xmlString.lastIndexOf(">");
@@ -2097,7 +2097,7 @@ public class NativeND2Reader extends FormatReader {
       LOGGER.debug("Could not parse XML", e);
 
       String[] lines = textString.split("\n");
-      ND2Handler handler = new ND2Handler(core, offsetCount);
+      ND2Handler handler = new ND2Handler(this, core, offsetCount);
       for (String line : lines) {
         int separator = line.indexOf(":");
         if (separator >= 0) {

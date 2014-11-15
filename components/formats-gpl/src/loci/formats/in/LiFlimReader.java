@@ -390,7 +390,7 @@ public class LiFlimReader extends FormatReader {
     ms.moduloT.end = ms.sizeT - 1;
 
     if (backgroundX != null) {
-      ms = new CoreMetadata();
+      ms = new CoreMetadata(this);
       ms.sizeX = Integer.parseInt(backgroundX);
       ms.sizeY = Integer.parseInt(backgroundY);
       ms.sizeZ = Integer.parseInt(backgroundZ) * f;

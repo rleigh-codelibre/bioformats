@@ -255,7 +255,7 @@ public class SVSReader extends BaseTiffReader {
 
     core.clear();
     for (int i=0; i<seriesCount; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
     }
 
     for (int i=0; i<seriesCount; i++) {

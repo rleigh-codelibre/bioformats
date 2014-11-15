@@ -437,7 +437,7 @@ public class PrairieReader extends FormatReader {
       final int sizeY = linesPerFrame == null ? tiff.getSizeY() : linesPerFrame;
       framesAreTime[s] = sequence.isTimeSeries() && sizeT == 1;
 
-      final CoreMetadata cm = new CoreMetadata();
+      final CoreMetadata cm = new CoreMetadata(this);
       cm.sizeX = sizeX;
       cm.sizeY = sizeY;
       cm.sizeZ = framesAreTime[s] ? 1 : indexCount;

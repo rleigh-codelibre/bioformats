@@ -118,7 +118,7 @@ public class ImaconReader extends BaseTiffReader {
 
     core.clear();
     for (int i=0; i<ifds.size(); i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       ms.imageCount = 1;
       IFD ifd = ifds.get(i);

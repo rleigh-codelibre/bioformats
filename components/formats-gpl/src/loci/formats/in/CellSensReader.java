@@ -396,7 +396,7 @@ public class CellSensReader extends FormatReader {
 
     int index = 0;
     for (int s=0; s<seriesCount; s++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       if (s < files.size() - 1) {
@@ -780,7 +780,7 @@ public class CellSensReader extends FormatReader {
     ms.pixelType = convertPixelType(pixelType);
     if (usePyramid) {
       for (int i=1; i<maxResolution; i++) {
-        CoreMetadata newResolution = new CoreMetadata(ms);
+	CoreMetadata newResolution = new CoreMetadata(this, ms);
 
         tileX.add(tileX.get(tileX.size() - 1));
         tileY.add(tileY.get(tileY.size() - 1));

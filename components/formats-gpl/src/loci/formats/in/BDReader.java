@@ -346,7 +346,7 @@ public class BDReader extends FormatReader {
     int coresize = core.size();
     core.clear();
     for (int i=0; i<coresize; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       ms.sizeC = nChannels;
       ms.sizeZ = nSlices;
@@ -601,10 +601,10 @@ public class BDReader extends FormatReader {
 
     core.clear();
     int coresize = wellLabels.size() * fieldRows * fieldCols;
-    CoreMetadata ms0 = new CoreMetadata();
+    CoreMetadata ms0 = new CoreMetadata(this);
     core.add(ms0);
     for (int i=1; i<coresize; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
     }
 
     ms0.sizeC = Integer.parseInt(exp.getTable("General").get("Dyes"));

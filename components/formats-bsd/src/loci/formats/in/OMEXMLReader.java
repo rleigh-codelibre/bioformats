@@ -274,7 +274,7 @@ public class OMEXMLReader extends FormatReader {
     int oldSeries = getSeries();
     core.clear();
     for (int i=0; i<numDatasets; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
 
       setSeries(i);

@@ -658,7 +658,7 @@ public class CellVoyagerReader extends FormatReader
 		{
 			for ( final AreaInfo area : well.areas )
 			{
-				final CoreMetadata ms = new CoreMetadata();
+				final CoreMetadata ms = new CoreMetadata(this);
 				core.add( ms );
 
 				ms.sizeX = area.width;

@@ -374,7 +374,7 @@ public class NDPIReader extends BaseTiffReader {
 
     core.clear();
     for (int s=0; s<seriesCount; s++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       if (s == 0) {
         ms.resolutionCount = pyramidHeight;

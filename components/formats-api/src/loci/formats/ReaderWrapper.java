@@ -445,7 +445,7 @@ public abstract class ReaderWrapper implements IFormatReader {
     List<CoreMetadata> newcore = new ArrayList<CoreMetadata>();
 
     for (int s=0; s<oldcore.size(); s++) {
-      CoreMetadata newMeta = oldcore.get(s).clone(this, s);
+      CoreMetadata newMeta = oldcore.get(s).clone(this, this, s);
       newMeta.resolutionCount = oldcore.get(s).resolutionCount;
       newcore.add(newMeta);
     }

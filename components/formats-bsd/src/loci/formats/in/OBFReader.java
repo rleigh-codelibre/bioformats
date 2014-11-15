@@ -209,7 +209,7 @@ public class OBFReader extends FormatReader
 
 		if (magicString.equals(STACK_MAGIC_STRING) && magicNumber == MAGIC_NUMBER && version <= STACK_VERSION)
 		{
-			CoreMetadata obf = new CoreMetadata() ;
+			CoreMetadata obf = new CoreMetadata(this) ;
 			core.add(obf) ;
 
 			obf.littleEndian = LITTLE_ENDIAN ;

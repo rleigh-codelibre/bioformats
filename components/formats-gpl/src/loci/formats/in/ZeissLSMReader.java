@@ -440,8 +440,8 @@ public class ZeissLSMReader extends FormatReader {
 
     core.clear();
     for (int c=0; c<seriesCount; c++) {
-      CoreMetadata ms = new CoreMetadata();
-        core.add(ms);
+      CoreMetadata ms = new CoreMetadata(this);
+      core.add(ms);
     }
     channelNames = new String[seriesCount][];
     ifdsList = new Vector<IFDList>();

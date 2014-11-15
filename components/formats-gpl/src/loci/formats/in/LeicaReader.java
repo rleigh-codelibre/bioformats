@@ -453,7 +453,7 @@ public class LeicaReader extends FormatReader {
 
     core.clear();
     for (int i=0; i<numSeries; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
     }
 
     files = new Vector[numSeries];
@@ -515,7 +515,7 @@ public class LeicaReader extends FormatReader {
 
     core.clear();
     for (int i=0; i<numSeries; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       while (index < valid.length && !valid[index]) index++;
       if (index >= valid.length) {
         break;

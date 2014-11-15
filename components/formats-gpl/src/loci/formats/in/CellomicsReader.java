@@ -221,7 +221,7 @@ public class CellomicsReader extends FormatReader {
     }
 
     for (int i=0; i<seriesCount; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
     }
 
     in = getDecompressedStream(id);

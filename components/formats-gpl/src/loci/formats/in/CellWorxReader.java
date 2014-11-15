@@ -390,7 +390,7 @@ public class CellWorxReader extends FormatReader {
 
     core.clear();
     for (int i=0; i<seriesCount; i++) {
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       setSeries(i);
       ms.littleEndian = pnl.isLittleEndian();

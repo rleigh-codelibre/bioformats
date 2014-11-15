@@ -263,7 +263,7 @@ public class MicromanagerReader extends FormatReader {
     int seriesCount = positions.size();
     core.clear();
     for (int i=0; i<seriesCount; i++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
       setSeries(i);
       parsePosition(i);
     }
@@ -370,7 +370,7 @@ public class MicromanagerReader extends FormatReader {
     core.clear();
     positions = new Vector<Position>();
     for (int pos=0; pos<jsonData.length; pos++) {
-      core.add(new CoreMetadata());
+      core.add(new CoreMetadata(this));
       Position p = new Position();
       p.metadataFile = "Position #" + (pos + 1);
       positions.add(p);

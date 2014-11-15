@@ -122,7 +122,7 @@ public class NAFReader extends FormatReader {
     core.clear();
     for (int i=0; i<seriesCount; i++) {
       in.seek(fp + i*256);
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       ms.littleEndian = little;
       ms.sizeX = in.readInt();

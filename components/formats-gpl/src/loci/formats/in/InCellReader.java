@@ -404,7 +404,7 @@ public class InCellReader extends FormatReader {
       int c = oneTimepointPerSeries ?
         channelsPerTimepoint.get(i % sizeT).intValue() : sizeC;
 
-      CoreMetadata ms = new CoreMetadata();
+      CoreMetadata ms = new CoreMetadata(this);
       core.add(ms);
       ms.sizeZ = z;
       ms.sizeC = c;

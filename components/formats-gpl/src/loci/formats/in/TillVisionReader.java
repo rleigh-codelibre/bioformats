@@ -280,7 +280,7 @@ public class TillVisionReader extends FormatReader {
           embeddedOffset = new long[nFound];
 
           for (int i=0; i<nFound; i++) {
-            CoreMetadata ms = new CoreMetadata();
+            CoreMetadata ms = new CoreMetadata(this);
             core.add(ms);
 
             s.seek(cimages[i]);
@@ -462,7 +462,7 @@ public class TillVisionReader extends FormatReader {
       CoreMetadata ms;
 
       if (!embeddedImages) {
-        ms = new CoreMetadata();
+        ms = new CoreMetadata(this);
         core.add(ms);
         setSeries(i);
 
