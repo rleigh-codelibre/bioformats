@@ -999,7 +999,6 @@ public abstract class FormatReader extends FormatHandler
   }
 
   /* @see IFormatReader#setPlane(int) */
-  @Override
   public void setPlane(int no) {
     if (plane < 0 || plane >= getImageCount()) {
       throw new IllegalArgumentException("Invalid plane: " + plane);
@@ -1009,7 +1008,6 @@ public abstract class FormatReader extends FormatHandler
   }
 
   /* @see IFormatReader#getPlane() */
-  @Override
   public int getPlane() {
     return plane;
   }

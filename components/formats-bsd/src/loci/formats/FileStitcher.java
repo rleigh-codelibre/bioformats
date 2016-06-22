@@ -497,8 +497,6 @@ public class FileStitcher extends ReaderWrapper {
   {
     FormatTools.assertId(getCurrentFile(), true, 2);
 
-    setPlane(no);
-
     int[] pos = computeIndices(no);
     IFormatReader r = getReader(getCoreIndex(), pos[0]);
     int ino = pos[1];
@@ -523,8 +521,6 @@ public class FileStitcher extends ReaderWrapper {
     throws FormatException, IOException
   {
     FormatTools.assertId(getCurrentFile(), true, 2);
-
-    setPlane(no);
 
     IFormatReader r = getReader(no);
     int ino = getAdjustedIndex(no);
@@ -604,24 +600,6 @@ public class FileStitcher extends ReaderWrapper {
   public int getSeries() {
     FormatTools.assertId(getCurrentFile(), true, 2);
     return reader.getSeries() > 0 ? reader.getSeries() : series;
-  }
-
-  /* @see IFormatReader#setPlane(int) */
-  @Override
-  public void setPlane(int no) {
-    FormatTools.assertId(getCurrentFile(), true, 2);
-    int n = reader.getSeriesCount();
-    if (n > 1 || noStitch) reader.setPlane(no);
-    else {
-      plane = no;
-    }
-  }
-
-  /* @see IFormatReader#getPlane() */
-  @Override
-  public int getPlane() {
-    FormatTools.assertId(getCurrentFile(), true, 2);
-    return reader.getPlane() > 0 ? reader.getPlane() : plane;
   }
 
   /* @see IFormatReader#seriesToCoreIndex(int) */

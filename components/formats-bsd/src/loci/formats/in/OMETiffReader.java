@@ -300,7 +300,6 @@ public class OMETiffReader extends FormatReader {
       return null;
     }
     info[series][no].reader.setId(info[series][no].id);
-    info[series][no].reader.setPlane(info[series][no].ifd);
     return info[series][no].reader.get16BitLookupTable(0);
   }
 

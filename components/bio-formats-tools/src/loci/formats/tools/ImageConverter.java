@@ -624,7 +624,7 @@ public final class ImageConverter {
       reader.openBytes(index, xCoordinate, yCoordinate, width, height);
 
     autoscalePlane(buf, index);
-    applyLUT(writer);
+    applyLUT(writer, index);
     long m = System.currentTimeMillis();
     writer.saveBytes(outputIndex, buf);
     return m;
@@ -718,7 +718,7 @@ public final class ImageConverter {
         }
 
         autoscalePlane(buf, index);
-        applyLUT(writer);
+        applyLUT(writer, index);
         if (m == null) {
           m = System.currentTimeMillis();
         }
@@ -837,20 +837,21 @@ public final class ImageConverter {
    * Use the lookup table from the reader (if present) to set
    * the color model in the given writer
    * @param writer the {@link loci.formats.IFormatWriter} on which to set a color model
+   * @param index the index of the plane in the input file
    * @throws FormatException
    * @throws IOException
    */
-  private void applyLUT(IFormatWriter writer)
+  private void applyLUT(IFormatWriter writer, int index)
     throws FormatException, IOException
   {
-    byte[][] lut = reader.get8BitLookupTable(reader.getPlane());
+    byte[][] lut = reader.get8BitLookupTable(index);
     if (lut != null) {
       IndexColorModel model = new IndexColorModel(8, lut[0].length,
         lut[0], lut[1], lut[2]);
       writer.setColorModel(model);
     }
     else {
-      short[][] lut16 = reader.get16BitLookupTable(reader.getPlane());
+      short[][] lut16 = reader.get16BitLookupTable(index);
       if (lut16 != null) {
         Index16ColorModel model = new Index16ColorModel(16, lut16[0].length,
           lut16, reader.isLittleEndian());

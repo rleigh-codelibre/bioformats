@@ -497,18 +497,6 @@ public class ImageReader implements IFormatReader {
     return getReader().getSeries();
   }
 
-  /* @see IFormatReader#setPlane(int) */
-  @Override
-  public void setPlane(int no) {
-    getReader().setPlane(no);
-  }
-
-  /* @see IFormatReader#getPlane() */
-  @Override
-  public int getPlane() {
-    return getReader().getPlane();
-  }
-
   /* @see IFormatReader#getUsedFiles() */
   @Override
   public String[] getUsedFiles() {

@@ -929,7 +929,7 @@ public final class FormatTools {
    * If 'bufLength' is less than 0, then the buffer length check is not
    * performed.
    */
-  public static void checkPlaneParameters(IFormatReader r, int no,
+  public static void checkPlaneParameters(FormatReader r, int no,
     int bufLength, int x, int y, int w, int h) throws FormatException
   {
     assertId(r.getCurrentFile(), true, 2);

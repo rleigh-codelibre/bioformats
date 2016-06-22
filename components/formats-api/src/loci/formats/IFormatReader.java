@@ -340,14 +340,6 @@ public interface IFormatReader extends IFormatHandler, IMetadataConfigurable {
   /** Gets the currently active series. */
   int getSeries();
 
-  /** Activates the specified plane. This also resets the resolution
-   * to 0.
-   */
-  void setPlane(int no);
-
-  /** Gets the currently active plane. */
-  int getPlane();
-
   /** Specifies whether or not to normalize float data. */
   void setNormalized(boolean normalize);
 

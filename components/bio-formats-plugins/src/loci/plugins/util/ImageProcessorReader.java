@@ -103,7 +103,7 @@ public class ImageProcessorReader extends ReaderWrapper {
     }
 
     // create a color model for this plane (null means default)
-    final LUT cm = createColorModel();
+    final LUT cm = createColorModel(no);
 
     // convert byte array to appropriate primitive array type
     boolean isFloat = FormatTools.isFloatingPoint(type);
@@ -196,7 +196,7 @@ public class ImageProcessorReader extends ReaderWrapper {
     }
 
     // create a color model for this plane (null means default)
-    final LUT cm = createColorModel();
+    final LUT cm = createColorModel(no);
 
     // convert byte array to appropriate primitive array type
     boolean isFloat = FormatTools.isFloatingPoint(type);
@@ -281,13 +281,13 @@ public class ImageProcessorReader extends ReaderWrapper {
 
   // -- Helper methods --
 
-  private LUT createColorModel() throws FormatException, IOException {
+  private LUT createColorModel(int no) throws FormatException, IOException {
     // NB: If a color table is present, we might as well use it,
     // regardless of the value of isIndexed.
     //if (!isIndexed()) return null;
 
-    byte[][] byteTable = get8BitLookupTable(getPlane());
-    if (byteTable == null) byteTable = convertTo8Bit(get16BitLookupTable(getPlane()));
+    byte[][] byteTable = get8BitLookupTable(no);
+    if (byteTable == null) byteTable = convertTo8Bit(get16BitLookupTable(no));
     if (byteTable == null || byteTable.length == 0) return null;
 
     // extract red, green and blue elements
