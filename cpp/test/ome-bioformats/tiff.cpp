@@ -1,0 +1,177 @@
+/*
+ * #%L
+ * OME-BIOFORMATS C++ library for image IO.
+ * %%
+ * Copyright © 2006 - 2013 Open Microscopy Environment:
+ *   - Massachusetts Institute of Technology
+ *   - National Institutes of Health
+ *   - University of Dundee
+ *   - Board of Regents of the University of Wisconsin-Madison
+ *   - Glencoe Software, Inc.
+ * %%
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * The views and conclusions contained in the software and documentation are
+ * those of the authors and should not be interpreted as representing official
+ * policies, either expressed or implied, of any organization.
+ * #L%
+ */
+
+#include <stdexcept>
+#include <vector>
+
+#include <ome/bioformats/tiff/TIFF.h>
+#include <ome/bioformats/tiff/IFD.h>
+#include <ome/bioformats/tiff/Exception.h>
+
+#include <ome/test/config.h>
+
+#include <gtest/gtest.h>
+
+//#include <tiffio.h>
+
+using ome::bioformats::tiff::TIFF;
+using ome::bioformats::tiff::IFD;
+using ome::bioformats::tiff::directory_index_type;
+
+TEST(TIFFTest, Construct)
+{
+  ASSERT_NO_THROW(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+}
+
+TEST(TIFFTest, ConstructFailMode)
+{
+  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "XK"),
+               ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, ConstructFailFile)
+{
+  ASSERT_THROW(TIFF::open(PROJECT_SOURCE_DIR "/CMakeLists.txt", "r"), ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, IFDsByIndex)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  for (directory_index_type i = 0; i < 10; ++i)
+    {
+      ASSERT_NO_THROW(t->getDirectoryByIndex(i));
+    }
+
+  ASSERT_THROW(t->getDirectoryByIndex(40), ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, IFDsByOffset)
+{
+  /// @todo Add offset tests.
+  ASSERT_TRUE(false);
+}
+
+TEST(TIFFTest, Field)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  char *text;
+  ifd->getField(270, &text);
+}
+
+TEST(TIFFTest, Field0)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  char *text;
+  ASSERT_THROW(ifd->getField(0, &text), ome::bioformats::tiff::Exception);
+}
+
+TEST(TIFFTest, FieldWrapString)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string text;
+  ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).get(text);
+}
+
+TEST(TIFFTest, FieldWrapUInt16)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  uint16_t value ;
+  ifd->getField(ome::bioformats::tiff::BITSPERSAMPLE).get(value);
+
+  ASSERT_EQ(8, value);
+}
+
+TEST(TIFFTest, ValueProxy)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string text;
+  ome::bioformats::tiff::ValueProxy<std::string> d(text);
+  d = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION);
+}
+
+TEST(TIFFTest, Value)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  ome::bioformats::tiff::Value<std::string> text;
+  text = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION);
+
+  std::cerr << text.get();
+}
+
+TEST(TIFFTest, FieldName)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string name;
+  name = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).name();
+
+  ASSERT_EQ(std::string("ImageDescription"), name);
+}
+
+TEST(TIFFTest, FieldCount)
+{
+  std::shared_ptr<TIFF> t(TIFF::open(PROJECT_SOURCE_DIR "/components/specification/samples/2010-06/18x24y5z1t2c8b-text.ome.tiff", "r"));
+
+  std::shared_ptr<IFD> ifd(t->getDirectoryByIndex(0));
+
+  std::string name;
+  bool count = ifd->getField(ome::bioformats::tiff::IMAGEDESCRIPTION).count();
+
+  ASSERT_EQ(false, count);
+}
