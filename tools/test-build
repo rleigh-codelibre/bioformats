@@ -30,7 +30,6 @@ antbuild()
       ant clean compile-formats-gpl
       ant clean compile-bio-formats-tools
       ant clean compile-tests
-      ant clean compile-turbojpeg
       ant clean utils
       ant -Dsphinx.warnopts="-W" clean-docs-sphinx docs-sphinx
     )

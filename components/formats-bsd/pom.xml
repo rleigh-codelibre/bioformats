@@ -49,9 +49,9 @@
       <version>${ome-model.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>turbojpeg</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.openmicroscopy</groupId>
+      <artifactId>ome-turbojpeg</artifactId>
+      <version>${ome-turbojpeg.version}</version>
     </dependency>
     <dependency>
       <groupId>org.scijava</groupId>

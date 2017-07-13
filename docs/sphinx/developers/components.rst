@@ -33,7 +33,6 @@ Forks of existing projects
 --------------------------
 
 - :ref:`jai <forks-jai>`
-- :ref:`turbojpeg <forks-turbojpeg>`
 
 All components
 --------------
@@ -100,19 +99,6 @@ needed for reading images from histology/pathology formats in
 :ref:`formats-gpl <formats-gpl>`.  There are no dependencies on other
 components.
 
-.. _forks-turbojpeg:
-
-:source:`forks/turbojpeg (libjpeg-turbo Java bindings) <components/forks/turbojpeg>`:
-
-`Ant: jar-turbojpeg`
-
-This is a fork of `libjpeg-turbo <http://libjpeg-turbo.virtualgl.org/>`_.
-There are not any real code changes, but having this as a separate component
-allows us to package the libjpeg-turbo Java API together with all of the
-required binaries into a single .jar file using `native-lib-loader
-<http://github.com/scijava/native-lib-loader>`_.  There are no dependencies on
-other components.
-
 .. _formats-api:
 
 :source:`formats-api (Bio-Formats API) <components/formats-api>`:
@@ -170,6 +156,7 @@ now available as separate build dependencies:
 - :ref:`OME Common <ome-common>`
 - :ref:`OME MDB Tools (Java) <forks-mdbtools>`
 - :ref:`OME Apache Jakarta POI <forks-poi>`
+- :ref:`OME TurboJPEG <forks-turbojpeg>`
 - :ref:`JXRlib <jxrlib>`
 
 Decoupled OME data model components:
@@ -223,6 +210,17 @@ Java implementation of the `Metakit database specification
 :ref:`ome-common <ome-common>` and is used by
 :ref:`formats-gpl <formats-gpl>`, but is otherwise independent of the main
 Bio-Formats API.
+
+.. _forks-turbojpeg:
+
+`OME TurboJPEG <https://github.com/ome/ome-turbojpeg>`_:
+
+This is a fork of `libjpeg-turbo <http://libjpeg-turbo.virtualgl.org/>`_.
+There are not any real code changes, but having this as a separate component
+allows us to package the libjpeg-turbo Java API together with all of the
+required binaries into a single .jar file using `native-lib-loader
+<http://github.com/scijava/native-lib-loader>`_.  There are no dependencies on
+other components.
 
 .. _ome-xml:
 
