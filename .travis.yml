@@ -16,7 +16,6 @@ addons:
 
 jdk:
   - oraclejdk8
-  - openjdk7
 
 env:
   - BUILD=maven

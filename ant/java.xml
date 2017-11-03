@@ -228,7 +228,7 @@ your FindBugs installation's lib directory. E.g.:
       <fileset dir="${utils.dir}" includes="**/*.class"/>
     </delete>
     <javac debug="true" includeantruntime="false" fork="true"
-      deprecation="true" source="1.7" target="1.7"
+      deprecation="true" source="1.8" target="1.8"
       encoding="UTF-8"
       srcdir="${utils.dir}" includes="**/*.java"
       classpath="${artifact.dir}/${component.jar}">
@@ -249,7 +249,7 @@ your FindBugs installation's lib directory. E.g.:
       <classpath refid="runtime.classpath"/>
       <doctitle><![CDATA[<h1>Bio-Formats</h1>]]></doctitle>
       <bottom><![CDATA[${copyright.begin} ${YEAR} ${copyright.end}]]></bottom>
-      <link href="http://docs.oracle.com/javase/7/docs/api/"/>
+      <link href="http://docs.oracle.com/javase/8/docs/api/"/>
       <link href="http://rsbweb.nih.gov/ij/developer/api/"/>
       <link href="http://www.ssec.wisc.edu/visad-docs/javadoc/"/>
       <!--<link href="http://www.jdocs.com/formlayout/1.0.4/api/"/>-->

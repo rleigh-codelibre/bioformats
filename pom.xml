@@ -41,7 +41,7 @@
     <date>${maven.build.timestamp}</date>
     <year>2017</year>
     <project.rootdir>${basedir}</project.rootdir>
-    <imagej1.version>1.48s</imagej1.version>
+    <imagej1.version>1.51r</imagej1.version>
     <jgoodies-forms.version>1.7.2</jgoodies-forms.version>
     <log4j.version>1.2.17</log4j.version>
     <logback.version>1.1.1</logback.version>
@@ -179,10 +179,10 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
-          <!-- Require the Java 7 platform. -->
+          <!-- Require the Java 8 platform. -->
           <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
+            <source>1.8</source>
+            <target>1.8</target>
           </configuration>
         </plugin>
 
@@ -247,8 +247,8 @@
                  http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5101868 -->
             <use>false</use>
             <links>
-              <!-- Java 7 -->
-              <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              <!-- Java 8 -->
+              <link>http://docs.oracle.com/javase/8/docs/api/</link>
 
               <!-- ImageJ1 -->
               <link>http://jenkins.imagej.net/job/ImageJ1-javadoc/javadoc/</link>
@@ -485,8 +485,8 @@
                http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5101868 -->
           <use>false</use>
           <links>
-            <!-- Java 7 -->
-            <link>http://docs.oracle.com/javase/7/docs/api/</link>
+            <!-- Java 8 -->
+            <link>http://docs.oracle.com/javase/8/docs/api/</link>
 
             <!-- ImageJ1 -->
             <link>http://jenkins.imagej.net/job/ImageJ1-javadoc/javadoc/</link>
