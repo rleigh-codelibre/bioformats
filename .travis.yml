@@ -29,10 +29,6 @@ matrix:
 
 before_install:
   - if [[ $BUILD == 'ant' ]]; then pip install --user flake8 Sphinx; fi
-  - mkdir -p downloads
-  - if [[ ! -f downloads/maven.tar.gz ]]; then curl -o downloads/maven.tar.gz http://mirror.ox.ac.uk/sites/rsync.apache.org/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz; fi
-  - tar xf downloads/maven.tar.gz
-  - export PATH=$(pwd)/apache-maven-3.5.0/bin:$PATH
 
 script:
   - ./tools/test-build $BUILD
