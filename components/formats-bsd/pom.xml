@@ -167,7 +167,7 @@
             <suiteXmlFile>test/spec/testng.xml</suiteXmlFile>
           </suiteXmlFiles>
           <additionalClasspathElements>
-            <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+            <additionalClasspathElement>${basedir}/../../logback/</additionalClasspathElement>
           </additionalClasspathElements>
           <systemPropertyVariables>
             <testng.runWriterSaveBytesTests>2</testng.runWriterSaveBytesTests>

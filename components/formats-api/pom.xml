@@ -113,7 +113,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <additionalClasspathElements>
-              <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+              <additionalClasspathElement>${basedir}/../../logback/</additionalClasspathElement>
           </additionalClasspathElements>
         </configuration>
       </plugin>
