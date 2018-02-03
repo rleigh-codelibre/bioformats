@@ -17,23 +17,6 @@ maven()
     mvn install
 }
 
-# Test Ant build targets
-antbuild()
-{
-    (
-      ant clean compile
-      ant clean compile-autogen
-      ant clean compile-formats-api
-      ant clean compile-bio-formats-plugins
-      ant clean compile-formats-bsd
-      ant clean compile-formats-gpl
-      ant clean compile-bio-formats-tools
-      ant clean compile-turbojpeg
-      ant clean utils
-      ant -Dsphinx.warnopts="-W" clean-docs-sphinx docs-sphinx
-    )
-}
-
 for arg in "$@"
 do
     case $arg in
@@ -41,10 +24,8 @@ do
             clean ;;
         maven)
             maven ;;
-        ant)
-            antbuild ;;
         all)
-            clean && maven && antbuild;;
+            clean && maven ;;
         *)
             echo "Invalid argument: \"$arg\"" >&2
             exit 1

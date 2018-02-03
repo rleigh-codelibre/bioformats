@@ -20,13 +20,12 @@ jdk:
 
 env:
   - BUILD=maven
-  - BUILD=ant
 
 matrix:
   fast_finish: true
 
 before_install:
-  - if [[ $BUILD == 'ant' ]]; then pip install --user flake8 Sphinx; fi
+  - pip install --user flake8 Sphinx
 
 script:
   - ./tools/test-build $BUILD
