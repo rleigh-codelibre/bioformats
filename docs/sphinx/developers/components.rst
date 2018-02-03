@@ -154,17 +154,6 @@ Everything in the component is GPL-licensed (in contrast with
 Most file formats represented in this component do not have a publicly
 available specification.
 
-.. _test-suite:
-
-:source:`test-suite (Bio-Formats testing framework) <components/test-suite>`:
-
-`Ant: jar-tests`
-
-All tests that operate on files from our data repository (i.e. integration
-tests) are included in this component.  These tests are primarily run by the
-:devs_doc:`continuous integration jobs <ci-bio-formats.html>`, and verify that
-there are no regressions in reading images or metadata.
-
 External components
 -------------------
 
@@ -276,3 +265,12 @@ expected to replace the stub .jar files at runtime.
 
 This component contains the Java bindings for jxrlib, an open source
 implementation of the JPEG-XR image format standard.
+
+.. _test-suite:
+
+`Bio-Formats testing framework <https://github.com/ome/bio-formats-test/tree/master>`:
+
+All tests that operate on files from our data repository (i.e. integration
+tests) are included in this component.  These tests are primarily run by the
+:devs_doc:`continuous integration jobs <ci-bio-formats.html>`, and verify that
+there are no regressions in reading images or metadata.

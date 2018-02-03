@@ -25,7 +25,6 @@
     <module>components/bio-formats-plugins</module>
     <module>components/bundles/loci_tools</module>
     <module>components/bio-formats-tools</module>
-    <module>components/test-suite</module>
     <module>docs/sphinx</module>
   </modules>
 
