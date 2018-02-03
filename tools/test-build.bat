@@ -25,5 +25,5 @@ if [%build%] == [ant] (
   ant -Dsphinx.warnopts="-W" clean-docs-sphinx docs-sphinx || exit /b 1
   REM Do not clean here so that we can potentially archive both
   REM docs and java archives.
-  ant tools dist-bftools dist-matlab dist-octave || exit /b 1
+  ant tools dist-bftools || exit /b 1
 )
