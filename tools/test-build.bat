@@ -22,7 +22,4 @@ if [%build%] == [ant] (
   ant clean compile-turbojpeg || exit /b 1
   ant clean utils || exit /b 1
   ant -Dsphinx.warnopts="-W" clean-docs-sphinx docs-sphinx || exit /b 1
-  REM Do not clean here so that we can potentially archive both
-  REM docs and java archives.
-  ant tools dist-bftools || exit /b 1
 )
