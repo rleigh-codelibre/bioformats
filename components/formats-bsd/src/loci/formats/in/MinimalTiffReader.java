@@ -92,6 +92,8 @@ public class MinimalTiffReader extends FormatReader {
 
   protected boolean noSubresolutions = false;
 
+  protected TiffParser.SubIFDSelection subIFDSelection = TiffParser.SubIFDSelection.EMBED;
+
   protected boolean seriesToIFD = false;
 
   /** Number of JPEG 2000 resolution levels. */
@@ -445,7 +447,7 @@ public class MinimalTiffReader extends FormatReader {
 
     LOGGER.info("Reading IFDs");
 
-    IFDList allIFDs = tiffParser.getIFDs();
+    IFDList allIFDs = tiffParser.getIFDs(subIFDSelection);
 
     if (allIFDs == null || allIFDs.size() == 0) {
       throw new FormatException("No IFDs found");
@@ -481,7 +483,11 @@ public class MinimalTiffReader extends FormatReader {
         long[] stripOffsets = ifd.getStripOffsets();
         long[] stripByteCounts = ifd.getStripByteCounts();
 
-        if (stripOffsets.length > 0) {
+        IFDList subifds =ifd.getSubIFDs();
+        if (subifds != null && subifds.size() > 0) {
+
+        }
+        else if (stripOffsets.length > 0) {
           long stripOffset = stripOffsets[0];
           in.seek(stripOffset);
           JPEG2000MetadataParser metadataParser =

@@ -233,7 +233,7 @@ public class EPSReader extends FormatReader {
 
       in = new RandomAccessInputStream(b);
       TiffParser tp = new TiffParser(in);
-      ifds = tp.getIFDs();
+      ifds = tp.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
       IFD firstIFD = ifds.get(0);
       map = tp.getColorMap(firstIFD);

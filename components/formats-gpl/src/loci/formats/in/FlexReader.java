@@ -1309,7 +1309,7 @@ public class FlexReader extends FormatReader {
 
             if (compressed || firstIFD.getStripOffsets()[0] == 16) {
               tp.setDoCaching(false);
-              file.ifds = tp.getIFDs();
+              file.ifds = tp.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
               file.ifds.set(0, firstIFD);
             }
             else {

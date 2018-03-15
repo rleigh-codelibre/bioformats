@@ -118,7 +118,7 @@ public class ImaconReader extends BaseTiffReader {
   protected void initStandardMetadata() throws FormatException, IOException {
     super.initStandardMetadata();
 
-    ifds = tiffParser.getIFDs();
+    ifds = tiffParser.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
     core.clear();
     for (int i=0; i<ifds.size(); i++) {

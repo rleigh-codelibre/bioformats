@@ -638,7 +638,7 @@ public class CellSensReader extends FormatReader {
     }
 
     parser = new TiffParser(id);
-    ifds = parser.getIFDs();
+    ifds = parser.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
     RandomAccessInputStream vsi = new RandomAccessInputStream(id);
     vsi.order(parser.getStream().isLittleEndian());

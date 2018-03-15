@@ -197,6 +197,10 @@ public class IFD extends HashMap<Integer, Object> {
   public static final int SHARPNESS = 41994;
   public static final int SUBJECT_DISTANCE_RANGE = 41996;
 
+  // -- Fields --
+
+  public IFDList subIFDs;
+
   // -- Constructors --
 
   public IFD() {
@@ -205,6 +209,13 @@ public class IFD extends HashMap<Integer, Object> {
 
   public IFD(IFD ifd) {
     super(ifd);
+  }
+
+  // -- Cleanup --
+  @Override
+  public void clear() {
+      super.clear();
+      subIFDs = null;
   }
 
   // -- Tag retrieval methods --
@@ -950,6 +961,16 @@ public class IFD extends HashMap<Integer, Object> {
   /** Adds a directory entry of type LONG to this IFD. */
   public void putIFDValue(int tag, long value) {
     putIFDValue(tag, new Long(value));
+  }
+
+  // -- SubIFDs
+
+  public IFDList getSubIFDs() {
+    return subIFDs;
+  }
+
+  public void setSubIFDs(IFDList subIFDs) {
+    this.subIFDs = subIFDs;
   }
 
   // -- Debugging --

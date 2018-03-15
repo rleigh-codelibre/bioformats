@@ -206,7 +206,7 @@ public class NDPISReader extends FormatReader {
       // populate channel names based on IFD entry
       try (RandomAccessInputStream in = new RandomAccessInputStream(ndpiFiles[c])) {
         TiffParser tp = new TiffParser(in);
-        ifd = tp.getIFDs().get(0);
+        ifd = tp.getIFDs(TiffParser.SubIFDSelection.EXCLUDE).get(0);
       }
 
       String channelName = ifd.getIFDStringValue(TAG_CHANNEL);

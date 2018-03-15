@@ -210,8 +210,24 @@ public class TiffParser {
 
   // -- TiffParser methods - IFD parsing --
 
-  /** Returns all IFDs in the file.  */
+  //* Strategy for selecting IFDs */
+  public enum SubIFDSelection {
+    FLATTEN, // Make a flat list including SubIFDs
+    EMBED, // Embed SubIFDs in top-level IFDs
+    EXCLUDE; // Exclude SubIFDs from top-level list and do not embed
+  }
+
+  /**
+   * Returns all IFDs in the file.
+   * @deprecated Use {@link getIFDs(SubIFDSelection)} instead.
+   */
+  @Deprecated
   public IFDList getIFDs() throws IOException {
+    return getIFDs(SubIFDSelection.FLATTEN);
+  }
+
+  /** Returns all IFDs in the file.  */
+  public IFDList getIFDs(SubIFDSelection strategy) throws IOException {
     if (ifdList != null) return ifdList;
 
     long[] offsets = getIFDOffsets();
@@ -230,11 +246,23 @@ public class TiffParser {
       }
       catch (FormatException e) { }
       if (subOffsets != null) {
-        for (long subOffset : subOffsets) {
-          IFD sub = getIFD(subOffset);
-          if (sub != null) {
-            ifds.add(sub);
+        if (strategy == SubIFDSelection.FLATTEN) {
+          for (long subOffset : subOffsets) {
+            IFD sub = getIFD(subOffset);
+            if (sub != null) {
+              ifds.add(sub);
+            }
           }
+        }
+        else if(strategy == SubIFDSelection.EMBED) {
+          IFDList subIFDs = new IFDList();
+          for (long subOffset : subOffsets) {
+            IFD sub = getIFD(subOffset);
+            if (sub != null) {
+              subIFDs.add(sub);
+            }
+          }
+          ifd.setSubIFDs(subIFDs);
         }
       }
     }
@@ -245,7 +273,7 @@ public class TiffParser {
 
   /** Returns thumbnail IFDs. */
   public IFDList getThumbnailIFDs() throws IOException {
-    IFDList ifds = getIFDs();
+    IFDList ifds = getIFDs(SubIFDSelection.EXCLUDE);
     IFDList thumbnails = new IFDList();
     for (IFD ifd : ifds) {
       Number subfile = (Number) ifd.getIFDValue(IFD.NEW_SUBFILE_TYPE);
@@ -259,7 +287,7 @@ public class TiffParser {
 
   /** Returns non-thumbnail IFDs. */
   public IFDList getNonThumbnailIFDs() throws IOException {
-    IFDList ifds = getIFDs();
+    IFDList ifds = getIFDs(SubIFDSelection.EXCLUDE);
     IFDList nonThumbs = new IFDList();
     for (IFD ifd : ifds) {
       Number subfile = (Number) ifd.getIFDValue(IFD.NEW_SUBFILE_TYPE);
@@ -273,7 +301,7 @@ public class TiffParser {
 
   /** Returns EXIF IFDs. */
   public IFDList getExifIFDs() throws FormatException, IOException {
-    IFDList ifds = getIFDs();
+    IFDList ifds = getIFDs(SubIFDSelection.EXCLUDE);
     IFDList exif = new IFDList();
     for (IFD ifd : ifds) {
       long offset = ifd.getIFDLongValue(IFD.EXIF, 0);

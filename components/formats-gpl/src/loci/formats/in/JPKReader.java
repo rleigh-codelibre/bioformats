@@ -33,6 +33,7 @@ import loci.formats.FormatTools;
 import loci.formats.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.PhotoInterp;
+import loci.formats.tiff.TiffParser;
 
 /**
  * JPKReader is the file format reader for JPK Instruments files.
@@ -84,7 +85,7 @@ public class JPKReader extends BaseTiffReader {
   protected void initStandardMetadata() throws FormatException, IOException {
     super.initStandardMetadata();
 
-    ifds = tiffParser.getIFDs();
+    ifds = tiffParser.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
     // repopulate core metadata
 

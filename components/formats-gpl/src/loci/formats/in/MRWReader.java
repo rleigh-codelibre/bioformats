@@ -211,7 +211,7 @@ public class MRWReader extends FormatReader {
         in.read(b);
         RandomAccessInputStream ras = new RandomAccessInputStream(b);
         TiffParser tp = new TiffParser(ras);
-        IFDList ifds = tp.getIFDs();
+        IFDList ifds = tp.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
         for (IFD ifd : ifds) {
           Integer[] keys = (Integer[]) ifd.keySet().toArray(new Integer[0]);

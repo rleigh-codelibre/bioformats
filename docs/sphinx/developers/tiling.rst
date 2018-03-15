@@ -15,7 +15,7 @@ For TIFF-based readers, if the image has been written using tiles, then the tile
 
 ::
 
-    IFD tileIFd = reader.getIFDs().get(0);
+    IFD tileIFd = reader.getIFDs(TiffParser.SubIFDSelection.EXCLUDE).get(0);
     int tileHeight = tileIFd.getIFDIntValue(IFD.TILE_LENGTH);
     int tileWidth = tileIFd.getIFDIntValue(IFD.TILE_WIDTH);
 

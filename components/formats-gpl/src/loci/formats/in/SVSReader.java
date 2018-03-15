@@ -250,7 +250,7 @@ public class SVSReader extends BaseTiffReader {
   protected void initStandardMetadata() throws FormatException, IOException {
     super.initStandardMetadata();
 
-    ifds = tiffParser.getIFDs();
+    ifds = tiffParser.getIFDs(TiffParser.SubIFDSelection.EXCLUDE);
 
     int seriesCount = ifds.size();
 
