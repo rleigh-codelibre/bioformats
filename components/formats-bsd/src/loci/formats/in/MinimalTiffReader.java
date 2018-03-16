@@ -77,10 +77,10 @@ public class MinimalTiffReader extends FormatReader {
   protected IFDList thumbnailIFDs;
 
   /**
-   * List of JPEG 2000 sub-resolution IFDs for each IFD in the current TIFF
-   * with the same order as <code>ifds</code>.
+   * List of sub-resolution IFDs for each IFD in the current TIFF with the
+   * same order as <code>ifds</code>.
    */
-  protected List<IFDList> j2kSubResolutionIFDs;
+  protected List<IFDList> subResolutionIFDs;
 
   protected transient TiffParser tiffParser;
 
@@ -293,7 +293,7 @@ public class MinimalTiffReader extends FormatReader {
         || firstIFD.getCompression() == TiffCompression.JPEG_2000_LOSSY)
         && j2kResolutionLevels != null) {
       if (getCoreIndex() > 0) {
-        ifd = j2kSubResolutionIFDs.get(no).get(getCoreIndex() - 1);
+        ifd = subResolutionIFDs.get(no).get(getCoreIndex() - 1);
       }
       setResolutionLevel(ifd);
     }
@@ -380,7 +380,7 @@ public class MinimalTiffReader extends FormatReader {
       }
       ifds = null;
       thumbnailIFDs = null;
-      j2kSubResolutionIFDs = null;
+      subResolutionIFDs = null;
       lastPlane = 0;
       tiffParser = null;
       j2kResolutionLevels = null;
@@ -455,7 +455,7 @@ public class MinimalTiffReader extends FormatReader {
 
     ifds = new IFDList();
     thumbnailIFDs = new IFDList();
-    j2kSubResolutionIFDs = new ArrayList<IFDList>();
+    subResolutionIFDs = new ArrayList<IFDList>();
     for (IFD ifd : allIFDs) {
       Number subfile = (Number) ifd.getIFDValue(IFD.NEW_SUBFILE_TYPE);
       int subfileType = subfile == null ? 0 : subfile.intValue();
@@ -501,7 +501,7 @@ public class MinimalTiffReader extends FormatReader {
                   ifd.getTileWidth(), ifd.getTileLength()));
             }
             IFDList theseSubResolutionIFDs = new IFDList();
-            j2kSubResolutionIFDs.add(theseSubResolutionIFDs);
+            subResolutionIFDs.add(theseSubResolutionIFDs);
             for (int level = 1; level <= j2kResolutionLevels; level++) {
               IFD newIFD = new IFD(ifd);
               long imageWidth = ifd.getImageWidth();
@@ -582,14 +582,14 @@ public class MinimalTiffReader extends FormatReader {
     ms0.bitsPerPixel = firstIFD.getBitsPerSample()[0];
 
     // New core metadata now that we know how many sub-resolutions we have.
-    if (j2kResolutionLevels != null && j2kSubResolutionIFDs.size() > 0) {
-      IFDList ifds = j2kSubResolutionIFDs.get(0);
+    if (j2kResolutionLevels != null && subResolutionIFDs.size() > 0) {
+      IFDList ifds = subResolutionIFDs.get(0);
       int seriesCount = ifds.size() + 1;
       if (!hasFlattenedResolutions()) {
         ms0.resolutionCount = seriesCount;
       }
 
-      ms0.sizeT = j2kSubResolutionIFDs.size();
+      ms0.sizeT = subResolutionIFDs.size();
       ms0.imageCount = ms0.sizeT;
 
       if (ms0.sizeT <= 0) {
