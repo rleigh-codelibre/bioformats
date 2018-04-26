@@ -80,7 +80,13 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
    * List of sub-resolution IFDs for each IFD in the current TIFF with the
    * same order as <code>ifds</code>.
    */
-  protected List<IFDList> subResolutionIFDs;
+  protected MetadataList<IFD> standardSubResolutionIFDs;
+
+  /**
+   * List of sub-resolution IFDs for each IFD in the current TIFF with the
+   * same order as <code>ifds</code>.
+   */
+  protected MetadataList<IFD> j2kSubResolutionIFDs;
 
   protected transient TiffParser tiffParser;
 
@@ -95,7 +101,7 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
   protected boolean seriesToIFD = false;
 
   /** Number of JPEG 2000 resolution levels. */
-  private Integer resolutionLevels;
+  private Integer j2kResolutionLevels;
 
   /** Codec options to use when decoding JPEG 2000 data. */
   private JPEG2000CodecOptions j2kCodecOptions;
@@ -287,11 +293,14 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
     } else {
       ifd = ifds.get(no);
     }
-    if ((firstIFD.getCompression() == TiffCompression.JPEG_2000
+    if(standardSubResolutionIFDs != null) {
+      ifd = standardSubResolutionIFDs.get(series, resolution);
+    }
+    else if ((firstIFD.getCompression() == TiffCompression.JPEG_2000
         || firstIFD.getCompression() == TiffCompression.JPEG_2000_LOSSY)
-        && resolutionLevels != null) {
+        && j2kResolutionLevels != null) {
       if (getCoreIndex() > 0) {
-        ifd = subResolutionIFDs.get(no).get(getCoreIndex() - 1);
+        ifd = j2kSubResolutionIFDs.get(series, resolution);
       }
       setResolutionLevel(ifd);
     }
@@ -378,10 +387,11 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
       }
       ifds = null;
       thumbnailIFDs = null;
-      subResolutionIFDs = null;
+      standardSubResolutionIFDs = null;
+      j2kSubResolutionIFDs = null;
       lastPlane = 0;
       tiffParser = null;
-      resolutionLevels = null;
+      j2kResolutionLevels = null;
       j2kCodecOptions = null;
       seriesToIFD = false;
     }
@@ -453,7 +463,8 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
 
     ifds = new IFDList();
     thumbnailIFDs = new IFDList();
-    subResolutionIFDs = new ArrayList<IFDList>();
+    standardSubResolutionIFDs = new MetadataList<>();
+    j2kSubResolutionIFDs = new MetadataList<>();
     for (IFD ifd : allIFDs) {
       tiffParser.fillInIFD(ifd);
       Number subfile = (Number) ifd.getIFDValue(IFD.NEW_SUBFILE_TYPE);
@@ -472,8 +483,16 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
 
     ms0.imageCount = ifds.size();
 
+    int subIFDCount = 0;
+    int j2kSubIFDCount = 0;
+
     tiffParser.setAssumeEqualStrips(equalStrips);
     for (IFD ifd : ifds) {
+      standardSubResolutionIFDs.add();
+      j2kSubResolutionIFDs.add();
+
+      ifd
+
       if ((ifd.getCompression() == TiffCompression.JPEG_2000
           || ifd.getCompression() == TiffCompression.JPEG_2000_LOSSY) &&
           ifd.getImageWidth() == ifds.get(0).getImageWidth()) {
@@ -486,17 +505,15 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
           in.seek(stripOffset);
           JPEG2000MetadataParser metadataParser =
             new JPEG2000MetadataParser(in, stripOffset + stripByteCounts[0]);
-          resolutionLevels = metadataParser.getResolutionLevels();
-          if (resolutionLevels != null && !noSubresolutions) {
+          resolution = metadataParser.getResolutionLevels();
+          if (resolution != null && !noSubresolutions) {
             if (LOGGER.isDebugEnabled()) {
               LOGGER.debug(String.format(
                   "Original resolution IFD Levels %d %dx%d Tile %dx%d",
-                  resolutionLevels, ifd.getImageWidth(), ifd.getImageLength(),
+                  resolution, ifd.getImageWidth(), ifd.getImageLength(),
                   ifd.getTileWidth(), ifd.getTileLength()));
             }
-            IFDList theseSubResolutionIFDs = new IFDList();
-            subResolutionIFDs.add(theseSubResolutionIFDs);
-            for (int level = 1; level <= resolutionLevels; level++) {
+            for (int level = 1; level <= resolution; level++) {
               IFD newIFD = new IFD(ifd);
               long imageWidth = ifd.getImageWidth();
               long imageLength = ifd.getImageLength();
@@ -525,7 +542,7 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
               long newImageLength =
                 (long) ((evenTilesPerColumn * newTileLength) + remainingLength);
 
-              int resolutionLevel = Math.abs(level - resolutionLevels);
+              int resolutionLevel = Math.abs(level - resolution);
               newIFD.put(IFD.IMAGE_WIDTH, newImageWidth);
               newIFD.put(IFD.IMAGE_LENGTH, newImageLength);
               newIFD.put(IFD.TILE_WIDTH, newTileWidth);
@@ -536,7 +553,8 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
                     "Tile %dx%d", resolutionLevel, newImageWidth,
                     newImageLength, newTileWidth, newTileLength));
               }
-              theseSubResolutionIFDs.add(newIFD);
+              j2kSubResolutionIFDs.add(j2kSubResolutionIFDs.size() -1 , newIFD);
+              j2kSubIFDCount++;
             }
           }
         }
@@ -544,6 +562,14 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
           LOGGER.warn("IFD has no strip offsets!");
         }
       }
+    }
+
+    // If no subresolutions are present, discard the lists.
+    if (subIFDCount == 0) {
+      standardSubResolutionIFDs = null;
+    }
+    if (j2kSubIFDCount == 0) {
+      j2kSubResolutionIFDs = null;
     }
 
     IFD firstIFD = ifds.get(0);
@@ -576,7 +602,7 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
     ms0.bitsPerPixel = firstIFD.getBitsPerSample()[0];
 
     // New core metadata now that we know how many sub-resolutions we have.
-    if (resolutionLevels != null && subResolutionIFDs.size() > 0) {
+    if (resolution != null && subResolutionIFDs.size() > 0) {
       IFDList ifds = subResolutionIFDs.get(0);
       int seriesCount = ifds.size() + 1;
       if (!hasFlattenedResolutions()) {
