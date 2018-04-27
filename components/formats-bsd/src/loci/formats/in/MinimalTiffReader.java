@@ -39,6 +39,7 @@ import java.util.List;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
+import loci.formats.MetadataList;
 import loci.formats.MetadataTools;
 import loci.formats.SubResolutionFormatReader;
 import org.slf4j.Logger;
@@ -491,7 +492,7 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
       standardSubResolutionIFDs.add();
       j2kSubResolutionIFDs.add();
 
-      ifd
+      ifd.get
 
       if ((ifd.getCompression() == TiffCompression.JPEG_2000
           || ifd.getCompression() == TiffCompression.JPEG_2000_LOSSY) &&
