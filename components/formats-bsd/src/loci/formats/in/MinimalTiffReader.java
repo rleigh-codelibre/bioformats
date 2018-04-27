@@ -492,9 +492,16 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
       standardSubResolutionIFDs.add();
       j2kSubResolutionIFDs.add();
 
-      ifd.get
+      standardSubResolutionIFDs.add(subIFDCount, ifd);
+      IFDList subifds = tiffParser.getSubIFDs(ifd);
 
-      if ((ifd.getCompression() == TiffCompression.JPEG_2000
+      if(subifds != null) {
+        LOGGER.debug("Found IFD with sub-resolutions");
+        for (IFD subifd : subifds) {
+          standardSubResolutionIFDs.add(subIFDCount, subifd);
+        }
+      }
+      else if ((ifd.getCompression() == TiffCompression.JPEG_2000
           || ifd.getCompression() == TiffCompression.JPEG_2000_LOSSY) &&
           ifd.getImageWidth() == ifds.get(0).getImageWidth()) {
         LOGGER.debug("Found IFD with JPEG 2000 compression");
