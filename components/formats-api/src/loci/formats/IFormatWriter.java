@@ -121,6 +121,8 @@ public interface IFormatWriter extends IFormatHandler {
   /**
    * Sets the current series.
    *
+   * Also resets the resolution count to 1 and the resolution to 0.
+   *
    * @param series the series index, starting from 0.
    * @throws FormatException if the specified series is invalid.
    */
@@ -128,6 +130,41 @@ public interface IFormatWriter extends IFormatHandler {
 
   /** Returns the current series. */
   int getSeries();
+
+  /**
+   * Set the number of resolution levels for the current series.
+   *
+   * The default number of resolution levels is 1 (the full size image).
+   *
+   * Check the return value to get the effective number of resolution levels
+   * supported by the writer.
+   *
+   * @param count the number of resolution levels, including the full size image.
+   * @return the number of effective resolution levels.
+   * @throws FormatException if resolution levels are unsupported.
+   */
+  int setResolutionCount(int count) throws FormatException;
+
+  /**
+   * Return the number of resolution levels for the current series.
+   */
+  int getResolutionCount();
+
+  /**
+   * Set the resolution level.
+   *
+   * @param resolution the resolution index, starting from 0.
+   * @throws FormatException if resolution levels are unsupported, or the specified resolution is invalid.
+   * @see #getResolutionCount()
+   */
+  void setResolution(int resolution) throws FormatException;
+
+  /**
+   * Get the current resolution level.
+   *
+   * @see #getResolutionCount()
+   */
+  int getResolution();
 
   /** Sets whether or not the channels in an image are interleaved. */
   void setInterleaved(boolean interleaved);
@@ -140,6 +177,9 @@ public interface IFormatWriter extends IFormatHandler {
 
   /** Reports whether the writer can save multiple images to a single file. */
   boolean canDoStacks();
+
+  /** Reports whether the writer can save sub-resolution images. */
+  boolean canDoSubResolutions();
 
   /**
    * Sets the metadata retrieval object from

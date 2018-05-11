@@ -81,7 +81,13 @@ public abstract class FormatWriter extends FormatHandler
   protected int validBits;
 
   /** Current series. */
-  protected int series;
+  protected int series = 0;
+
+  /** Current resolution. */
+  protected int resolution = 0;
+
+  /** Current resolution count. */
+  protected int resolutionCount = 1;
 
   /** Whether or not we are writing planes sequentially. */
   protected boolean sequential;
@@ -171,6 +177,8 @@ public abstract class FormatWriter extends FormatHandler
         metadataRetrieve.getImageCount() + " series.");
     }
     this.series = series;
+    this.resolutionCount = 1;
+    this.resolution = 0;
   }
 
   /* @see IFormatWriter#getSeries() */
@@ -178,6 +186,34 @@ public abstract class FormatWriter extends FormatHandler
   public int getSeries() {
     return series;
   }
+
+  /* @see IFormatWriter#setResolutionCount(int) */
+  public int setResolutionCount(int count) throws FormatException {
+    if (!canDoSubResolutions()) {
+      throw new FormatException("Writer does not support sub-resolutions");
+    }
+    this.resolutionCount = count;
+    return resolutionCount;
+  }
+
+  /* @see IFormatWriter#getResolutionCount(int) */
+  public int getResolutionCount() { return this.resolutionCount; }
+
+  /* @see IFormatWriter#setResolution() */
+  public void setResolution(int resolution) throws FormatException {
+    if (!canDoSubResolutions()) {
+      throw new FormatException("Writer does not support sub-resolutions");
+    }
+    if (resolution < 0) throw new FormatException("Resolution must be > 0.");
+    if (resolution >= resolutionCount) {
+      throw new FormatException("Resolution is '" + resolution +
+        "' but only " + resolutionCount + " are defined.");
+    }
+    this.resolution = 0;
+  }
+
+  /* @see IFormatWriter#getResolution() */
+  public int getResolution() { return this.resolution; }
 
   /* @see IFormatWriter#setInterleaved(boolean) */
   @Override
@@ -200,6 +236,10 @@ public abstract class FormatWriter extends FormatHandler
   /* @see IFormatWriter#canDoStacks() */
   @Override
   public boolean canDoStacks() { return false; }
+
+  /* @see IFormatWriter#canDoStacks() */
+  @Override
+  public boolean canDoSubResolutions() { return false; }
 
   /* @see IFormatWriter#setMetadataRetrieve(MetadataRetrieve) */
   @Override
@@ -360,6 +400,9 @@ public abstract class FormatWriter extends FormatHandler
     out = null;
     currentId = null;
     initialized = null;
+    series = 0;
+    resolutionCount = 1;
+    resolution = 0;
   }
 
   // -- Helper methods --
