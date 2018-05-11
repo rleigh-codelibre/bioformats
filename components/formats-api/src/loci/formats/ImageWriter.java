@@ -298,6 +298,22 @@ public class ImageWriter implements IFormatWriter {
     return getWriter().getSeries();
   }
 
+  /* @see IFormatWriter#setResolutionCount(int) */
+  public int setResolutionCount(int count) throws FormatException {
+    return getWriter().setResolutionCount(count);
+  }
+
+  /* @see IFormatWriter#getResolutionCount(int) */
+  public int getResolutionCount() { return getWriter().getResolutionCount(); }
+
+  /* @see IFormatWriter#setResolution() */
+  public void setResolution(int resolution) throws FormatException {
+    getWriter().setResolution(resolution);
+  }
+
+  /* @see IFormatWriter#getResolution() */
+  public int getResolution() { return getWriter().getResolution(); }
+
   /* @see IFormatWriter#setInterleaved(boolean) */
   @Override
   public void setInterleaved(boolean interleaved) {
@@ -323,6 +339,12 @@ public class ImageWriter implements IFormatWriter {
   @Override
   public boolean canDoStacks() {
     return getWriter().canDoStacks();
+  }
+
+  /* @see IFormatWriter#canDoSubResolutions() */
+  @Override
+  public boolean canDoSubResolutions() {
+    return getWriter().canDoSubResolutions();
   }
 
   /* @see IFormatWriter#setMetadataRetrieve(MetadataRetrieve) */

@@ -235,6 +235,22 @@ public abstract class WriterWrapper implements IFormatWriter {
     return writer.getSeries();
   }
 
+  /* @see IFormatWriter#setResolutionCount(int) */
+  public int setResolutionCount(int count) throws FormatException {
+    return writer.setResolutionCount(count);
+  }
+
+  /* @see IFormatWriter#getResolutionCount(int) */
+  public int getResolutionCount() { return writer.getResolutionCount(); }
+
+  /* @see IFormatWriter#setResolution() */
+  public void setResolution(int resolution) throws FormatException {
+    writer.setResolution(resolution);
+  }
+
+  /* @see IFormatWriter#getResolution() */
+  public int getResolution() { return writer.getResolution(); }
+
   @Override
   public void setInterleaved(boolean interleaved) {
     writer.setInterleaved(interleaved);
@@ -253,6 +269,11 @@ public abstract class WriterWrapper implements IFormatWriter {
   @Override
   public boolean canDoStacks() {
     return writer.canDoStacks();
+  }
+
+  @Override
+  public boolean canDoSubResolutions() {
+    return writer.canDoSubResolutions();
   }
 
   @Override
