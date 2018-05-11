@@ -247,6 +247,10 @@ public class OMETiffWriter extends TiffWriter {
     }
   }
 
+  /* @see loci.formats.IFormatWriter#canDoSubResolutions() */
+  @Override
+  public boolean canDoSubResolutions() { return true; }
+
   // -- OMETiff-specific methods --
   public String getCompanion() {
     MetadataOptions options = getMetadataOptions();

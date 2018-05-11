@@ -9,13 +9,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -500,99 +500,141 @@ public final class ImageConverter {
     long read = 0, write = 0;
     int first = series == -1 ? 0 : series;
     int last = series == -1 ? num : series + 1;
+    int currentFileSeriesCount = 0;
+    int currentFileResolutionCount = 0;
     long timeLastLogged = System.currentTimeMillis();
     for (int q=first; q<last; q++) {
       reader.setSeries(q);
-      firstTile = true;
-
-      if (!dimensionsSet) {
-        width = reader.getSizeX();
-        height = reader.getSizeY();
-      }
-
       int writerSeries = series == -1 ? q : 0;
-      writer.setSeries(writerSeries);
-      writer.setInterleaved(reader.isInterleaved() && !autoscale);
-      writer.setValidBitsPerPixel(reader.getBitsPerPixel());
-      int numImages = writer.canDoStacks() ? reader.getImageCount() : 1;
 
-      int startPlane = (int) Math.max(0, firstPlane);
-      int endPlane = (int) Math.min(numImages, lastPlane);
-      numImages = endPlane - startPlane;
+      // Start with a resolutionCount of 1.  BUT, because we call setId and setSeries
+      // deep in the loops and called functions below, it will be set to the real
+      // resolutionCount on the first pass for each series.
+      int resolutionCount = 1;
 
-      if (channel >= 0) {
-        numImages /= reader.getEffectiveSizeC();
-      }
-      if (zSection >= 0) {
-        numImages /= reader.getSizeZ();
-      }
-      if (timepoint >= 0) {
-        numImages /= reader.getSizeT();
-      }
-
-      total += numImages;
-
-      int count = 0;
-      for (int i=startPlane; i<endPlane; i++) {
-        int[] coords = reader.getZCTCoords(i);
-
-        if ((zSection >= 0 && coords[0] != zSection) || (channel >= 0 &&
-          coords[1] != channel) || (timepoint >= 0 && coords[2] != timepoint))
-        {
-          continue;
+      for (int r = 0; r < resolutionCount; r++) {
+        if (writer.canDoSubResolutions()) {
+          reader.setResolution(r);
+          System.err.println("RC2: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount() + " wi" + writer.getResolution());
         }
 
-        String outputName = FormatTools.getFilename(q, i, reader, out, zeroPadding);
-        if (outputName.equals(FormatTools.getTileFilename(0, 0, 0, outputName))) {
-          writer.setId(outputName);
-          if (compression != null) writer.setCompression(compression);
+        firstTile = true;
+
+        if (!dimensionsSet) {
+          width = reader.getSizeX();
+          height = reader.getSizeY();
         }
-        else {
-          int tileNum = outputName.indexOf(FormatTools.TILE_NUM);
-          int tileX = outputName.indexOf(FormatTools.TILE_X);
-          int tileY = outputName.indexOf(FormatTools.TILE_Y);
-          if (tileNum < 0 && (tileX < 0 || tileY < 0)) {
-            throw new FormatException("Invalid file name pattern; " +
-              FormatTools.TILE_NUM + " or both of " + FormatTools.TILE_X +
-              " and " + FormatTools.TILE_Y + " must be specified.");
+
+        writer.setInterleaved(reader.isInterleaved() && !autoscale);
+        writer.setValidBitsPerPixel(reader.getBitsPerPixel());
+        // TODO Why is this immediately reassigned below?
+        int numImages = writer.canDoStacks() ? reader.getImageCount() : 1;
+
+        int startPlane = (int) Math.max(0, firstPlane);
+        int endPlane = (int) Math.min(numImages, lastPlane);
+        numImages = endPlane - startPlane;
+
+        if (channel >= 0) {
+          numImages /= reader.getEffectiveSizeC();
+        }
+        if (zSection >= 0) {
+          numImages /= reader.getSizeZ();
+        }
+        if (timepoint >= 0) {
+          numImages /= reader.getSizeT();
+        }
+
+        total += numImages;
+
+        int count = 0;
+        for (int i = startPlane; i < endPlane; i++) {
+          int[] coords = reader.getZCTCoords(i);
+
+          if ((zSection >= 0 && coords[0] != zSection) || (channel >= 0 &&
+            coords[1] != channel) || (timepoint >= 0 && coords[2] != timepoint)) {
+            continue;
           }
-        }
 
-        int outputIndex = 0;
-        if (nextOutputIndex.containsKey(outputName)) {
-          outputIndex = nextOutputIndex.get(outputName);
-        }
+          String outputName = FormatTools.getFilename(q, i, reader, out, zeroPadding);
+          if (outputName.equals(FormatTools.getTileFilename(0, 0, 0, outputName))) {
+            writer.setId(outputName);
+            currentFileSeriesCount = 0;
+            writer.setSeries(currentFileSeriesCount);
+            if (writer.canDoSubResolutions()) {
+              resolutionCount = writer.setResolutionCount(reader.getResolutionCount());
+              System.err.println("RC: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
+              writer.setResolution(0);
+            }
+            if (compression != null) writer.setCompression(compression);
+          } else {
+            if (count == 0) {
+              if (r == 0) {
+                writer.setSeries(currentFileSeriesCount);
+                if (writer.canDoSubResolutions()) {
+                  resolutionCount = writer.setResolutionCount(reader.getResolutionCount());
+                  System.err.println("RC: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
+                  writer.setResolution(0);
+                }
+              }
+              else {
+                if (writer.canDoSubResolutions()) {
+                  System.err.println("RC2: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
+                  writer.setResolution(r);
+                }
+              }
+            }
+            System.err.println("RC3: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
 
-        long s = System.currentTimeMillis();
-        long m = convertPlane(writer, i, outputIndex, outputName);
-        long e = System.currentTimeMillis();
-        read += m - s;
-        write += e - m;
-
-        nextOutputIndex.put(outputName, outputIndex + 1);
-        if (i == endPlane - 1) {
-          nextOutputIndex.remove(outputName);
-        }
-
-        // log number of planes processed every second or so
-        if (count == numImages - 1 || (e - timeLastLogged) / 1000 > 0) {
-          int current = (count - startPlane) + 1;
-          int percent = 100 * current / numImages;
-          StringBuilder sb = new StringBuilder();
-          sb.append("\t");
-          int numSeries = last - first;
-          if (numSeries > 1) {
-            sb.append("Series ");
-            sb.append(q);
-            sb.append(": converted ");
+            int tileNum = outputName.indexOf(FormatTools.TILE_NUM);
+            int tileX = outputName.indexOf(FormatTools.TILE_X);
+            int tileY = outputName.indexOf(FormatTools.TILE_Y);
+            if (tileNum < 0 && (tileX < 0 || tileY < 0)) {
+              throw new FormatException("Invalid file name pattern; " +
+                FormatTools.TILE_NUM + " or both of " + FormatTools.TILE_X +
+                " and " + FormatTools.TILE_Y + " must be specified.");
+            }
           }
-          else sb.append("Converted ");
-          LOGGER.info(sb.toString() + "{}/{} planes ({}%)",
-            new Object[] {current, numImages, percent});
-          timeLastLogged = e;
+
+          int outputIndex = 0;
+          if (nextOutputIndex.containsKey(outputName)) {
+            outputIndex = nextOutputIndex.get(outputName);
+          }
+
+          long s = System.currentTimeMillis();
+          long m = convertPlane(writer, q, r, i, outputIndex, outputName);
+          long e = System.currentTimeMillis();
+          read += m - s;
+          write += e - m;
+
+          nextOutputIndex.put(outputName, outputIndex + 1);
+          if (i == endPlane - 1) {
+            nextOutputIndex.remove(outputName);
+          }
+
+          // log number of planes processed every second or so
+          if (count == numImages - 1 || (e - timeLastLogged) / 1000 > 0) {
+            int current = (count - startPlane) + 1;
+            int percent = 100 * current / numImages;
+            StringBuilder sb = new StringBuilder();
+            sb.append("\t");
+            int numSeries = last - first;
+            if (numSeries > 1 || resolutionCount > 1) {
+              sb.append("Series ");
+              sb.append(q);
+              if (resolutionCount > 1) {
+                sb.append(", resolution ");
+                sb.append(r);
+              }
+              sb.append(": converted ");
+            } else sb.append("Converted ");
+            LOGGER.info(sb.toString() + "{}/{} planes ({}%)",
+              new Object[]{current, numImages, percent});
+            timeLastLogged = e;
+          }
+          count++;
         }
-        count++;
       }
+      currentFileSeriesCount++;
     }
     writer.close();
     long end = System.currentTimeMillis();
@@ -621,7 +663,8 @@ public final class ImageConverter {
    * @throws FormatException
    * @throws IOException
    */
-  private long convertPlane(IFormatWriter writer, int index, int outputIndex,
+  private long convertPlane(IFormatWriter writer,
+                            int series, int resolution, int index, int outputIndex,
     String currentFile)
     throws FormatException, IOException
   {
@@ -635,7 +678,7 @@ public final class ImageConverter {
       if ((writer instanceof TiffWriter) || ((writer instanceof ImageWriter) &&
         (((ImageWriter) writer).getWriter(out) instanceof TiffWriter)))
       {
-        return convertTilePlane(writer, index, outputIndex, currentFile);
+        return convertTilePlane(writer, series, resolution, index, outputIndex, currentFile);
       }
     }
 
@@ -659,8 +702,9 @@ public final class ImageConverter {
    * @throws FormatException
    * @throws IOException
    */
-  private long convertTilePlane(IFormatWriter writer, int index, int outputIndex,
-    String currentFile)
+  private long convertTilePlane(IFormatWriter writer,
+                                int series, int resolution, int index,
+                                int outputIndex, String currentFile)
     throws FormatException, IOException
   {
     int w = reader.getOptimalTileWidth();
@@ -720,6 +764,10 @@ public final class ImageConverter {
           writer.close();
           writer.setMetadataRetrieve(retrieve);
           writer.setId(tileName);
+          writer.setSeries(series);
+          if (writer.canDoSubResolutions()) {
+            writer.setResolution(resolution);
+          }
           if (compression != null) writer.setCompression(compression);
 
           outputIndex = 0;

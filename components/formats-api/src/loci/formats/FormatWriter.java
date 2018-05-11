@@ -193,7 +193,7 @@ public abstract class FormatWriter extends FormatHandler
       throw new FormatException("Writer does not support sub-resolutions");
     }
     this.resolutionCount = count;
-    return resolutionCount;
+    return getResolutionCount();
   }
 
   /* @see IFormatWriter#getResolutionCount(int) */
