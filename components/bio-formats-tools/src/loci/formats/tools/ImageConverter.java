@@ -48,6 +48,8 @@ import loci.common.services.ServiceFactory;
 import loci.formats.ChannelFiller;
 import loci.formats.ChannelMerger;
 import loci.formats.ChannelSeparator;
+import loci.formats.CoreMetadata;
+import loci.formats.CoreMetadataList;
 import loci.formats.FilePattern;
 import loci.formats.FileStitcher;
 import loci.formats.FormatException;
@@ -65,6 +67,7 @@ import loci.formats.in.DynamicMetadataOptions;
 import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
@@ -116,6 +119,10 @@ public final class ImageConverter {
   private HashMap<String, Integer> nextOutputIndex = new HashMap<String, Integer>();
   private boolean firstTile = true;
   private DynamicMetadataOptions options = new DynamicMetadataOptions();
+
+  String currentFile = null;
+  int currentFileStartSeries = 0;
+  int currentFileStartResolution = 0;
 
   // -- Constructor --
 
@@ -500,8 +507,6 @@ public final class ImageConverter {
     long read = 0, write = 0;
     int first = series == -1 ? 0 : series;
     int last = series == -1 ? num : series + 1;
-    int currentFileSeriesCount = 0;
-    int currentFileResolutionCount = 0;
     long timeLastLogged = System.currentTimeMillis();
     for (int q=first; q<last; q++) {
       reader.setSeries(q);
@@ -556,44 +561,17 @@ public final class ImageConverter {
           }
 
           String outputName = FormatTools.getFilename(q, i, reader, out, zeroPadding);
-          if (outputName.equals(FormatTools.getTileFilename(0, 0, 0, outputName))) {
-            writer.setId(outputName);
-            currentFileSeriesCount = 0;
-            writer.setSeries(currentFileSeriesCount);
-            if (writer.canDoSubResolutions()) {
-              resolutionCount = writer.setResolutionCount(reader.getResolutionCount());
-              System.err.println("RC: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
-              writer.setResolution(0);
-            }
-            if (compression != null) writer.setCompression(compression);
-          } else {
-            if (count == 0) {
-              if (r == 0) {
-                writer.setSeries(currentFileSeriesCount);
-                if (writer.canDoSubResolutions()) {
-                  resolutionCount = writer.setResolutionCount(reader.getResolutionCount());
-                  System.err.println("RC: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
-                  writer.setResolution(0);
-                }
-              }
-              else {
-                if (writer.canDoSubResolutions()) {
-                  System.err.println("RC2: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
-                  writer.setResolution(r);
-                }
-              }
-            }
-            System.err.println("RC3: r=" + reader.getResolutionCount() + " w=" + writer.getResolutionCount());
 
-            int tileNum = outputName.indexOf(FormatTools.TILE_NUM);
-            int tileX = outputName.indexOf(FormatTools.TILE_X);
-            int tileY = outputName.indexOf(FormatTools.TILE_Y);
-            if (tileNum < 0 && (tileX < 0 || tileY < 0)) {
-              throw new FormatException("Invalid file name pattern; " +
-                FormatTools.TILE_NUM + " or both of " + FormatTools.TILE_X +
-                " and " + FormatTools.TILE_Y + " must be specified.");
-            }
+          int tileNum = outputName.indexOf(FormatTools.TILE_NUM);
+          int tileX = outputName.indexOf(FormatTools.TILE_X);
+          int tileY = outputName.indexOf(FormatTools.TILE_Y);
+          if (tileNum < 0 && (tileX < 0 || tileY < 0)) {
+            throw new FormatException("Invalid file name pattern; " +
+              FormatTools.TILE_NUM + " or both of " + FormatTools.TILE_X +
+              " and " + FormatTools.TILE_Y + " must be specified.");
           }
+
+          setOutputFile(outputName, reader, writer, q, r, count, width, height, tileX, tileY, tileNum);
 
           int outputIndex = 0;
           if (nextOutputIndex.containsKey(outputName)) {
@@ -634,7 +612,6 @@ public final class ImageConverter {
           count++;
         }
       }
-      currentFileSeriesCount++;
     }
     writer.close();
     long end = System.currentTimeMillis();
@@ -652,20 +629,65 @@ public final class ImageConverter {
   }
 
   // -- Helper methods --
+  private void setOutputFile(String outputName, IFormatReader reader, IFormatWriter writer,
+                             int series, int resolution, int plane, int sizeX, int sizeY,
+                             int tileX, int tileY, int tileIndex) throws FormatException, IOException {
+    // Need to call setId, file not yet opened
+    if (currentFile == null) {
+      writer.setId(outputName);
+    }
+    // Need to call setId, file changed
+    else if (currentFile != outputName) {
+      writer.close();
+
+      OMEXMLMetadata newstore = null;
+      OMEXMLService service = null;
+      try {
+        ServiceFactory factory = new ServiceFactory();
+        service = factory.getInstance(OMEXMLService.class);
+        newstore = (OMEXMLMetadata) service.createOMEXMLMetadata();
+      }
+      catch (DependencyException de) {
+        throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG, de);
+      }
+      catch (ServiceException se) {
+        throw new FormatException(se);
+      }
+
+      MetadataTools.populateMetadata(newstore, 0, outputName, new CoreMetadata(reader, series));
+
+      newstore.setPixelsSizeX(new PositiveInteger(sizeX), 0);
+      newstore.setPixelsSizeY(new PositiveInteger(sizeY), 0);
+
+      writer.setMetadataRetrieve(newstore);
+      writer.setId(outputName);
+      currentFileStartSeries = series;
+      currentFileStartResolution = 0;
+    }
+    else if (currentFile == null) {
+      writer.setId(outputName);
+    }
+    if (currentFileStartSeries != series) {
+      writer.setSeries(series - currentFileStartSeries);
+    }
+    if (currentFileStartResolution != resolution) {
+      if (writer.canDoSubResolutions()) {
+        writer.setResolution(resolution - currentFileStartResolution);
+      }
+    }
+  }
 
   /**
    * Convert the specified plane using the given writer.
    * @param writer the {@link loci.formats.IFormatWriter} to use for writing the plane
    * @param index the index of the plane to convert in the input file
    * @param outputIndex the index of the plane to convert in the output file
-   * @param currentFile the file name or pattern being written to
    * @return the time at which conversion started, in milliseconds
    * @throws FormatException
    * @throws IOException
    */
   private long convertPlane(IFormatWriter writer,
-                            int series, int resolution, int index, int outputIndex,
-    String currentFile)
+                            int series, int resolution, int index, int outputIndex, String outputName)
     throws FormatException, IOException
   {
     if (DataTools.safeMultiply64(width, height) >=
@@ -678,7 +700,7 @@ public final class ImageConverter {
       if ((writer instanceof TiffWriter) || ((writer instanceof ImageWriter) &&
         (((ImageWriter) writer).getWriter(out) instanceof TiffWriter)))
       {
-        return convertTilePlane(writer, series, resolution, index, outputIndex, currentFile);
+        return convertTilePlane(writer, series, resolution, index, outputIndex, outputName);
       }
     }
 
