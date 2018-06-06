@@ -32,13 +32,20 @@
 
 package loci.formats;
 
+import loci.common.services.DependencyException;
+import loci.common.services.ServiceFactory;
+import loci.formats.services.OMEXMLService;
+import loci.formats.services.OMEXMLServiceImpl;
+import loci.formats.meta.MetadataRetrieve;
+import loci.formats.ome.OMEXMLMetadata;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class CoreMetadataList extends MetadataList<CoreMetadata> {
-  static final Comparator<CoreMetadata> comparator = new Comparator<CoreMetadata>() {
+  private static final Comparator<CoreMetadata> comparator = new Comparator<CoreMetadata>() {
     @Override
     public int compare(CoreMetadata c1, CoreMetadata c2) {
       int result = Integer.compare(c1.sizeZ, c2.sizeZ);
@@ -92,6 +99,73 @@ public class CoreMetadataList extends MetadataList<CoreMetadata> {
 
   public CoreMetadataList(List<CoreMetadata> list) {
     setFlattenedList(list);
+  }
+
+  /**
+   * Construct a list from a MetadataStore.
+   *
+   * @param retrieve the {#MetadataRetrieve} to use.
+   */
+  public CoreMetadataList(MetadataRetrieve retrieve) throws MissingLibraryException {
+    int imageCount = retrieve.getImageCount();
+
+    for (int i = 0; i < imageCount; i++) {
+      CoreMetadata c = new CoreMetadata();
+
+      c.resolutionCount = 1;
+      c.sizeX = retrieve.getPixelsSizeX(i).getValue();
+      c.sizeY = retrieve.getPixelsSizeY(i).getValue();
+      c.sizeZ = retrieve.getPixelsSizeZ(i).getValue();
+      c.sizeT = retrieve.getPixelsSizeT(i).getValue();
+      c.sizeC = retrieve.getPixelsSizeC(i).getValue();
+      c.imageCount = c.sizeZ * c.sizeT * c.sizeC;
+
+      int channels = retrieve.getChannelCount(i);
+      int samples = 0;
+      for (int ch = 0; ch < channels; ch++) {
+        samples += retrieve.getChannelSamplesPerPixel(i, ch).getValue();
+      }
+      c.sizeC *= samples;
+
+      c.pixelType = FormatTools.pixelTypeFromString(
+        retrieve.getPixelsType(i).toString());
+      c.dimensionOrder = retrieve.getPixelsDimensionOrder(i).toString();
+      c.orderCertain = true;
+      c.rgb = false;
+      c.littleEndian = true;
+      c.interleaved = false;
+      c.indexed = true;
+      c.bitsPerPixel = retrieve.getPixelsSignificantBits(i).getValue();
+      c.falseColor = true;
+      c.metadataComplete = true;
+      c.moduloZ = null;
+      c.moduloT = null;
+      c.moduloC = null;
+
+      try {
+        OMEXMLMetadata meta = (OMEXMLMetadata) retrieve;
+        ServiceFactory factory = new ServiceFactory();
+        OMEXMLService service = factory.getInstance(OMEXMLService.class);
+
+        c.moduloZ = service.getModuloAlongZ(meta, i);
+        c.moduloC = service.getModuloAlongC(meta, i);
+        c.moduloT = service.getModuloAlongT(meta, i);
+      }
+      catch (DependencyException de) {
+        throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG, de);
+      }
+
+      if (c.moduloZ == null) {
+        c.moduloZ = new Modulo("Z");
+      }
+      if (c.moduloT == null) {
+        c.moduloT = new Modulo("T");
+      }
+      if (c.moduloC == null) {
+        c.moduloC = new Modulo("C");
+      }
+
+    }
   }
 
   /**

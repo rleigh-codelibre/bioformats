@@ -40,6 +40,7 @@ import ome.xml.model.primitives.PositiveInteger;
 import loci.common.DataTools;
 import loci.common.RandomAccessOutputStream;
 import loci.common.Region;
+import loci.formats.CoreMetadataList;
 import loci.formats.codec.CodecOptions;
 import loci.formats.meta.DummyMetadata;
 import loci.formats.meta.MetadataRetrieve;
@@ -92,6 +93,11 @@ public abstract class FormatWriter extends FormatHandler
    * prevent "null" access.
    */
   protected MetadataRetrieve metadataRetrieve = new DummyMetadata();
+
+  /**
+   * List of {@CoreMetadata} objects for each series and resolution.
+   */
+  protected CoreMetadataList core;
 
   /** Current file. */
   protected RandomAccessOutputStream out;
