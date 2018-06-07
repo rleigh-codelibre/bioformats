@@ -240,6 +240,22 @@ public abstract class FormatWriter extends FormatHandler
     return core;
   }
 
+  /* @see IFormatWriter#setCoreMetadataList(CoreMetadataList) */
+  @Override
+  public void setCoreMetadataList(CoreMetadataList corelist) {
+    FormatTools.assertId(currentId, false, 1);
+    if (corelist == null) {
+      throw new IllegalArgumentException("Core metadata list object is null");
+    }
+    core = corelist;
+  }
+
+  /* @see IFormatWriter#getCoreMetadataList() */
+  @Override
+  public CoreMetadataList getCoreMetadataList() {
+    return core;
+  }
+
   /* @see IFormatWriter#setColorModel(ColorModel) */
   @Override
   public void setColorModel(ColorModel model) { cm = model; }
@@ -464,7 +480,7 @@ public abstract class FormatWriter extends FormatHandler
 
     if (interleaved) bpp *= samples;
 
-    int sizeX = r.getPixelsSizeX(series).getValue().intValue();
+    int sizeX = core.get(series, 0).sizeX;
 
     out.skipBytes(bpp * (y * sizeX + x));
   }
@@ -475,8 +491,8 @@ public abstract class FormatWriter extends FormatHandler
    */
   protected boolean isFullPlane(int x, int y, int w, int h) {
     MetadataRetrieve r = getMetadataRetrieve();
-    int sizeX = r.getPixelsSizeX(series).getValue().intValue();
-    int sizeY = r.getPixelsSizeY(series).getValue().intValue();
+    int sizeX = core.get(series, 0).sizeX;
+    int sizeY = core.get(series, 0).sizeY;
     return x == 0 && y == 0 && w == sizeX && h == sizeY;
   }
 
