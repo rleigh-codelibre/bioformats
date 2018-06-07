@@ -35,7 +35,6 @@ package loci.formats;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceFactory;
 import loci.formats.services.OMEXMLService;
-import loci.formats.services.OMEXMLServiceImpl;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
 
@@ -106,7 +105,7 @@ public class CoreMetadataList extends MetadataList<CoreMetadata> {
    *
    * @param retrieve the {#MetadataRetrieve} to use.
    */
-  public CoreMetadataList(MetadataRetrieve retrieve) throws MissingLibraryException {
+  public CoreMetadataList(MetadataRetrieve retrieve) {
     int imageCount = retrieve.getImageCount();
 
     for (int i = 0; i < imageCount; i++) {
@@ -118,11 +117,13 @@ public class CoreMetadataList extends MetadataList<CoreMetadata> {
       c.sizeZ = retrieve.getPixelsSizeZ(i).getValue();
       c.sizeT = retrieve.getPixelsSizeT(i).getValue();
       c.sizeC = retrieve.getPixelsSizeC(i).getValue();
+      c.sizeSubC = new int[c.sizeC];
       c.imageCount = c.sizeZ * c.sizeT * c.sizeC;
 
       int channels = retrieve.getChannelCount(i);
       int samples = 0;
       for (int ch = 0; ch < channels; ch++) {
+        c.sizeSubC[ch] = retrieve.getChannelSamplesPerPixel(i, ch).getValue();
         samples += retrieve.getChannelSamplesPerPixel(i, ch).getValue();
       }
       c.sizeC *= samples;
@@ -152,7 +153,6 @@ public class CoreMetadataList extends MetadataList<CoreMetadata> {
         c.moduloT = service.getModuloAlongT(meta, i);
       }
       catch (DependencyException de) {
-        throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG, de);
       }
 
       if (c.moduloZ == null) {
