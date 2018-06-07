@@ -118,13 +118,28 @@ public interface IFormatReader extends IFormatHandler {
   int getEffectiveSizeC();
 
   /**
-   * Gets the number of channels returned with each call to openBytes.
-   * The most common case where this value is greater than 1 is for interleaved
-   * RGB data, such as a 24-bit color image plane. However, it is possible for
-   * this value to be greater than 1 for non-interleaved data, such as an RGB
-   * TIFF with Planar rather than Chunky configuration.
+   * Gets the number of sub-channels returned with each call to openBytes for the
+   * first channel only. The most common case where this value is greater than 1
+   * is for interleaved RGB data, such as a 24-bit color image plane. However, it
+   * is possible for this value to be greater than 1 for non-interleaved data,
+   * such as an RGB TIFF with Planar rather than Chunky configuration.
+   *
+   * Note: this method only returns the number of subchannels for the
+   * first channel only.  Use {#getRGBChannelCount(int)} to get the
+   * number of subchannels for a specific channel.
    */
   int getRGBChannelCount();
+
+  /**
+   * Gets the number of sub-channels returned with each call to openBytes for the
+   * specified channel. The most common case where this value is greater than 1
+   * is for interleaved RGB data, such as a 24-bit color image plane. However,
+   * it is possible for this value to be greater than 1 for non-interleaved data,
+   * such as an RGB TIFF with Planar rather than Chunky configuration.
+   *
+   * @param channel the channel to get
+   */
+  int getRGBChannelCount(int channel);
 
   /**
    * Gets whether the image planes are indexed color.

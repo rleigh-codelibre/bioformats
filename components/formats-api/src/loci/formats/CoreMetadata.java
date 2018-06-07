@@ -32,6 +32,7 @@
 
 package loci.formats;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 
 /**
@@ -58,6 +59,9 @@ public class CoreMetadata implements Cloneable {
 
   /** Number of channels. */
   public int sizeC;
+
+  /** Separate subchannel sizes. */
+  public int sizeSubC[];
 
   /** Number of timepoints. */
   public int sizeT;
@@ -154,6 +158,10 @@ public class CoreMetadata implements Cloneable {
     sizeY = r.getSizeY();
     sizeZ = r.getSizeZ();
     sizeC = r.getSizeC();
+    sizeSubC = new int[sizeC];
+    for (int s = 0; s < sizeC; s++) {
+      sizeSubC[s] = r.getRGBChannelCount(s);
+    }
     sizeT = r.getSizeT();
     thumbSizeX = r.getThumbSizeX();
     thumbSizeY = r.getThumbSizeY();
@@ -183,6 +191,8 @@ public class CoreMetadata implements Cloneable {
     sizeY = c.sizeY;
     sizeZ = c.sizeZ;
     sizeC = c.sizeC;
+    sizeSubC = new int[c.sizeSubC.length];
+    System.arraycopy(c.sizeSubC, 0, sizeSubC, 0, c.sizeSubC.length);
     sizeT = c.sizeT;
     thumbSizeX = c.thumbSizeX;
     thumbSizeY = c.thumbSizeY;
@@ -215,6 +225,7 @@ public class CoreMetadata implements Cloneable {
     sb.append("\n\tsizeY = " + sizeY);
     sb.append("\n\tsizeZ = " + sizeZ);
     sb.append("\n\tsizeC = " + sizeC);
+    sb.append("\n\tsizeSubC = " + Arrays.toString(sizeSubC));
     sb.append("\n\tsizeT = " + sizeT);
     sb.append("\n\tthumbSizeX = " + thumbSizeX);
     sb.append("\n\tthumbSizeY = " + thumbSizeY);

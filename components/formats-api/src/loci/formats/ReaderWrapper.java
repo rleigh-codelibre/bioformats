@@ -241,6 +241,11 @@ public abstract class ReaderWrapper implements IFormatReader {
 
   @Override
   public int getRGBChannelCount() {
+    return getRGBChannelCount(0);
+  }
+
+  @Override
+  public int getRGBChannelCount(int channel) {
     //return reader.getRGBChannelCount();
     int effSizeC = getEffectiveSizeC();
     if (effSizeC == 0) return 0;

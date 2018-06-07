@@ -711,18 +711,19 @@ public abstract class FormatReader extends FormatHandler
   /* @see IFormatReader#getEffectiveSizeC() */
   @Override
   public int getEffectiveSizeC() {
-    // NB: by definition, imageCount == effectiveSizeC * sizeZ * sizeT
-    int sizeZT = getSizeZ() * getSizeT();
-    if (sizeZT == 0) return 0;
-    return getImageCount() / sizeZT;
+    return core.get(getCoreIndex()).sizeSubC.length;
+  }
+
+  /* @see IFormatReader#getRGBChannelCount() */
+  @Override
+  public int getRGBChannelCount(int channel) {
+    return core.get(getCoreIndex()).sizeSubC[channel];
   }
 
   /* @see IFormatReader#getRGBChannelCount() */
   @Override
   public int getRGBChannelCount() {
-    int effSizeC = getEffectiveSizeC();
-    if (effSizeC == 0) return 0;
-    return getSizeC() / effSizeC;
+    return getRGBChannelCount(0);
   }
 
   /* @see IFormatReader#isIndexed() */

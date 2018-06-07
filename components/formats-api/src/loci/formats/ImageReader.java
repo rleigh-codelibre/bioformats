@@ -340,6 +340,12 @@ public class ImageReader implements IFormatReader {
     return getReader().getRGBChannelCount();
   }
 
+  /* @see IFormatReader#getRGBChannelCount(int) */
+  @Override
+  public int getRGBChannelCount(int channel) {
+    return getReader().getRGBChannelCount(channel);
+  }
+
   /* @see IFormatReader#isIndexed() */
   @Override
   public boolean isIndexed() {
