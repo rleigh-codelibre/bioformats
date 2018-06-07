@@ -48,7 +48,7 @@ import loci.formats.meta.MetadataRetrieve;
 /**
  * Abstract superclass of all biological file format writers.
  */
-public abstract class FormatWriter extends FormatHandler
+public abstract class SubResolutionFormatWriter extends FormatHandler
   implements IFormatWriter
 {
 
@@ -105,10 +105,10 @@ public abstract class FormatWriter extends FormatHandler
   // -- Constructors --
 
   /** Constructs a format writer with the given name and default suffix. */
-  public FormatWriter(String format, String suffix) { super(format, suffix); }
+  public SubResolutionFormatWriter(String format, String suffix) { super(format, suffix); }
 
   /** Constructs a format writer with the given name and default suffixes. */
-  public FormatWriter(String format, String[] suffixes) {
+  public SubResolutionFormatWriter(String format, String[] suffixes) {
     super(format, suffixes);
   }
 
@@ -225,7 +225,6 @@ public abstract class FormatWriter extends FormatHandler
   }
 
   /* @see IFormatWriter#setCoreMetadataList(CoreMetadataList) */
-  @Override
   public void setCoreMetadataList(CoreMetadataList corelist) {
     FormatTools.assertId(currentId, false, 1);
     if (corelist == null) {
@@ -235,23 +234,6 @@ public abstract class FormatWriter extends FormatHandler
   }
 
   /* @see IFormatWriter#getCoreMetadataList() */
-  @Override
-  public CoreMetadataList getCoreMetadataList() {
-    return core;
-  }
-
-  /* @see IFormatWriter#setCoreMetadataList(CoreMetadataList) */
-  @Override
-  public void setCoreMetadataList(CoreMetadataList corelist) {
-    FormatTools.assertId(currentId, false, 1);
-    if (corelist == null) {
-      throw new IllegalArgumentException("Core metadata list object is null");
-    }
-    core = corelist;
-  }
-
-  /* @see IFormatWriter#getCoreMetadataList() */
-  @Override
   public CoreMetadataList getCoreMetadataList() {
     return core;
   }
