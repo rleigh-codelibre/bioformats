@@ -58,7 +58,7 @@ public class CoreMetadata implements Cloneable {
   public int sizeZ;
 
   /** Number of channels. */
-  public int sizeC;
+  //public int sizeC;
 
   /** Separate subchannel sizes. */
   public int sizeSubC[];
@@ -157,7 +157,7 @@ public class CoreMetadata implements Cloneable {
     sizeX = r.getSizeX();
     sizeY = r.getSizeY();
     sizeZ = r.getSizeZ();
-    sizeC = r.getSizeC();
+    int sizeC = r.getSizeC();
     sizeSubC = new int[sizeC];
     for (int s = 0; s < sizeC; s++) {
       sizeSubC[s] = r.getRGBChannelCount(s);
@@ -190,7 +190,7 @@ public class CoreMetadata implements Cloneable {
     sizeX = c.sizeX;
     sizeY = c.sizeY;
     sizeZ = c.sizeZ;
-    sizeC = c.sizeC;
+    // sizeC = c.sizeC;
     sizeSubC = new int[c.sizeSubC.length];
     System.arraycopy(c.sizeSubC, 0, sizeSubC, 0, c.sizeSubC.length);
     sizeT = c.sizeT;
@@ -224,7 +224,7 @@ public class CoreMetadata implements Cloneable {
     sb.append("\n\tsizeX = " + sizeX);
     sb.append("\n\tsizeY = " + sizeY);
     sb.append("\n\tsizeZ = " + sizeZ);
-    sb.append("\n\tsizeC = " + sizeC);
+    //sb.append("\n\tsizeC = " + sizeC);
     sb.append("\n\tsizeSubC = " + Arrays.toString(sizeSubC));
     sb.append("\n\tsizeT = " + sizeT);
     sb.append("\n\tthumbSizeX = " + thumbSizeX);
