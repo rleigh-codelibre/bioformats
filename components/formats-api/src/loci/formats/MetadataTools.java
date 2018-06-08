@@ -205,10 +205,22 @@ public final class MetadataTools {
   {
     final String pixelType = FormatTools.getPixelTypeString(coreMeta.pixelType);
     final int effSizeC = coreMeta.imageCount / coreMeta.sizeZ / coreMeta.sizeT;
-    final int samplesPerPixel = coreMeta.sizeC / effSizeC;
-    populateMetadata(store, null, series, imageName, coreMeta.littleEndian,
-      coreMeta.dimensionOrder, pixelType, coreMeta.sizeX, coreMeta.sizeY,
-      coreMeta.sizeZ, coreMeta.sizeC, coreMeta.sizeT, samplesPerPixel);
+
+    if (coreMeta.sizeSubC != null) {
+      int sizeC = 0;
+      for (int sizeS : coreMeta.sizeSubC) {
+        sizeC += sizeS;
+      }
+      populateMetadata(store, null, series, imageName, coreMeta.littleEndian,
+        coreMeta.dimensionOrder, pixelType, coreMeta.sizeX, coreMeta.sizeY,
+        coreMeta.sizeZ, sizeC, coreMeta.sizeT, coreMeta.sizeSubC);
+    }
+    else {
+//      final int samplesPerPixel = coreMeta.sizeC / effSizeC;
+//      populateMetadata(store, null, series, imageName, coreMeta.littleEndian,
+//        coreMeta.dimensionOrder, pixelType, coreMeta.sizeX, coreMeta.sizeY,
+//        coreMeta.sizeZ, coreMeta.sizeC, coreMeta.sizeT, samplesPerPixel);
+    }
   }
 
   /**
@@ -221,9 +233,28 @@ public final class MetadataTools {
    * </p>
    */
   public static void populateMetadata(MetadataStore store, int series,
-    String imageName, boolean littleEndian, String dimensionOrder,
-    String pixelType, int sizeX, int sizeY, int sizeZ, int sizeC, int sizeT,
-    int samplesPerPixel)
+                                      String imageName, boolean littleEndian, String dimensionOrder,
+                                      String pixelType, int sizeX, int sizeY, int sizeZ, int sizeC, int sizeT,
+                                      int samplesPerPixel)
+  {
+    populateMetadata(store, null, series, imageName, littleEndian,
+      dimensionOrder, pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT,
+      samplesPerPixel);
+  }
+
+  /**
+   * Populates the given {@link MetadataStore}, for the specified series, using
+   * the provided values.
+   * <p>
+   * After calling this method, the metadata store will be sufficiently
+   * populated for use with an {@link IFormatWriter} (assuming it is also a
+   * {@link MetadataRetrieve}).
+   * </p>
+   */
+  public static void populateMetadata(MetadataStore store, int series,
+                                      String imageName, boolean littleEndian, String dimensionOrder,
+                                      String pixelType, int sizeX, int sizeY, int sizeZ, int sizeC, int sizeT,
+                                      int[] samplesPerPixel)
   {
     populateMetadata(store, null, series, imageName, littleEndian,
       dimensionOrder, pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT,
@@ -251,6 +282,27 @@ public final class MetadataTools {
       sizeX, sizeY, sizeZ, sizeC, sizeT, samplesPerPixel);
   }
 
+  /**
+   * Populates the given {@link MetadataStore}, for the specified series, using
+   * the provided values.
+   * <p>
+   * After calling this method, the metadata store will be sufficiently
+   * populated for use with an {@link IFormatWriter} (assuming it is also a
+   * {@link MetadataRetrieve}).
+   * </p>
+   */
+  public static void populateMetadata(MetadataStore store, String file,
+                                      int series, String imageName, boolean littleEndian, String dimensionOrder,
+                                      String pixelType, int sizeX, int sizeY, int sizeZ, int sizeC, int sizeT,
+                                      int[] samplesPerPixel)
+  {
+    store.setImageID(createLSID("Image", series), series);
+    setDefaultCreationDate(store, file, series);
+    if (imageName != null) store.setImageName(imageName, series);
+    populatePixelsOnly(store, series, littleEndian, dimensionOrder, pixelType,
+      sizeX, sizeY, sizeZ, sizeC, sizeT, samplesPerPixel);
+  }
+
   public static void populatePixelsOnly(MetadataStore store, IFormatReader r) {
     int oldSeries = r.getSeries();
     for (int i=0; i<r.getSeriesCount(); i++) {
@@ -258,9 +310,13 @@ public final class MetadataTools {
 
       String pixelType = FormatTools.getPixelTypeString(r.getPixelType());
 
+      int[] samplesPerPixel = new int[r.getEffectiveSizeC()];
+      for (int c = 0; c < samplesPerPixel.length; ++c) {
+        samplesPerPixel[c] = r.getRGBChannelCount(c);
+      }
       populatePixelsOnly(store, i, r.isLittleEndian(), r.getDimensionOrder(),
         pixelType, r.getSizeX(), r.getSizeY(), r.getSizeZ(), r.getSizeC(),
-        r.getSizeT(), r.getRGBChannelCount());
+        r.getSizeT(), samplesPerPixel);
     }
     r.setSeries(oldSeries);
   }
@@ -294,6 +350,38 @@ public final class MetadataTools {
       store.setChannelID(createLSID("Channel", series, i),
         series, i);
       store.setChannelSamplesPerPixel(new PositiveInteger(samplesPerPixel),
+        series, i);
+    }
+  }
+
+  public static void populatePixelsOnly(MetadataStore store, int series,
+                                        boolean littleEndian, String dimensionOrder, String pixelType, int sizeX,
+                                        int sizeY, int sizeZ, int sizeC, int sizeT, int[] samplesPerPixel)
+  {
+    store.setPixelsID(createLSID("Pixels", series), series);
+    store.setPixelsBigEndian(!littleEndian, series);
+    try {
+      store.setPixelsDimensionOrder(
+        DimensionOrder.fromString(dimensionOrder), series);
+    }
+    catch (EnumerationException e) {
+      LOGGER.warn("Invalid dimension order: " + dimensionOrder, e);
+    }
+    try {
+      store.setPixelsType(PixelType.fromString(pixelType), series);
+    }
+    catch (EnumerationException e) {
+      LOGGER.warn("Invalid pixel type: " + pixelType, e);
+    }
+    store.setPixelsSizeX(new PositiveInteger(sizeX), series);
+    store.setPixelsSizeY(new PositiveInteger(sizeY), series);
+    store.setPixelsSizeZ(new PositiveInteger(sizeZ), series);
+    store.setPixelsSizeC(new PositiveInteger(sizeC), series);
+    store.setPixelsSizeT(new PositiveInteger(sizeT), series);
+    for (int i=0; i<samplesPerPixel.length; i++) {
+      store.setChannelID(createLSID("Channel", series, i),
+        series, i);
+      store.setChannelSamplesPerPixel(new PositiveInteger(samplesPerPixel[i]),
         series, i);
     }
   }

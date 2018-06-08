@@ -680,7 +680,18 @@ public abstract class FormatReader extends FormatHandler
   @Override
   public int getSizeC() {
     FormatTools.assertId(currentId, true, 1);
-    return core.get(getCoreIndex()).sizeC;
+    int sizeC = 0;
+    int sizeSubC[] = core.get(getCoreIndex()).sizeSubC;
+    if (sizeSubC != null) {
+
+      for (int sizeS : sizeSubC) {
+        sizeC += sizeS;
+      }
+    }
+    else {
+      //return core.get(getCoreIndex()).sizeC;
+    }
+    return sizeC;
   }
 
   /* @see IFormatReader#getSizeT() */
