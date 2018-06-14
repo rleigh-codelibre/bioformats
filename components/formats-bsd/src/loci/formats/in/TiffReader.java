@@ -324,12 +324,15 @@ public class TiffReader extends BaseTiffReader {
     if (z * t * (isRGB() ? 1 : c) == ifds.size()) {
       m.sizeZ = z;
       m.sizeT = t;
-      m.sizeC = isRGB() ? getSizeC() : c;
+      //m.sizeC = isRGB() ? getSizeC() : c;
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = isRGB() ? getSizeC() : c;
     }
     else if (z * c * t == ifds.size() && isRGB()) {
       m.sizeZ = z;
       m.sizeT = t;
-      m.sizeC *= c;
+      //m.sizeC *= c;
+      m.sizeSubC[0] *= c;
     }
     else if (ifds.size() == 1 && images > ifds.size() &&
       ifds.get(0).getCompression() == TiffCompression.UNCOMPRESSED)
@@ -377,7 +380,9 @@ public class TiffReader extends BaseTiffReader {
       if (z * c * t == ifds.size()) {
         m.sizeZ = z;
         m.sizeT = t;
-        m.sizeC = c;
+        //m.sizeC = c;
+        m.sizeSubC = new int[1];
+        m.sizeSubC[0] = c;
       }
       else if (z * t == ifds.size()) {
         m.sizeZ = z;

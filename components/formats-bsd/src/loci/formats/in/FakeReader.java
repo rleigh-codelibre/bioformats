@@ -774,7 +774,9 @@ public class FakeReader extends FormatReader {
       ms.sizeX = sizeX;
       ms.sizeY = sizeY;
       ms.sizeZ = sizeZ;
-      ms.sizeC = sizeC;
+      //ms.sizeC = sizeC;
+      ms.sizeSubC = new int[1];
+      ms.sizeSubC[0] = sizeC;
       ms.sizeT = sizeT;
       ms.thumbSizeX = thumbSizeX;
       ms.thumbSizeY = thumbSizeY;
@@ -1246,7 +1248,7 @@ public class FakeReader extends FormatReader {
 
   /** Creates a mapping between indices and color values. */
   private void createIndexMap(int num) {
-    int sizeC = core.get(0).sizeC;
+    int sizeC = core.get(0).sizeSubC[0];
 
     // create random mapping from indices to values
     indexToValue = new int[sizeC][num];

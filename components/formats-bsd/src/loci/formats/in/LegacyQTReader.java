@@ -208,7 +208,9 @@ public class LegacyQTReader extends BIFormatReader {
       m.sizeX = img.getWidth();
       m.sizeY = img.getHeight();
       m.sizeZ = 1;
-      m.sizeC = img.getRaster().getNumBands();
+      //m.sizeC = img.getRaster().getNumBands();
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = img.getRaster().getNumBands();
       m.sizeT = getImageCount();
       m.pixelType = AWTImageTools.getPixelType(img);
       m.dimensionOrder = "XYCTZ";

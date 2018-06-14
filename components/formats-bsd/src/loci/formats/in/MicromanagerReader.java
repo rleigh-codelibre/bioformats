@@ -631,7 +631,9 @@ public class MicromanagerReader extends FormatReader {
 
       if (getSizeZ() * getSizeC() * getSizeT() != uniqueZ.size() * uniqueC.size() * uniqueT.size()) {
         ms.sizeZ = uniqueZ.size();
-        ms.sizeC = uniqueC.size();
+        //ms.sizeC = uniqueC.size();
+        ms.sizeSubC = new int[1];
+        ms.sizeSubC[0] = uniqueC.size();
         ms.sizeT = uniqueT.size();
       }
 
@@ -708,7 +710,8 @@ public class MicromanagerReader extends FormatReader {
         if (value.endsWith(",")) value = value.substring(0, value.length() - 1);
         addSeriesMeta(key, value);
         if (key.equals("Channels")) {
-          ms.sizeC = Integer.parseInt(value);
+          //ms.sizeC = Integer.parseInt(value);
+          ms.sizeSubC[0] = Integer.parseInt(value);
         }
         else if (key.equals("ChNames")) {
           p.channels = value.split(",");

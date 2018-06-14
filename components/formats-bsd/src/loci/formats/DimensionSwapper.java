@@ -142,7 +142,9 @@ public class DimensionSwapper extends ReaderWrapper {
     ms.sizeX = dims[newX];
     ms.sizeY = dims[newY];
     ms.sizeZ = dims[newZ];
-    ms.sizeC = dims[newC];
+    //ms.sizeC = dims[newC];
+    ms.sizeSubC = new int[1];
+    ms.sizeSubC[0] = dims[newC];
     ms.sizeT = dims[newT];
 
     ms.moduloZ = moduli[newZ - 2];
@@ -202,7 +204,11 @@ public class DimensionSwapper extends ReaderWrapper {
   @Override
   public int getSizeC() {
     FormatTools.assertId(getCurrentFile(), true, 2);
-    return core.get(getCoreIndex()).sizeC;
+    int c = 0;
+    for (int s = 0; s < core.get(getCoreIndex()).sizeSubC.length; s++) {
+      c += core.get(getCoreIndex()).sizeSubC[s];
+    }
+    return c;
   }
 
   /* @see IFormatReader#getSizeT() */

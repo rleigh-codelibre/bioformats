@@ -367,7 +367,9 @@ public class TextReader extends FormatReader {
     m.sizeX = sizeX;
     m.sizeY = sizeY;
     m.sizeZ = sizeZ;
-    m.sizeC = sizeC;
+    //m.sizeC = sizeC;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = sizeC;
     m.sizeT = sizeT;
     m.pixelType = FormatTools.FLOAT;
     m.bitsPerPixel = 32;

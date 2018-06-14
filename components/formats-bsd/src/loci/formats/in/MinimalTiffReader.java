@@ -570,14 +570,18 @@ public class MinimalTiffReader extends SubResolutionFormatReader {
     ms0.sizeX = (int) firstIFD.getImageWidth();
     ms0.sizeY = (int) firstIFD.getImageLength();
     ms0.sizeZ = 1;
-    ms0.sizeC = isRGB() ? samples : 1;
+    //ms0.sizeC = isRGB() ? samples : 1;
+    ms0.sizeSubC = new int[1];
+    ms0.sizeSubC[0] = isRGB() ? samples : 1;
     ms0.sizeT = ifds.size();
     ms0.pixelType = firstIFD.getPixelType();
     ms0.metadataComplete = true;
     ms0.indexed = photo == PhotoInterp.RGB_PALETTE &&
       (get8BitLookupTable() != null || get16BitLookupTable() != null);
     if (isIndexed()) {
-      ms0.sizeC = 1;
+      //ms0.sizeC = 1;
+      ms0.sizeSubC = new int[1];
+      ms0.sizeSubC[0] = 1;
       ms0.rgb = false;
       for (IFD ifd : ifds) {
         ifd.putIFDValue(IFD.PHOTOMETRIC_INTERPRETATION,

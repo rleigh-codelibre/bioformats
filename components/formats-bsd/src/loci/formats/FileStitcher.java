@@ -325,7 +325,7 @@ public class FileStitcher extends ReaderWrapper {
   @Override
   public int getSizeC() {
     FormatTools.assertId(getCurrentFile(), true, 2);
-    return noStitch ? reader.getSizeC() : core.get(getCoreIndex()).sizeC;
+    return noStitch ? reader.getSizeC() : core.get(getCoreIndex()).sizeSubC[0];
   }
 
   /* @see IFormatReader#getSizeT() */
@@ -1144,7 +1144,9 @@ public class FileStitcher extends ReaderWrapper {
     }
 
     ms.sizeZ = sizeZ[sno];
-    ms.sizeC = sizeC[sno];
+    //ms.sizeC = sizeC[sno];
+    ms.sizeSubC = new int[1];
+    ms.sizeSubC[0] = sizeC[sno];
     ms.sizeT = sizeT[sno];
     lenZ[sno] = new int[numZ + 1];
     lenC[sno] = new int[numC + 1];
@@ -1160,7 +1162,8 @@ public class FileStitcher extends ReaderWrapper {
           lenZ[sno][z++] = count[i];
           break;
         case AxisGuesser.C_AXIS:
-          ms.sizeC *= count[i];
+          //ms.sizeC *= count[i];
+          ms.sizeSubC[0] *= count[i];
           lenC[sno][c++] = count[i];
           break;
         case AxisGuesser.T_AXIS:
@@ -1175,13 +1178,15 @@ public class FileStitcher extends ReaderWrapper {
       }
     }
     ms.imageCount = ms.sizeZ * ms.sizeT;
-    ms.imageCount *= (ms.sizeC / reader.getRGBChannelCount());
+    //ms.imageCount *= (ms.sizeC / reader.getRGBChannelCount());
+    ms.imageCount *= ms.sizeSubC.length;
 
     ms.moduloC = reader.getModuloC();
     ms.moduloZ = reader.getModuloZ();
     ms.moduloT = reader.getModuloT();
 
-    if (ms.moduloC.length() % ms.sizeC != 0) {
+    // ms.sizeSubC[0] should be replaced by sum of all subchannels?
+    if (ms.moduloC.length() % ms.sizeSubC[0] != 0) {
       ms.moduloC.start = 0;
       ms.moduloC.step = 1;
       ms.moduloC.end = 0;

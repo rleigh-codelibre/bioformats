@@ -265,7 +265,9 @@ public class PictReader extends FormatReader {
     m.sizeY = in.readShort();
     m.sizeX = in.readShort();
     m.sizeZ = 1;
-    m.sizeC = 1;
+    //m.sizeC = 1;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = 1;
     m.sizeT = 1;
     m.dimensionOrder = "XYCZT";
     m.imageCount = 1;
@@ -370,7 +372,8 @@ public class PictReader extends FormatReader {
         break;
       case PICT_JPEG:
         jpegOffsets.add(in.getFilePointer() + 2);
-        core.get(0).sizeC = 3;
+        //core.get(0).sizeC = 3;
+        core.get(0).sizeSubC[0] = 3;
         core.get(0).rgb = true;
         while ((in.readShort() & 0xffff) != 0xffd9 &&
           in.getFilePointer() < in.length());
@@ -513,7 +516,8 @@ public class PictReader extends FormatReader {
             }
             strips.add(uBufI);
             buf = null;
-            core.get(0).sizeC = 3;
+            //core.get(0).sizeC = 3;
+            core.get(0).sizeSubC[0] = 3;
             break;
           case 8:
             strips.add(buf);
@@ -550,7 +554,8 @@ public class PictReader extends FormatReader {
           uBufI = new int[getSizeX()];
           unpackBits(buf, uBufI);
           strips.add(uBufI);
-          core.get(0).sizeC = 3;
+          //core.get(0).sizeC = 3;
+          core.get(0).sizeSubC[0] = 3;
         }
         else {
           PackbitsCodec c = new PackbitsCodec();
@@ -578,7 +583,8 @@ public class PictReader extends FormatReader {
             }
             strips.add(newBuf);
           }
-          core.get(0).sizeC = 3;
+          //core.get(0).sizeC = 3;
+          core.get(0).sizeSubC[0] = 3;
         }
       }
     }

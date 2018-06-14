@@ -334,8 +334,13 @@ public class BMPReader extends FormatReader {
 
     LOGGER.info("Populating metadata");
 
-    m.sizeC = bpp != 24 ? 1 : 3;
-    if (bpp == 32) m.sizeC = 4;
+    //m.sizeC = bpp != 24 ? 1 : 3;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = bpp != 24 ? 1 : 3;
+    if (bpp == 32) {
+      //m.sizeC = 4;
+      m.sizeSubC[0] = 4;
+    }
     if (bpp > 8) bpp /= getSizeC();
 
     switch (bpp) {
@@ -359,7 +364,9 @@ public class BMPReader extends FormatReader {
     m.metadataComplete = true;
     m.indexed = palette != null;
     if (isIndexed()) {
-      m.sizeC = 1;
+      //m.sizeC = 1;
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = 1;
       m.rgb = false;
     }
     m.falseColor = false;

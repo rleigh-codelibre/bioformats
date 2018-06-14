@@ -191,7 +191,9 @@ public class PCXReader extends FormatReader {
 
     m.sizeZ = 1;
     m.sizeT = 1;
-    m.sizeC = nColorPlanes;
+    //m.sizeC = nColorPlanes;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = nColorPlanes;
     m.rgb = nColorPlanes > 1;
     m.imageCount = 1;
     m.pixelType = FormatTools.UINT8;

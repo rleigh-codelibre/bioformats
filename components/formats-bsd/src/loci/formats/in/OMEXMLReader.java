@@ -310,7 +310,9 @@ public class OMEXMLReader extends FormatReader {
       ms.sizeY = h.intValue();
       ms.sizeT = t.intValue();
       ms.sizeZ = z.intValue();
-      ms.sizeC = c.intValue();
+      //ms.sizeC = c.intValue();
+      ms.sizeSubC = new int[1];
+      ms.sizeSubC[0] = c.intValue();
       ms.imageCount = getSizeZ() * getSizeC() * getSizeT();
       ms.littleEndian = endian == null ? false : !endian.booleanValue();
       ms.rgb = false;

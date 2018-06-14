@@ -350,10 +350,12 @@ public class IM3Reader extends FormatReader {
                         final IntIM3Record iRec = (IntIM3Record)subRec;
                         cm.sizeX = iRec.getEntry(is, 0);
                         cm.sizeY = iRec.getEntry(is, 1);
-                        cm.sizeC = iRec.getEntry(is, 2);
+                        //cm.sizeC = iRec.getEntry(is, 2);
+                        cm.sizeSubC = new int[1];
+                        cm.sizeSubC[0] = iRec.getEntry(is, 2);
                         cm.sizeZ = 1;
                         cm.sizeT = 1;
-                        cm.imageCount = cm.sizeC;
+                        cm.imageCount = cm.sizeSubC[0];
                         cm.metadataComplete = true;
                       }
                     }

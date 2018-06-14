@@ -242,11 +242,17 @@ public class EPSReader extends FormatReader {
       m.sizeY = (int) firstIFD.getImageLength();
       m.sizeZ = 1;
       m.sizeT = 1;
-      m.sizeC = firstIFD.getSamplesPerPixel();
+      //m.sizeC = firstIFD.getSamplesPerPixel();
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = firstIFD.getSamplesPerPixel();
       if (map != null && getSizeC() == 1) {
-        m.sizeC = 3;
+        //m.sizeC = 3;
+        m.sizeSubC[0] = 3;
       }
-      if (getSizeC() == 2) m.sizeC = 4;
+      if (getSizeC() == 2) {
+        //m.sizeC = 4;
+        m.sizeSubC[0] = 4;
+      }
       m.littleEndian = firstIFD.isLittleEndian();
       m.interleaved = true;
       m.rgb = getSizeC() > 1;
@@ -275,7 +281,11 @@ public class EPSReader extends FormatReader {
     while (line != null && !line.equals("%%EOF")) {
       if (line.endsWith(image)) {
         if (!line.startsWith(image)) {
-          if (line.indexOf("colorimage") != -1) m.sizeC = 3;
+          if (line.indexOf("colorimage") != -1) {
+            //m.sizeC = 3;
+            m.sizeSubC = new int[1];
+            m.sizeSubC[0] = 3;
+          }
           String[] t = line.split(" ");
           try {
             int newX = Integer.parseInt(t[0]);
@@ -289,7 +299,9 @@ public class EPSReader extends FormatReader {
           catch (NumberFormatException exc) {
             LOGGER.debug("Could not parse image dimensions", exc);
             if (t.length > 3) {
-              m.sizeC = Integer.parseInt(t[3]);
+              //m.sizeC = Integer.parseInt(t[3]);
+              m.sizeSubC = new int[1];
+              m.sizeSubC[0] = Integer.parseInt(t[3]);
             }
           }
         }
@@ -333,7 +345,9 @@ public class EPSReader extends FormatReader {
         String[] t = line.split(" ");
         m.sizeX = Integer.parseInt(t[0]);
         m.sizeY = Integer.parseInt(t[1]);
-        m.sizeC = Integer.parseInt(t[3]);
+        //m.sizeC = Integer.parseInt(t[3]);
+        m.sizeSubC = new int[1];
+        m.sizeSubC[0] = Integer.parseInt(t[3]);
         for (int i=4; i<t.length; i++) {
           image = t[i].trim();
           if (image.length() > 1) {
@@ -347,7 +361,11 @@ public class EPSReader extends FormatReader {
 
     LOGGER.info("Populating metadata");
 
-    if (getSizeC() == 0) m.sizeC = 1;
+    if (getSizeC() == 0) {
+      //m.sizeC = 1;
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = 1;
+    }
 
     m.sizeZ = 1;
     m.sizeT = 1;

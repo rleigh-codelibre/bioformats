@@ -142,7 +142,9 @@ public class FitsReader extends FormatReader {
     while (in.read() == 0x20);
     pixelOffset = in.getFilePointer() - 1;
 
-    m.sizeC = 1;
+    //m.sizeC = 1;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = 1;
     m.sizeT = 1;
     if (getSizeZ() == 0) m.sizeZ = 1;
 

@@ -324,6 +324,7 @@ public class AVIReader extends FormatReader {
     LOGGER.info("Populating metadata");
 
     ms0.imageCount = offsets.size();
+    ms0.sizeSubC = new int[1];
     ms0.sizeZ = 1;
     ms0.sizeT = getImageCount();
     ms0.littleEndian = true;
@@ -344,23 +345,29 @@ public class AVIReader extends FormatReader {
       if (bmpBitsPerPixel == 16) {
         nBytes /= 2;
       }
-      ms0.sizeC = nBytes;
+      //ms0.sizeC = nBytes;
+      ms0.sizeSubC[0] = nBytes;
       ms0.rgb = getSizeC() > 1;
     }
     else if (bmpBitsPerPixel == 32) {
-      ms0.sizeC = 4;
+      //ms0.sizeC = 4;
+      ms0.sizeSubC[0] = 4;
       ms0.rgb = true;
     }
     else if (bytesPerPlane == 0 || bmpBitsPerPixel == 24) {
       ms0.rgb = bmpBitsPerPixel > 8 || (bmpCompression != 0 && lut == null);
-      ms0.sizeC = isRGB() ? 3 : 1;
+      //ms0.sizeC = isRGB() ? 3 : 1;
+      ms0.sizeSubC[0] = isRGB() ? 3 : 1;
     }
     else if (bmpCompression == MS_VIDEO) {
-      ms0.sizeC = 3;
+      //ms0.sizeC = 3;
+      ms0.sizeSubC[0] = 3;
       ms0.rgb = true;
     }
     else {
-      ms0.sizeC = bytesPerPlane /
+      //ms0.sizeC = bytesPerPlane /
+      //  (getSizeX() * getSizeY() * (bmpBitsPerPixel / 8));
+      ms0.sizeSubC[0] = bytesPerPlane /
         (getSizeX() * getSizeY() * (bmpBitsPerPixel / 8));
       ms0.rgb = getSizeC() > 1;
     }

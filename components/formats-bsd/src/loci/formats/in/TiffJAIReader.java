@@ -165,10 +165,12 @@ public class TiffJAIReader extends BIFormatReader {
     m.sizeX = img.getWidth();
     m.sizeY = img.getHeight();
     m.sizeZ = 1;
-    m.sizeC = img.getSampleModel().getNumBands();
+    //m.sizeC = img.getSampleModel().getNumBands();
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = img.getSampleModel().getNumBands();
     m.sizeT = numPages;
 
-    m.rgb = m.sizeC > 1;
+    m.rgb = m.sizeSubC[0] > 1;
 
     m.dimensionOrder = "XYCZT";
     m.pixelType = AWTImageTools.getPixelType(img);

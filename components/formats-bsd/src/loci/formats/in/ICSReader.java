@@ -1344,8 +1344,18 @@ public class ICSReader extends FormatReader {
         }
       }
       else {
-        if (m.sizeC == 0) m.sizeC = axisLengths[i];
-        else m.sizeC *= axisLengths[i];
+        if (m.sizeSubC == null) {
+          m.sizeSubC = new int[1];
+          m.sizeSubC[0] = 0;
+        }
+        //if (m.sizeC == 0) m.sizeC = axisLengths[i];
+        //else m.sizeC *= axisLengths[i];
+        if (m.sizeSubC[0] == 0) {
+          m.sizeSubC[0] = axisLengths[i];
+        }
+        else {
+          m.sizeSubC[0] *= axisLengths[i];
+        }
         channelLengths.add(new Integer(axisLengths[i]));
         storedRGB = getSizeX() == 0;
         m.rgb = getSizeX() == 0 && getSizeC() <= 4 && getSizeC() > 1;
@@ -1380,7 +1390,11 @@ public class ICSReader extends FormatReader {
       MetadataTools.makeSaneDimensionOrder(getDimensionOrder());
 
     if (getSizeZ() == 0) m.sizeZ = 1;
-    if (getSizeC() == 0) m.sizeC = 1;
+    if (getSizeC() == 0) {
+      //m.sizeC = 1;
+      m.sizeSubC = new int[1];
+      m.sizeSubC[0] = 1;
+    }
     if (getSizeT() == 0) m.sizeT = 1;
 
     // Set up ModuloC.  It appears that for ICS, different channels
@@ -1446,7 +1460,9 @@ public class ICSReader extends FormatReader {
 
       if (newOrder != null) {
         m.dimensionOrder = newOrder;
-        m.sizeC = binCount;
+        //m.sizeC = binCount;
+        m.sizeSubC = new int[1];
+        m.sizeSubC[0] = binCount;
         m.moduloC.parentType = FormatTools.LIFETIME;
       }
     }

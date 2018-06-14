@@ -395,7 +395,9 @@ public class NativeQTReader extends FormatReader {
     }
 
     m.rgb = bitsPerPixel < 40;
-    m.sizeC = isRGB() ? 3 : 1;
+    //m.sizeC = isRGB() ? 3 : 1;
+    m.sizeSubC = new int[1];
+    m.sizeSubC[0] = isRGB() ? 3 : 1;
     m.interleaved = isRGB();
     m.sizeT = getImageCount();
 
