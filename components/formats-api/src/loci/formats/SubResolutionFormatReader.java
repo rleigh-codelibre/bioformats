@@ -681,7 +681,11 @@ public abstract class SubResolutionFormatReader extends FormatHandler
   @Override
   public int getSizeC() {
     FormatTools.assertId(currentId, true, 1);
-    return currentCore().sizeC;
+    int c = 0;
+    for (int s = 0; s < currentCore().sizeSubC.length; s++) {
+      c += currentCore().sizeSubC[s];
+    }
+    return c;
   }
 
   /* @see IFormatReader#getSizeT() */
@@ -720,10 +724,14 @@ public abstract class SubResolutionFormatReader extends FormatHandler
 
   /* @see IFormatReader#getRGBChannelCount() */
   @Override
+  public int getRGBChannelCount(int channel) {
+    return currentCore().sizeSubC[channel];
+  }
+
+  /* @see IFormatReader#getRGBChannelCount() */
+  @Override
   public int getRGBChannelCount() {
-    int effSizeC = getEffectiveSizeC();
-    if (effSizeC == 0) return 0;
-    return getSizeC() / effSizeC;
+    return getRGBChannelCount(0);
   }
 
   /* @see IFormatReader#isIndexed() */

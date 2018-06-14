@@ -327,7 +327,8 @@ public class CoreMetadataListTest {
     assertEquals(expected.sizeX, observed.sizeX);
     assertEquals(expected.sizeY, observed.sizeY);
     assertEquals(expected.sizeZ, observed.sizeZ);
-    assertEquals(expected.sizeC, observed.sizeC);
+    //assertEquals(expected.sizeC, observed.sizeC);
+    assertArrayEquals(expected.sizeSubC, observed.sizeSubC);
     assertEquals(expected.sizeT, observed.sizeT);
     assertEquals(expected.thumbSizeX, observed.thumbSizeX);
     assertEquals(expected.thumbSizeY, observed.thumbSizeY);
