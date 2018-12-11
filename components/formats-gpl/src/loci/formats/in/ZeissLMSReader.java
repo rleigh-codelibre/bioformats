@@ -34,7 +34,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * Zeiss LMS reader for data from Zeiss CSM 700 systems.  Not to be confused

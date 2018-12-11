@@ -38,7 +38,7 @@ import java.util.List;
 
 import loci.common.Region;
 import loci.formats.codec.CodecOptions;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * Interface for all biological file format writers.

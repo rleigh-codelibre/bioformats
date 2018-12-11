@@ -41,7 +41,7 @@ import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.meta.OriginalMetadataAnnotation;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.units.UNITS;

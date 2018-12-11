@@ -43,7 +43,7 @@ import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.Modulo;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.in.Calibrator;
@@ -765,7 +765,7 @@ public class LociFunctions extends MacroFunctions {
       IJ.log("");
       IJ.log("For more information, see the online Javadocs");
       IJ.log("for the loci.formats.IFormatReader and ");
-      IJ.log("loci.formats.meta.MetadataRetrieve interfaces:");
+      IJ.log("ome.xml.meta.MetadataRetrieve interfaces:");
       IJ.log(URL_JAVADOCS);
     }
   }

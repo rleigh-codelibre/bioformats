@@ -35,8 +35,8 @@ package loci.formats;
 import java.io.IOException;
 
 import loci.common.DataTools;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 
 /**
  * Logic to automatically separate the channels in a file.

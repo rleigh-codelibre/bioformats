@@ -49,9 +49,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import loci.formats.MetadataTools;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.plugins.in.ImporterOptions;
 import ome.units.quantity.Length;
 import ome.units.UNITS;

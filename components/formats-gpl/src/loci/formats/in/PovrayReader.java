@@ -33,7 +33,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * PovrayReader is the file format reader for POV-Ray .df3 files.

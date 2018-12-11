@@ -57,7 +57,7 @@ import loci.formats.ImageReader;
 import loci.formats.MinMaxCalculator;
 import loci.formats.TileStitcher;
 import loci.formats.in.MetadataLevel;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.util.ImageProcessorReader;

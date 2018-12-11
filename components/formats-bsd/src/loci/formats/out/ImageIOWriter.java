@@ -42,7 +42,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
 import loci.formats.gui.AWTImageTools;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * ImageIOWriter is the superclass for file format writers that use the

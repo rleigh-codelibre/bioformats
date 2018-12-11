@@ -70,7 +70,7 @@ import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.ExtensionFileFilter;
 import loci.formats.gui.GUITools;
 import loci.formats.gui.Index16ColorModel;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.LociExporter;

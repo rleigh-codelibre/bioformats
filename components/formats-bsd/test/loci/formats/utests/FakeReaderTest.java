@@ -49,9 +49,9 @@ import loci.common.Location;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.in.FakeReader;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.tools.FakeImage;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.OMEXMLService;
 import loci.common.services.ServiceFactory;
 
@@ -499,7 +499,7 @@ public class FakeReaderTest {
     reader.setId("foo&series=5&" + key + "=10.fake");
     m = service.asRetrieve(reader.getMetadataStore());
     assertTrue(service.validateOMEXML(service.getOMEXML(m)));
-    Method method = Class.forName("loci.formats.meta.MetadataRetrieve").getMethod(methodName);
+    Method method = Class.forName("ome.xml.meta.MetadataRetrieve").getMethod(methodName);
     assertEquals(method.invoke(m), 50);
     for (int i = 0; i < 5; i++) {
       assertEquals(m.getImageAnnotationRefCount(0), 10);
@@ -514,7 +514,7 @@ public class FakeReaderTest {
     reader.setId(wd.resolve("foo.fake").toString());
     m = service.asRetrieve(reader.getMetadataStore());
     assertTrue(service.validateOMEXML(service.getOMEXML(m)));
-    Method method = Class.forName("loci.formats.meta.MetadataRetrieve").getMethod(methodName);
+    Method method = Class.forName("ome.xml.meta.MetadataRetrieve").getMethod(methodName);
     assertEquals(method.invoke(m), 50);
     for (int i = 0; i < 5; i++) {
       assertEquals(m.getImageAnnotationRefCount(0), 10);

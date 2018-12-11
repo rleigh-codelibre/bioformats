@@ -54,7 +54,7 @@ import loci.formats.codec.CodecOptions;
 import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.JPEGXRCodec;
 import loci.formats.codec.LZWCodec;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 import ome.xml.model.enums.AcquisitionMode;
 import ome.xml.model.enums.Binning;

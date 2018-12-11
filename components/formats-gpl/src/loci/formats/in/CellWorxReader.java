@@ -43,9 +43,9 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.MetadataTools;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.xml.meta.MetadataConverter;

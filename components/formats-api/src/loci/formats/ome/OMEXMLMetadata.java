@@ -32,7 +32,7 @@
 
 package loci.formats.ome;
 
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 
 /**
  *

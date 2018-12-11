@@ -25,7 +25,7 @@
 
 import loci.common.services.ServiceFactory;
 import loci.formats.*;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.xml.model.enums.DimensionOrder;

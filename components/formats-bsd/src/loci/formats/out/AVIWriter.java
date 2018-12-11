@@ -41,7 +41,7 @@ import loci.common.RandomAccessInputStream;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * AVIWriter is the file format writer for AVI files.

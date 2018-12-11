@@ -4,7 +4,7 @@ function metadata = createMinimalOMEXMLMetadata(I, varargin)
 %    createMinimalOMEXMLMetadata(I) creates an OME-XML metadata object from
 %    an input 5-D array. Minimal metadata information is stored such as the
 %    pixels dimensions, dimension order and type. The output object is a
-%    metadata object of type loci.formats.ome.OMEXMLMetadata.
+%    metadata object of type ome.xml.meta.OMEXMLMetadata.
 %
 %    createMinimalOMEXMLMetadata(I, dimensionOrder) specifies the dimension
 %    order of the input matrix. Default valuse is XYZCT.

@@ -48,12 +48,12 @@ import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.in.MetadataLevel;
-import loci.formats.meta.DummyMetadata;
-import loci.formats.meta.FilterMetadata;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.FilterMetadata;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.xml.model.AffineTransform;
@@ -574,7 +574,7 @@ public abstract class SubResolutionFormatReader extends FormatHandler
     return buf;
   }
 
-  /** Return a properly configured loci.formats.meta.FilterMetadata. */
+  /** Return a properly configured ome.xml.meta.FilterMetadata. */
   protected MetadataStore makeFilterMetadata() {
     return new FilterMetadata(getMetadataStore(), isMetadataFiltered());
   }
@@ -1182,7 +1182,7 @@ public abstract class SubResolutionFormatReader extends FormatHandler
     FormatTools.assertId(currentId, false, 1);
     if (store == null) {
       throw new IllegalArgumentException("Metadata object cannot be null; " +
-        "use loci.formats.meta.DummyMetadata instead");
+        "use ome.xml.meta.DummyMetadata instead");
     }
     metadataStore = store;
   }

@@ -40,7 +40,7 @@ import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
 import loci.formats.in.DefaultMetadataOptions;
 import loci.formats.in.MetadataLevel;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 
 import org.testng.annotations.BeforeClass;

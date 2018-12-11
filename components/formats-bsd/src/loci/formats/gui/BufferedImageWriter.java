@@ -39,7 +39,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.IFormatWriter;
 import loci.formats.WriterWrapper;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * A writer wrapper for writing image planes from BufferedImage objects.

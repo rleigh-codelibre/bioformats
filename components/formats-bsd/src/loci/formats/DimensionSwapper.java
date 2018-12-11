@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.CoreMetadata;
 
 /**

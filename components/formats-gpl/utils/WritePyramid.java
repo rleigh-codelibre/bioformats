@@ -25,8 +25,8 @@
 
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import loci.formats.meta.DummyMetadata;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.meta.IPyramidStore;
 import loci.formats.out.PyramidOMETiffWriter;
 import loci.formats.tiff.IFD;

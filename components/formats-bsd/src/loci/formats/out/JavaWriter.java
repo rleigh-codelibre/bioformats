@@ -40,7 +40,7 @@ import loci.common.DateTools;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * JavaWriter is the file format writer for Java source code.

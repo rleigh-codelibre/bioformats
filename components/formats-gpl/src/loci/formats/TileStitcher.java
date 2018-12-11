@@ -32,8 +32,8 @@ import java.util.List;
 
 import loci.common.DataTools;
 import loci.common.Region;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
 

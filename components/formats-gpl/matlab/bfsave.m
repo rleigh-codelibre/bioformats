@@ -64,7 +64,7 @@ ip = inputParser;
 ip.addRequired('I', @isnumeric);
 ip.addRequired('outputPath', @ischar);
 ip.addOptional('dimensionOrder', 'XYZCT', @(x) ismember(x, getDimensionOrders()));
-ip.addParamValue('metadata', [], @(x) isa(x, 'loci.formats.ome.OMEXMLMetadata'));
+ip.addParamValue('metadata', [], @(x) isa(x, 'ome.xml.meta.OMEXMLMetadata'));
 ip.addParamValue('Compression', '',  @ischar);
 ip.addParamValue('BigTiff', false , @islogical);
 ip.parse(varargin{:});

@@ -43,9 +43,9 @@ import loci.common.DataTools;
 import loci.common.RandomAccessOutputStream;
 import loci.common.Region;
 import loci.formats.codec.CodecOptions;
-import loci.formats.meta.DummyMetadata;
+import ome.xml.meta.DummyMetadata;
 import loci.formats.meta.IPyramidStore;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * Abstract superclass of all biological file format writers.

@@ -42,7 +42,7 @@ import loci.common.xml.BaseHandler;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
 import ome.xml.model.enums.EnumerationException;

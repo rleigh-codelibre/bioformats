@@ -36,7 +36,7 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.TargaRLECodec;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * File format reader for Truevision Targa files.

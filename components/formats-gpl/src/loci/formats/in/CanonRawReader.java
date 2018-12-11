@@ -34,7 +34,7 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * CanonRawReader is the file format reader for Canon RAW files.

@@ -37,7 +37,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import loci.common.RandomAccessInputStream;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * Interface for all biological file format readers.

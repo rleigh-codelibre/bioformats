@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import loci.formats.*;
-import loci.formats.ome.OMEXMLMetadataImpl;
+import ome.xml.meta.OMEXMLMetadataImpl;
 
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.PixelType;

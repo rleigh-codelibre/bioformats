@@ -27,8 +27,8 @@ package loci.formats.utests;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-import loci.formats.meta.IMetadata;
-import loci.formats.ome.OMEXMLMetadataImpl;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.OMEXMLMetadataImpl;
 
 import ome.xml.meta.OMEXMLMetadataRoot;
 import ome.xml.model.Arc;

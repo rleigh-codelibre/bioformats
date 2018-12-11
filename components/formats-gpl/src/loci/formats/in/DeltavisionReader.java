@@ -41,7 +41,7 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.meta.IMinMaxStore;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.TiffParser;
 
 import ome.xml.model.enums.Correction;

@@ -35,7 +35,7 @@ package loci.formats;
 import java.io.IOException;
 
 import loci.common.DataTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * For indexed color data representing true color, factors out

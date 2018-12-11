@@ -42,7 +42,7 @@ import loci.formats.FormatException;
 import loci.formats.in.TiffReader;
 import loci.formats.in.OMETiffReader;
 import loci.formats.in.DynamicMetadataOptions;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.out.OMETiffWriter;
 import loci.formats.tiff.IFD;
 import ome.xml.model.enums.PixelType;

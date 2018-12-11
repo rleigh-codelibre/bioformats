@@ -26,7 +26,7 @@
 import java.io.File;
 import loci.common.services.ServiceFactory;
 import loci.formats.ImageReader;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 
 /**

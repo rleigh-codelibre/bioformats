@@ -32,7 +32,7 @@ import java.io.InputStream;
 
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.xml.model.CommentAnnotation;

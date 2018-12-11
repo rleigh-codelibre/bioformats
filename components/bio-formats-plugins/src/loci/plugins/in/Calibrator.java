@@ -33,7 +33,7 @@ import ij.measure.Calibration;
 import java.util.Arrays;
 
 import loci.formats.FormatTools;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveInteger;
 

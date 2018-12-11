@@ -37,7 +37,7 @@ import java.io.IOException;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * EPSWriter is the file format writer for Encapsulated PostScript (EPS) files.

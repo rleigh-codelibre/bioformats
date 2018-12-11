@@ -41,7 +41,7 @@ import loci.formats.IFormatReader;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.LZOCodec;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 import ome.units.UNITS;
 import ome.units.quantity.Length;

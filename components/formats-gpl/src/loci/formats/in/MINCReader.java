@@ -40,7 +40,7 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.services.NetCDFService;
 
 import ome.units.quantity.Length;

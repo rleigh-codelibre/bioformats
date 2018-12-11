@@ -48,7 +48,7 @@ import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.PackbitsCodec;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.LegacyQTTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * PictReader is the file format reader for Apple PICT files.

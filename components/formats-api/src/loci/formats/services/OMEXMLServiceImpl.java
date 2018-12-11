@@ -55,13 +55,13 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.Modulo;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 import loci.formats.meta.ModuloAnnotation;
 import loci.formats.meta.OriginalMetadataAnnotation;
 import loci.formats.ome.OMEPyramidStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.units.quantity.Length;
 
@@ -447,7 +447,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
     return null;
   }
 
-  /** @see OMEXMLService#getOMEMetadata(loci.formats.meta.MetadataRetrieve) */
+  /** @see OMEXMLService#getOMEMetadata(ome.xml.meta.MetadataRetrieve) */
   @Override
   public OMEXMLMetadata getOMEMetadata(MetadataRetrieve src)
     throws ServiceException {
@@ -461,7 +461,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
     return omexmlMeta;
   }
 
-  /** @see OMEXMLService#getOMEXML(loci.formats.meta.MetadataRetrieve) */
+  /** @see OMEXMLService#getOMEXML(ome.xml.meta.MetadataRetrieve) */
   @Override
   public String getOMEXML(MetadataRetrieve src) throws ServiceException {
     OMEXMLMetadata omexmlMeta = getOMEMetadata(src);
@@ -709,7 +709,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
   }
 
   /**
-   * @see OMEXMLService#getOriginalMetadata(loci.formats.ome.OMEXMLMetadata)
+   * @see OMEXMLService#getOriginalMetadata(ome.xml.meta.OMEXMLMetadata)
    */
   @Override
   public Hashtable getOriginalMetadata(OMEXMLMetadata omexmlMeta) {
@@ -789,7 +789,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
   }
 
   /**
-   * @see OMEXMLService#populateOriginalMetadata(loci.formats.ome.OMEXMLMetadata, Hashtable)
+   * @see OMEXMLService#populateOriginalMetadata(ome.xml.meta.OMEXMLMetadata, Hashtable)
    */
   @Override
   public void populateOriginalMetadata(OMEXMLMetadata omexmlMeta,
@@ -833,7 +833,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
   }
 
   /**
-   * @see OMEXMLService#populateOriginalMetadata(loci.formats.ome.OMEXMLMetadata, java.lang.String, java.lang.String)
+   * @see OMEXMLService#populateOriginalMetadata(ome.xml.meta.OMEXMLMetadata, java.lang.String, java.lang.String)
    */
   @Override
   public void populateOriginalMetadata(OMEXMLMetadata omexmlMeta,
@@ -869,7 +869,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
   }
 
   /**
-   * @see OMEXMLService#convertMetadata(java.lang.String, loci.formats.meta.MetadataStore)
+   * @see OMEXMLService#convertMetadata(java.lang.String, ome.xml.meta.MetadataStore)
    */
   @Override
   public void convertMetadata(String xml, MetadataStore dest)
@@ -914,7 +914,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
   }
 
   /**
-   * @see OMEXMLService#convertMetadata(loci.formats.meta.MetadataRetrieve, loci.formats.meta.MetadataStore)
+   * @see OMEXMLService#convertMetadata(ome.xml.meta.MetadataRetrieve, ome.xml.meta.MetadataStore)
    */
   @Override
   public void convertMetadata(MetadataRetrieve src, MetadataStore dest) {
@@ -1153,13 +1153,13 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 
   // -- Utility methods - casting --
 
-  /** @see OMEXMLService#asStore(loci.formats.meta.MetadataRetrieve) */
+  /** @see OMEXMLService#asStore(ome.xml.meta.MetadataRetrieve) */
   @Override
   public MetadataStore asStore(MetadataRetrieve meta) {
     return meta instanceof MetadataStore ? (MetadataStore) meta : null;
   }
 
-  /** @see OMEXMLService#asRetrieve(loci.formats.meta.MetadataStore) */
+  /** @see OMEXMLService#asRetrieve(ome.xml.meta.MetadataStore) */
   @Override
   public MetadataRetrieve asRetrieve(MetadataStore meta) {
     return meta instanceof MetadataRetrieve ? (MetadataRetrieve) meta : null;

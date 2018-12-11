@@ -74,7 +74,7 @@ import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 import ome.xml.model.primitives.PositiveInteger;
 
 import org.slf4j.Logger;

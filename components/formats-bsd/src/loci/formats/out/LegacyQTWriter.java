@@ -43,7 +43,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatWriter;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.LegacyQTTools;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * LegacyQTWriter is a file format writer for QuickTime movies. It uses the

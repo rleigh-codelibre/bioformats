@@ -43,7 +43,7 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
 import loci.formats.codec.LZOCodec;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.services.MetakitService;
 
 import ome.units.quantity.Time;

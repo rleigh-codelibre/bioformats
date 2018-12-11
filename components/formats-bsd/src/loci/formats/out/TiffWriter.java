@@ -41,7 +41,7 @@ import loci.formats.FormatWriter;
 import loci.formats.ImageTools;
 import loci.formats.codec.CompressionType;
 import loci.formats.gui.AWTImageTools;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffCompression;
 import loci.formats.tiff.TiffParser;

@@ -49,7 +49,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.gui.BufferedImageWriter;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.out.OMETiffWriter;
 import loci.formats.services.OMEXMLService;
 import ome.xml.model.enums.EnumerationException;

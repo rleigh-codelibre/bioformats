@@ -41,11 +41,11 @@ import loci.common.Location;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.meta.IPyramidStore;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import ome.xml.model.enums.*;
 import ome.xml.model.enums.handlers.*;
@@ -487,7 +487,7 @@ public final class MetadataTools {
   /**
    * Creates an OME-XML metadata object using reflection, to avoid
    * direct dependencies on the optional {@link loci.formats.ome} package.
-   * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
+   * @return A new instance of {@link ome.xml.meta.AbstractOMEXMLMetadata},
    *   or null if one cannot be created.
    */
   public static IMetadata createOMEXMLMetadata() {

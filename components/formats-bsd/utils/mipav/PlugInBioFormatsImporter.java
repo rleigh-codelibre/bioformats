@@ -56,7 +56,7 @@ import loci.formats.DimensionSwapper;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.gui.GUITools;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import ome.units.UNITS;
 import ome.units.quantity.Length;

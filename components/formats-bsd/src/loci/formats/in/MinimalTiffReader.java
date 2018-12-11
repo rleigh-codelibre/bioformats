@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 import loci.common.DataTools;
 import loci.common.RandomAccessInputStream;
 import loci.formats.codec.JPEG2000CodecOptions;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.PhotoInterp;

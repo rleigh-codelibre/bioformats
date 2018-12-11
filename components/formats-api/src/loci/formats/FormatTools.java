@@ -50,9 +50,9 @@ import loci.common.ReflectedUniverse;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import loci.formats.meta.DummyMetadata;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
 

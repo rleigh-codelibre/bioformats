@@ -42,7 +42,7 @@ import java.util.Set;
 import loci.common.RandomAccessInputStream;
 import loci.formats.in.MetadataLevel;
 import loci.formats.in.MetadataOptions;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * Abstract superclass of reader logic that wraps other readers.

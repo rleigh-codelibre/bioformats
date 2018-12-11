@@ -39,7 +39,7 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.services.JHDFService;
 import loci.formats.services.JHDFServiceImpl;
 import ome.xml.model.primitives.Color;

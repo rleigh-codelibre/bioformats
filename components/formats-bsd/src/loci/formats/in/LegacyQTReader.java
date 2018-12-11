@@ -49,7 +49,7 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.LegacyQTTools;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * LegacyQTReader is a file format reader for QuickTime movie files.

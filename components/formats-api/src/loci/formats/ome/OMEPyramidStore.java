@@ -37,6 +37,7 @@ import java.util.List;
 
 import loci.formats.meta.IPyramidStore;
 import ome.xml.meta.MetadataRoot;
+import ome.xml.meta.OMEXMLMetadataImpl;
 import ome.xml.model.MapPair;
 import ome.xml.model.primitives.PositiveInteger;
 

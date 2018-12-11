@@ -44,7 +44,7 @@ import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.ReaderWrapper;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.enums.EnumerationException;

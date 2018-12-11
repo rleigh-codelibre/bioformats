@@ -42,7 +42,7 @@ import loci.common.Location;
 import loci.common.services.ServiceFactory;
 import loci.formats.FormatException;
 import loci.formats.in.TiffReader;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.tiff.IFD;

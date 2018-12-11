@@ -38,9 +38,9 @@ import loci.common.services.Service;
 import loci.common.services.ServiceException;
 import loci.formats.CoreMetadata;
 import loci.formats.Modulo;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import ome.xml.model.OMEModelObject;
 
 /**
@@ -62,7 +62,7 @@ public interface OMEXMLService extends Service {
   /**
    * Creates an OME-XML metadata object using reflection, to avoid
    * direct dependencies on the optional {@link loci.formats.ome} package.
-   * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
+   * @return A new instance of {@link ome.xml.meta.AbstractOMEXMLMetadata},
    *   or null if the class is not available.
    * @throws ServiceException If there is an error creating the OME-XML
    * metadata object.
@@ -73,7 +73,7 @@ public interface OMEXMLService extends Service {
    * Creates an OME-XML metadata object using reflection, to avoid
    * direct dependencies on the optional {@link loci.formats.ome} package,
    * wrapping a DOM representation of the given OME-XML string.
-   * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
+   * @return A new instance of {@link ome.xml.meta.AbstractOMEXMLMetadata},
    *   or null if the class is not available.
    * @throws ServiceException If there is an error creating the OME-XML
    * metadata object.
@@ -91,7 +91,7 @@ public interface OMEXMLService extends Service {
    * @param version The OME-XML version to use (e.g., "2003-FC" or "2007-06").
    *   If the xml and version parameters are both null, the newest version is
    *   used.
-   * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
+   * @return A new instance of {@link ome.xml.meta.AbstractOMEXMLMetadata},
    *   or null if the class is not available.
    * @throws ServiceException If there is an error creating the OME-XML
    * metadata object.
@@ -111,7 +111,7 @@ public interface OMEXMLService extends Service {
   /**
    * Checks whether the given object is an OME-XML metadata object.
    * @return True if the object is an instance of
-   *   {@link loci.formats.ome.OMEXMLMetadata}.
+   *   {@link ome.xml.meta.OMEXMLMetadata}.
    */
   public boolean isOMEXMLMetadata(Object o);
 
@@ -125,12 +125,12 @@ public interface OMEXMLService extends Service {
    * Gets the schema version for the given OME-XML metadata or root object
    * (e.g., "2007-06" or "2003-FC").
    * @return OME-XML schema version, or null if the object is not an instance
-   *   of {@link loci.formats.ome.OMEXMLMetadata}.
+   *   of {@link ome.xml.meta.OMEXMLMetadata}.
    */
   public String getOMEXMLVersion(Object o);
 
   /**
-   * Returns a {@link loci.formats.ome.OMEXMLMetadata} object with the same
+   * Returns a {@link ome.xml.meta.OMEXMLMetadata} object with the same
    * contents as the given MetadataRetrieve, converting it if necessary.
    * @throws ServiceException If there is an error creating the OME-XML
    * metadata object.
@@ -171,7 +171,7 @@ public interface OMEXMLService extends Service {
    * Adds the key/value pairs in the specified Hashtable as new
    * OriginalMetadata annotations in the given OME-XML metadata object.
    * @param omexmlMeta An object of type
-   *   {@link loci.formats.ome.OMEXMLMetadata}.
+   *   {@link ome.xml.meta.OMEXMLMetadata}.
    * @param metadata A hashtable containing metadata key/value pairs.
    */
   public void populateOriginalMetadata(OMEXMLMetadata omexmlMeta,
@@ -183,7 +183,7 @@ public interface OMEXMLService extends Service {
    * If no ModuloAlongZ annotation is present, return null.
    *
    * @param omexmlMeta An object of type
-   *  {@link loci.formats.ome.OMEXMLMetadata}
+   *  {@link ome.xml.meta.OMEXMLMetadata}
    * @param image the index of the Image to which the Annotation is linked
    */
   public Modulo getModuloAlongZ(OMEXMLMetadata omexmlMeta, int image);
@@ -194,7 +194,7 @@ public interface OMEXMLService extends Service {
    * If no ModuloAlongC annotation is present, return null.
    *
    * @param omexmlMeta An object of type
-   *  {@link loci.formats.ome.OMEXMLMetadata}
+   *  {@link ome.xml.meta.OMEXMLMetadata}
    * @param image the index of the Image to which the Annotation is linked
    */
   public Modulo getModuloAlongC(OMEXMLMetadata omexmlMeta, int image);
@@ -205,7 +205,7 @@ public interface OMEXMLService extends Service {
    * If no ModuloAlongT annotation is present, return null.
    *
    * @param omexmlMeta An object of type
-   *  {@link loci.formats.ome.OMEXMLMetadata}
+   *  {@link ome.xml.meta.OMEXMLMetadata}
    * @param image the index of the Image to which the Annotation is linked
    */
   public Modulo getModuloAlongT(OMEXMLMetadata omexmlMeta, int image);
@@ -215,7 +215,7 @@ public interface OMEXMLService extends Service {
    * object and store them in a Hashtable.
    *
    * @param omexmlMeta An object of type
-   *   {@link loci.formats.ome.OMEXMLMetadata}.
+   *   {@link ome.xml.meta.OMEXMLMetadata}.
    */
   public Hashtable getOriginalMetadata(OMEXMLMetadata omexmlMeta);
 
@@ -223,7 +223,7 @@ public interface OMEXMLService extends Service {
    * Adds the specified key/value pair as a new OriginalMetadata node
    * to the given OME-XML metadata object.
    * @param omexmlMeta An object of type
-   *   {@link loci.formats.ome.OMEXMLMetadata}.
+   *   {@link ome.xml.meta.OMEXMLMetadata}.
    * @param key Metadata key to populate.
    * @param value Metadata value corresponding to the specified key.
    */
@@ -234,7 +234,7 @@ public interface OMEXMLService extends Service {
    * Adds ModuloAlong* annotations to the given OME-XML metadata object,
    * using the given CoreMetadata object to determine modulo dimensions.
    *
-   * @param omexmlMeta An object of type {@link loci.formats.ome.OMEXMLMetadata}
+   * @param omexmlMeta An object of type {@link ome.xml.meta.OMEXMLMetadata}
    * @param core A fully populated object of type
    *   {@link loci.formats.CoreMetadata}
    * @param image Index of the Image to which the annotation should be linked.

@@ -44,7 +44,7 @@ import loci.common.Region;
 import loci.formats.codec.CodecOptions;
 import loci.formats.in.MetadataLevel;
 import loci.formats.in.MetadataOptions;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

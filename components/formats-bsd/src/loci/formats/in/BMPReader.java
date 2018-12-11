@@ -42,7 +42,7 @@ import loci.formats.FormatTools;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
 import loci.formats.UnsupportedCompressionException;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
 

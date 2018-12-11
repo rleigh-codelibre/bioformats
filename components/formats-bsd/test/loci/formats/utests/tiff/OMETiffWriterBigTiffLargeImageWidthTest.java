@@ -38,7 +38,7 @@ import java.io.File;
 
 import loci.common.services.ServiceFactory;
 import loci.formats.in.TiffReader;
-import loci.formats.ome.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.out.OMETiffWriter;
 import loci.formats.services.OMEXMLService;
 

@@ -42,8 +42,8 @@ import loci.formats.ChannelSeparator;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.MinMaxCalculator;
-import loci.formats.meta.IMetadata;
-import loci.formats.ome.OMEXMLMetadataImpl;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.OMEXMLMetadataImpl;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

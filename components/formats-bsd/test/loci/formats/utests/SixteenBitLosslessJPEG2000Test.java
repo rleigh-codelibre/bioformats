@@ -46,7 +46,7 @@ import loci.formats.FormatException;
 import loci.formats.IFormatWriter;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import loci.formats.meta.IMetadata;
+import ome.xml.meta.IMetadata;
 import loci.formats.out.JPEG2000Writer;
 import loci.formats.services.OMEXMLService;
 

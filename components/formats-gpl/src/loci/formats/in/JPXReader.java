@@ -40,7 +40,7 @@ import loci.formats.MetadataTools;
 import loci.formats.codec.JPEG2000BoxType;
 import loci.formats.codec.JPEG2000Codec;
 import loci.formats.codec.JPEG2000CodecOptions;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 
 /**
  * JPXReader is the file format reader for JPX (3D JPEG-2000) images.

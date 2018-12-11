@@ -60,7 +60,7 @@ import loci.common.Constants;
 import loci.common.services.ServiceFactory;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
-import loci.formats.meta.MetadataStore;
+import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import ome.specification.OmeValidator;
 import ome.specification.XMLMockObjects;

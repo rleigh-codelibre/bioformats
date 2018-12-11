@@ -43,7 +43,7 @@ import loci.formats.FormatWriter;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CompressionType;
 import loci.formats.gui.LegacyQTTools;
-import loci.formats.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * QTWriter is the file format writer for uncompressed QuickTime movie files.
