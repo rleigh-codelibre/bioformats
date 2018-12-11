@@ -36,8 +36,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ome.xml.meta.MetadataStore;
 import loci.formats.CoreMetadata;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * Handles swapping the dimension order of an image series. This class is

@@ -25,9 +25,10 @@
 
 import loci.common.services.ServiceFactory;
 import loci.formats.ImageReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.out.OMETiffWriter;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * Converts the given files to OME-TIFF format.

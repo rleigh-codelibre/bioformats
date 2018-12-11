@@ -48,6 +48,7 @@ import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.PackbitsCodec;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.LegacyQTTools;
+
 import ome.xml.meta.MetadataStore;
 
 /**

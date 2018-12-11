@@ -49,6 +49,7 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
 import loci.formats.gui.AWTImageTools;
+
 import ome.xml.meta.MetadataStore;
 
 /**

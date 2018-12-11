@@ -44,9 +44,10 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
 
 import org.xml.sax.SAXException;
 import org.w3c.dom.Element;

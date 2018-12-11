@@ -25,9 +25,10 @@
 
 import loci.common.services.ServiceFactory;
 import loci.formats.ImageReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * Converts the given image file to an LZW-compressed TIFF.

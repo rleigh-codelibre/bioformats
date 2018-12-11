@@ -33,13 +33,14 @@ import ij.measure.Calibration;
 import java.util.Arrays;
 
 import loci.formats.FormatTools;
-import ome.xml.meta.IMetadata;
-import ome.xml.model.primitives.NonNegativeInteger;
-import ome.xml.model.primitives.PositiveInteger;
 
 import ome.units.quantity.Time;
 import ome.units.quantity.Length;
 import ome.units.UNITS;
+
+import ome.xml.meta.IMetadata;
+import ome.xml.model.primitives.NonNegativeInteger;
+import ome.xml.model.primitives.PositiveInteger;
 
 /**
  * Logic for calibrating images.

@@ -50,9 +50,10 @@ import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
 import loci.formats.UnsupportedCompressionException;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * File format reader for NRRD files; see http://teem.sourceforge.net/nrrd.

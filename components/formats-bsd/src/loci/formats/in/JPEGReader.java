@@ -51,7 +51,9 @@ import loci.formats.services.EXIFService;
 import java.util.Date;
 import java.util.HashMap;
 import org.joda.time.DateTime;
+
 import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.primitives.Timestamp;
 
 /**

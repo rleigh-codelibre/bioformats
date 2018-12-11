@@ -37,10 +37,11 @@ import loci.formats.codec.Codec;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.PackbitsCodec;
 import loci.formats.codec.ZlibCodec;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffIFDEntry;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * PhotoshopTiffReader is the file format reader for

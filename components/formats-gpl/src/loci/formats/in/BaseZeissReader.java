@@ -42,15 +42,16 @@ import loci.formats.FormatTools;
 import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.MetadataTools;
+
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
+import ome.units.UNITS;
+
 import ome.xml.meta.DummyMetadata;
 import ome.xml.meta.MetadataStore;
 
 import ome.xml.model.primitives.Color;
 import ome.xml.model.primitives.Timestamp;
-
-import ome.units.quantity.Length;
-import ome.units.quantity.Time;
-import ome.units.UNITS;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

@@ -31,8 +31,9 @@ import loci.common.services.ServiceFactory;
 import loci.formats.FormatException;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * Uses Bio-Formats to extract lens numerical aperture

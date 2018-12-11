@@ -41,10 +41,11 @@ import loci.formats.IFormatReader;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.LZOCodec;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.UNITS;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * OpenlabReader is the file format reader for Openlab LIFF files.

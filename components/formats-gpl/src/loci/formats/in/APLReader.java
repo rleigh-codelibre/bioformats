@@ -39,7 +39,6 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.MDBService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
@@ -47,6 +46,8 @@ import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffParser;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * APLReader is the file format reader for Olympus APL files.

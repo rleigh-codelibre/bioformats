@@ -50,9 +50,6 @@ import loci.formats.codec.Codec;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.JPEG2000Codec;
 import loci.formats.codec.ZlibCodec;
-import ome.xml.meta.MetadataStore;
-
-import ome.xml.model.primitives.Color;
 
 import ome.units.quantity.ElectricPotential;
 import ome.units.quantity.Frequency;
@@ -60,6 +57,10 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Temperature;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Color;
 
 /**
  * NativeND2Reader is the file format reader for Nikon ND2 files.

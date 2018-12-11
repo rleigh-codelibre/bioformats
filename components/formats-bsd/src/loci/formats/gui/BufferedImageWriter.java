@@ -39,6 +39,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.IFormatWriter;
 import loci.formats.WriterWrapper;
+
 import ome.xml.meta.MetadataRetrieve;
 
 /**

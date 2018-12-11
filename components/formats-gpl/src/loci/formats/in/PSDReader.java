@@ -35,6 +35,7 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.PackbitsCodec;
+
 import ome.xml.meta.MetadataStore;
 
 /**

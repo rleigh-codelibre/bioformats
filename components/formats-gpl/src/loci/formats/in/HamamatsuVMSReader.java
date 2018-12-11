@@ -45,11 +45,12 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.JPEGTileDecoder;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.JPEGTurboService;
 import loci.formats.services.JPEGTurboServiceImpl;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * HamamatsuVMSReader is the file format reader for Hamamatsu VMS datasets.

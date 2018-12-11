@@ -42,9 +42,10 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.JPEGTileDecoder;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.JPEGTurboService;
 import loci.formats.services.JPEGTurboServiceImpl;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * Reader for decoding JPEG images using java.awt.Toolkit and TurboJPEG.

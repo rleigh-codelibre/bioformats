@@ -28,11 +28,12 @@ import loci.common.RandomAccessInputStream;
 import loci.common.services.ServiceFactory;
 import loci.formats.FilePattern;
 import loci.formats.in.TiffReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * Stitches the first plane from a collection of TIFFs into a single file.

@@ -45,9 +45,10 @@ import loci.formats.FormatException;
 import loci.formats.IFormatWriter;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import ome.xml.meta.IMetadata;
 import loci.formats.out.JPEG2000Writer;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

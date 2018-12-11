@@ -43,6 +43,7 @@ import loci.formats.FormatWriter;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CompressionType;
 import loci.formats.gui.LegacyQTTools;
+
 import ome.xml.meta.MetadataRetrieve;
 
 /**

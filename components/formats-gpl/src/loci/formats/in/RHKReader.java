@@ -33,9 +33,10 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * RHKReader is the file format reader for RHK Technologies files.

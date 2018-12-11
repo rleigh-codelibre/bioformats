@@ -43,12 +43,13 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
 import loci.formats.codec.LZOCodec;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.MetakitService;
 
 import ome.units.quantity.Time;
 import ome.units.quantity.Length;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * VolocityReader is the file format reader for Volocity library files.

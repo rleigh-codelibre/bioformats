@@ -41,11 +41,14 @@ import loci.formats.SubResolutionFormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.NetCDFService;
 import loci.formats.services.NetCDFServiceImpl;
-import ome.xml.model.primitives.Color;
+
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Color;
 
 /**
  * Reader for Bitplane Imaris 5.5 (HDF) files.

@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import ome.xml.model.primitives.Timestamp;
-
 import loci.common.DataTools;
 import loci.common.DateTools;
 import loci.common.Location;
@@ -41,7 +39,10 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
+
 import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * BrukerReader is the file format reader for Bruker MRI files.

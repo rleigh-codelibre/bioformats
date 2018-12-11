@@ -52,9 +52,10 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
+
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.units.quantity.Length;
 import ome.units.UNITS;

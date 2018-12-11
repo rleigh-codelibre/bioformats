@@ -31,10 +31,11 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import ome.xml.meta.IMetadata;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffCompression;
 import loci.formats.tiff.TiffSaver;
+
+import ome.xml.meta.IMetadata;
 
 import ome.xml.model.primitives.PositiveInteger;
 

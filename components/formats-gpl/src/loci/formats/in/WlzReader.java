@@ -70,12 +70,13 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.services.WlzService;
-import ome.xml.meta.MetadataStore;
-
-import ome.xml.model.primitives.PositiveFloat;
 
 import ome.units.quantity.Length;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.PositiveFloat;
 
 /**
  * WlzReader is a file format reader for Woolz files.

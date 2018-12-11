@@ -44,12 +44,14 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
+
 import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.enums.Immersion;
 import ome.xml.model.primitives.Color;
 import ome.xml.model.primitives.Timestamp;
-import ome.units.UNITS;
-import ome.units.quantity.Length;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

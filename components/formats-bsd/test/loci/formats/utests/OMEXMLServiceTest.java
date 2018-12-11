@@ -41,11 +41,13 @@ import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.meta.OriginalMetadataAnnotation;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 
 import ome.units.UNITS;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.OMEXMLMetadata;
+
 import ome.xml.model.OME;
 import ome.xml.model.StructuredAnnotations;
 import ome.xml.model.XMLAnnotation;

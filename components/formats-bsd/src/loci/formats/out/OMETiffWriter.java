@@ -40,10 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import ome.xml.meta.OMEXMLMetadataRoot;
-import ome.xml.model.primitives.NonNegativeInteger;
-import ome.xml.model.primitives.PositiveInteger;
-
 import loci.common.Location;
 import loci.common.Constants;
 import loci.common.RandomAccessInputStream;
@@ -54,13 +50,18 @@ import loci.common.services.ServiceFactory;
 import loci.common.xml.XMLTools;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffSaver;
 import loci.formats.in.MetadataOptions;
 import loci.formats.in.DynamicMetadataOptions;
+
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.OMEXMLMetadata;
+import ome.xml.meta.OMEXMLMetadataRoot;
+
+import ome.xml.model.primitives.NonNegativeInteger;
+import ome.xml.model.primitives.PositiveInteger;
 
 /**
  * OMETiffWriter is the file format writer for OME-TIFF files.

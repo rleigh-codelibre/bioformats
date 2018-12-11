@@ -118,9 +118,10 @@ import loci.common.Location;
 import loci.common.xml.XMLTools;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * ZeissTIFFReader is the file format reader for Zeiss AxioVision TIFF

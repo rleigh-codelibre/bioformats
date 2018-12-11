@@ -42,7 +42,14 @@ import loci.common.xml.BaseHandler;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
+
+import ome.units.quantity.ElectricPotential;
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
+import ome.units.UNITS;
+
 import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
 import ome.xml.model.enums.EnumerationException;
@@ -55,10 +62,6 @@ import ome.xml.model.enums.handlers.DetectorTypeEnumHandler;
 import ome.xml.model.enums.handlers.ImmersionEnumHandler;
 import ome.xml.model.primitives.PercentFraction;
 import ome.xml.model.primitives.Timestamp;
-import ome.units.quantity.ElectricPotential;
-import ome.units.quantity.Length;
-import ome.units.quantity.Time;
-import ome.units.UNITS;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

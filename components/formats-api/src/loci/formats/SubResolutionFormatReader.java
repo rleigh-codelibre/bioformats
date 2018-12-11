@@ -48,13 +48,14 @@ import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.in.MetadataLevel;
+import loci.formats.services.OMEXMLService;
+
 import ome.xml.meta.DummyMetadata;
 import ome.xml.meta.FilterMetadata;
 import ome.xml.meta.IMetadata;
 import ome.xml.meta.MetadataRetrieve;
 import ome.xml.meta.MetadataStore;
 import ome.xml.meta.OMEXMLMetadata;
-import loci.formats.services.OMEXMLService;
 
 import ome.xml.model.AffineTransform;
 import ome.xml.model.enums.AcquisitionMode;

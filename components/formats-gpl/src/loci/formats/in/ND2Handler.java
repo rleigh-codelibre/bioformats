@@ -36,10 +36,11 @@ import loci.formats.CoreMetadataList;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.UNITS;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

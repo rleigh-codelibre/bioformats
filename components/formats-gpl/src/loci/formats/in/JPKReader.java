@@ -30,9 +30,10 @@ import java.io.IOException;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.PhotoInterp;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * JPKReader is the file format reader for JPK Instruments files.

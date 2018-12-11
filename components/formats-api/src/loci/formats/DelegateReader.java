@@ -39,6 +39,7 @@ import java.util.Set;
 import loci.common.RandomAccessInputStream;
 import loci.formats.in.MetadataLevel;
 import loci.formats.in.MetadataOptions;
+
 import ome.xml.meta.MetadataStore;
 
 /**

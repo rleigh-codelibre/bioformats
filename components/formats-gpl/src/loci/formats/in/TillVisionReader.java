@@ -38,8 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import ome.xml.model.primitives.Timestamp;
-
 import loci.common.Constants;
 import loci.common.DataTools;
 import loci.common.DateTools;
@@ -55,11 +53,14 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.POIService;
 
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * TillVisionReader is the file format reader for TillVision files.

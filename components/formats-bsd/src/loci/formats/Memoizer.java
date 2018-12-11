@@ -46,10 +46,11 @@ import loci.common.RandomAccessOutputStream;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
+
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;

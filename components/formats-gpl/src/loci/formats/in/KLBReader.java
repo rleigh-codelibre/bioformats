@@ -52,9 +52,10 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.ZlibCodec;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
 
 import ome.xml.model.primitives.PositiveFloat;
 

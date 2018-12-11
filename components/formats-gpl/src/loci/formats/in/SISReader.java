@@ -39,12 +39,14 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
 
-import ome.xml.model.primitives.Timestamp;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * SISReader is the file format reader for Olympus Soft Imaging Solutions

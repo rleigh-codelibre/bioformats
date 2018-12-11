@@ -53,11 +53,11 @@ import loci.formats.codec.CompressionType;
 import loci.formats.codec.JPEG2000Codec;
 import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.ZlibCodec;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
 
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.OMEXMLMetadata;
 import ome.xml.meta.OMEXMLMetadataRoot;
 
 import org.xml.sax.Attributes;

@@ -37,6 +37,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import loci.common.RandomAccessInputStream;
+
 import ome.xml.meta.MetadataStore;
 
 /**

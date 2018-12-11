@@ -42,9 +42,10 @@ import loci.formats.FormatTools;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
 import loci.formats.UnsupportedCompressionException;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * BMPReader is the file format reader for Microsoft Bitmap (BMP) files.

@@ -34,10 +34,12 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
+
 import ome.units.quantity.Length;
 import ome.units.unit.Unit;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * MRCReader is the file format reader for MRC files.

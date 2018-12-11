@@ -60,11 +60,13 @@ import loci.common.Constants;
 import loci.common.services.ServiceFactory;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import ome.specification.OmeValidator;
 import ome.specification.XMLMockObjects;
 import ome.specification.XMLWriter;
+
+import ome.xml.meta.MetadataStore;
+
 import spec.AbstractTest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

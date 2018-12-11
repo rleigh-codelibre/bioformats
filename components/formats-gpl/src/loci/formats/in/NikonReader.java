@@ -42,13 +42,14 @@ import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
 import loci.formats.codec.NikonCodec;
 import loci.formats.codec.NikonCodecOptions;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffCompression;
 import loci.formats.tiff.TiffParser;
 import loci.formats.tiff.TiffRational;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * NikonReader is the file format reader for Nikon NEF (TIFF) files.

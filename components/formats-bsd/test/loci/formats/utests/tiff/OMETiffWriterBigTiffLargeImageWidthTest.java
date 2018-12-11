@@ -38,9 +38,10 @@ import java.io.File;
 
 import loci.common.services.ServiceFactory;
 import loci.formats.in.TiffReader;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.out.OMETiffWriter;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.PixelType;

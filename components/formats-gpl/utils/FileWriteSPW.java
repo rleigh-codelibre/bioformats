@@ -37,11 +37,12 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.ImageWriter;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.MetadataTools;
 import loci.common.DataTools;
+
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;

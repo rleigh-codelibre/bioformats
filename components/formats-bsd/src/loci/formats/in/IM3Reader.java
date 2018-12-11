@@ -39,7 +39,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ome.xml.model.enums.DimensionOrder;
 import loci.common.IRandomAccess;
 import loci.common.Location;
 import loci.common.RandomAccessInputStream;
@@ -48,7 +47,10 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
+
 import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.enums.DimensionOrder;
 
 /**
  * @author Lee Kamentsky

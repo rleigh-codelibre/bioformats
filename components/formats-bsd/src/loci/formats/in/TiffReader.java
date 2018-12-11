@@ -46,7 +46,6 @@ import loci.common.xml.XMLTools;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.TiffCompression;
@@ -54,6 +53,8 @@ import loci.formats.tiff.TiffCompression;
 import ome.units.quantity.Time;
 import ome.units.quantity.Length;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * TiffReader is the file format reader for regular TIFF files,

@@ -37,15 +37,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ome.xml.model.primitives.PositiveInteger;
-
 import loci.common.DataTools;
 import loci.common.RandomAccessOutputStream;
 import loci.common.Region;
 import loci.formats.codec.CodecOptions;
-import ome.xml.meta.DummyMetadata;
 import loci.formats.meta.IPyramidStore;
+
+import ome.xml.meta.DummyMetadata;
 import ome.xml.meta.MetadataRetrieve;
+
+import ome.xml.model.primitives.PositiveInteger;
 
 /**
  * Abstract superclass of all biological file format writers.

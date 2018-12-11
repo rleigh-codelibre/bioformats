@@ -69,16 +69,17 @@ import loci.formats.MinMaxCalculator;
 import loci.formats.MissingLibraryException;
 import loci.formats.gui.Index16ColorModel;
 import loci.formats.in.DynamicMetadataOptions;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.formats.ome.OMEPyramidStore;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
 import loci.formats.tiff.IFD;
 
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 import ome.xml.meta.OMEXMLMetadataRoot;
+
 import ome.xml.model.Image;
 import ome.xml.model.Pixels;
 import ome.xml.model.enums.PixelType;

@@ -31,8 +31,9 @@ import loci.common.services.ServiceFactory;
 import loci.formats.FormatException;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 import ome.xml.model.Ellipse;
 import ome.xml.model.Label;

@@ -57,7 +57,6 @@ import loci.formats.ImageReader;
 import loci.formats.MinMaxCalculator;
 import loci.formats.TileStitcher;
 import loci.formats.in.MetadataLevel;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.util.ImageProcessorReader;
@@ -65,9 +64,11 @@ import loci.plugins.util.LociPrefs;
 import loci.plugins.util.LuraWave;
 import loci.plugins.util.VirtualReader;
 import loci.plugins.util.WindowTools;
+
+import ome.xml.meta.IMetadata;
+
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;
-
 
 /**
  * Manages the import preparation process.

@@ -35,6 +35,7 @@ package loci.formats;
 import java.io.IOException;
 
 import loci.common.DataTools;
+
 import ome.xml.meta.MetadataRetrieve;
 import ome.xml.meta.MetadataStore;
 

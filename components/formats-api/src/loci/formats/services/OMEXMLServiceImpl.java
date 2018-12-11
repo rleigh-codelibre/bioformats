@@ -55,18 +55,19 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.Modulo;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.formats.meta.ModuloAnnotation;
 import loci.formats.meta.OriginalMetadataAnnotation;
 import loci.formats.ome.OMEPyramidStore;
-import ome.xml.meta.OMEXMLMetadata;
 
 import ome.units.quantity.Length;
 
+import ome.xml.meta.IMetadata;
 import ome.xml.meta.MetadataConverter;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import ome.xml.meta.OMEXMLMetadataRoot;
+
 import ome.xml.model.BinData;
 import ome.xml.model.Channel;
 import ome.xml.model.Image;

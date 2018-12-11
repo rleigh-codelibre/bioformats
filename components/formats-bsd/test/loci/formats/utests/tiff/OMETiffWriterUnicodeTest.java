@@ -38,11 +38,14 @@ import java.io.File;
 
 import loci.common.services.ServiceFactory;
 import loci.formats.ImageReader;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.out.OMETiffWriter;
 import loci.formats.services.OMEXMLService;
+
 import ome.units.UNITS;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.OMEXMLMetadata;
+
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.PixelType;
 import ome.xml.model.primitives.PositiveInteger;

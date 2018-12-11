@@ -25,14 +25,15 @@
 
 package loci.formats.utests;
 
-import ome.xml.meta.OMEXMLMetadataImpl;
+import ome.units.quantity.Power;
+import ome.units.UNITS;
+
 import ome.xml.meta.MetadataRoot;
+import ome.xml.meta.OMEXMLMetadataImpl;
+
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
-
-import ome.units.quantity.Power;
-import ome.units.UNITS;
 
 /**
  */

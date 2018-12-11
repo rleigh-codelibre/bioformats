@@ -37,8 +37,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import loci.tests.testng.TestTools.TileLoopIteration;
-import ome.xml.model.enums.DimensionOrder;
-import ome.xml.model.primitives.PositiveInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,11 +47,16 @@ import org.testng.annotations.Test;
 import loci.common.services.ServiceFactory;
 import loci.formats.FormatTools;
 import loci.formats.in.TiffReader;
-import ome.xml.meta.IMetadata;
+
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffCompression;
+
+import ome.xml.meta.IMetadata;
+
+import ome.xml.model.enums.DimensionOrder;
+import ome.xml.model.primitives.PositiveInteger;
 
 /**
  * Test grinding in a multi-threaded environment a JPEG-2000 encoded TIFF.

@@ -50,8 +50,9 @@ import loci.formats.ImageReader;
 import loci.formats.ImageWriter;
 import loci.formats.MetadataTools;
 import loci.formats.codec.CompressionType;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 import org.testng.annotations.Test;
 

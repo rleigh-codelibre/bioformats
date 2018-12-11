@@ -34,10 +34,11 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * MRWReader is the file format reader for Minolta MRW files.

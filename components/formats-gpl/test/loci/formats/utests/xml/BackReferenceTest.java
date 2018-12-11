@@ -33,8 +33,9 @@ import java.io.IOException;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.OME;
 import ome.xml.model.Plate;

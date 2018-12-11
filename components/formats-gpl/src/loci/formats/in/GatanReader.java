@@ -41,12 +41,15 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
+
 import ome.units.quantity.ElectricPotential;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
 import ome.units.unit.Unit;
+
+import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.primitives.Color;
 
 /**

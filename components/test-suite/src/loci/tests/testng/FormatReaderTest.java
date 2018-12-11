@@ -57,19 +57,21 @@ import loci.formats.ReaderWrapper;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.BufferedImageReader;
 import loci.formats.in.*;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
-import ome.xml.model.primitives.PositiveFloat;
-import ome.xml.model.primitives.PositiveInteger;
-import ome.xml.model.primitives.Timestamp;
 
 import ome.units.quantity.Length;
 import ome.units.quantity.Quantity;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
+
+import ome.xml.model.primitives.PositiveFloat;
+import ome.xml.model.primitives.PositiveInteger;
+import ome.xml.model.primitives.Timestamp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -62,11 +62,18 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.ResourceNamer;
-import ome.xml.meta.MetadataStore;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import ome.specification.XMLMockObjects;
+
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
+import ome.units.unit.Unit;
+import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 import ome.xml.meta.OMEXMLMetadataRoot;
+
 import ome.xml.model.MapPair;
 import ome.xml.model.OME;
 import ome.xml.model.enums.EnumerationException;
@@ -75,10 +82,6 @@ import ome.xml.model.enums.handlers.UnitsLengthEnumHandler;
 import ome.xml.model.primitives.Color;
 import ome.xml.model.primitives.NonNegativeLong;
 import ome.xml.model.primitives.Timestamp;
-import ome.units.quantity.Length;
-import ome.units.quantity.Time;
-import ome.units.unit.Unit;
-import ome.units.UNITS;
 
 /**
  * FakeReader is the file format reader for faking input data.

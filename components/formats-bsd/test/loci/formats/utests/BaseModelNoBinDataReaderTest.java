@@ -42,6 +42,7 @@ import loci.formats.ChannelSeparator;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.MinMaxCalculator;
+
 import ome.xml.meta.IMetadata;
 import ome.xml.meta.OMEXMLMetadataImpl;
 

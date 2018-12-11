@@ -38,11 +38,12 @@ import java.util.List;
 import loci.formats.FormatTools;
 import loci.formats.ImageWriter;
 import loci.formats.MetadataTools;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLServiceImpl;
 import loci.formats.services.OMEXMLService;
 import loci.common.services.ServiceFactory;
+
 import ome.xml.meta.IMetadata;
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.MapPair;
 

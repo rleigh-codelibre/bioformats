@@ -44,9 +44,10 @@ import loci.formats.FormatTools;
 import loci.formats.codec.CodecOptions;
 import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.ZlibCodec;
+import loci.formats.services.POIService;
+
 import ome.xml.meta.DummyMetadata;
 import ome.xml.meta.MetadataStore;
-import loci.formats.services.POIService;
 
 /**
  * ZeissZVIReader is the file format reader for Zeiss ZVI files.

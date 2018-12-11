@@ -54,6 +54,14 @@ import loci.formats.codec.CodecOptions;
 import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.JPEGXRCodec;
 import loci.formats.codec.LZWCodec;
+
+import ome.units.quantity.Length;
+import ome.units.quantity.Power;
+import ome.units.quantity.Pressure;
+import ome.units.quantity.Temperature;
+import ome.units.quantity.Time;
+import ome.units.UNITS;
+
 import ome.xml.meta.MetadataStore;
 
 import ome.xml.model.enums.AcquisitionMode;
@@ -63,13 +71,6 @@ import ome.xml.model.primitives.Color;
 import ome.xml.model.primitives.PercentFraction;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
-
-import ome.units.quantity.Length;
-import ome.units.quantity.Power;
-import ome.units.quantity.Pressure;
-import ome.units.quantity.Temperature;
-import ome.units.quantity.Time;
-import ome.units.UNITS;
 
 import org.xml.sax.SAXException;
 import org.w3c.dom.Element;

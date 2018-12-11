@@ -36,9 +36,12 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
-import ome.xml.model.primitives.Timestamp;
+
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * FujiReader is the file format reader for Fuji LAS 3000 datasets.

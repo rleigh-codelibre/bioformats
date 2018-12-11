@@ -38,11 +38,12 @@ import loci.formats.FormatTools;
 import loci.formats.IFormatWriter;
 import loci.formats.ImageWriter;
 import loci.formats.gui.BufferedImageReader;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataRetrieve;
 import loci.formats.out.JPEG2000Writer;
 import loci.formats.out.JPEGWriter;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

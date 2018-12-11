@@ -35,11 +35,8 @@ import loci.common.xml.XMLTools;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
-
-import ome.xml.model.primitives.Timestamp;
 
 import ome.units.quantity.ElectricPotential;
 import ome.units.quantity.Frequency;
@@ -47,6 +44,10 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Temperature;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * NikonElementsTiffReader is the file format reader for TIFF files produced

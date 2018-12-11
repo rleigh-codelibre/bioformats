@@ -41,9 +41,10 @@ import loci.formats.FormatWriter;
 import loci.formats.MissingLibraryException;
 import loci.formats.in.CellH5Reader;
 import loci.formats.in.CellH5Reader.CellH5Constants;
-import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.JHDFService;
 import loci.formats.services.JHDFServiceImpl;
+
+import ome.xml.meta.MetadataRetrieve;
 
 import ome.xml.model.enums.DimensionOrder;
 

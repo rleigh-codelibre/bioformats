@@ -32,16 +32,17 @@ import java.io.InputStream;
 
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.formats.FormatTools;
+
+import ome.units.UNITS;
+
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.Image;
 import ome.xml.model.OME;
 import ome.xml.model.Pixels;
 import ome.xml.model.primitives.PositiveFloat;
-
-import ome.units.UNITS;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

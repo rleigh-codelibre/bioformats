@@ -49,15 +49,16 @@ import loci.common.Location;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.in.FakeReader;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.tools.FakeImage;
-import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.OMEXMLService;
 import loci.common.services.ServiceFactory;
 
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
+
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.OMEXMLMetadata;
 
 import ome.xml.model.primitives.Timestamp;
 

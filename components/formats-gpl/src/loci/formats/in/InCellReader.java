@@ -43,17 +43,18 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.meta.IMinMaxStore;
+
+import ome.units.quantity.Length;
+import ome.units.quantity.Temperature;
+import ome.units.quantity.Time;
+import ome.units.UNITS;
+
 import ome.xml.meta.MetadataStore;
 
 import ome.xml.model.enums.Binning;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
-
-import ome.units.quantity.Length;
-import ome.units.quantity.Temperature;
-import ome.units.quantity.Time;
-import ome.units.UNITS;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;

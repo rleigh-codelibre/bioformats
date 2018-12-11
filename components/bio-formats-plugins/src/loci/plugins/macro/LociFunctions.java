@@ -43,7 +43,6 @@ import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
 import loci.formats.Modulo;
-import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.in.Calibrator;
@@ -56,6 +55,8 @@ import loci.plugins.util.LociPrefs;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * This class provides macro extensions in ImageJ for Bio-Formats.

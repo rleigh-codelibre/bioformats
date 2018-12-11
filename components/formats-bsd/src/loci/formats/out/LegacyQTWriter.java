@@ -43,6 +43,7 @@ import loci.formats.FormatException;
 import loci.formats.FormatWriter;
 import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.LegacyQTTools;
+
 import ome.xml.meta.MetadataRetrieve;
 
 /**

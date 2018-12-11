@@ -47,14 +47,15 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.ImageReader;
 import loci.formats.MinMaxCalculator;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.plugins.BF;
 import loci.plugins.util.ImageProcessorReader;
 import loci.plugins.util.VirtualImagePlus;
 
 import ome.units.quantity.Length;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 
 /**
  * Logic for colorizing images.

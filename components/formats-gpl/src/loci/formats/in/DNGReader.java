@@ -39,12 +39,13 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.ImageTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffParser;
 import loci.formats.tiff.TiffRational;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * DNGReader is the file format reader for Canon DNG (TIFF) files.

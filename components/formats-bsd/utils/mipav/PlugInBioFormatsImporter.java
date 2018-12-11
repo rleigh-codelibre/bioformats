@@ -56,11 +56,12 @@ import loci.formats.DimensionSwapper;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.gui.GUITools;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * A plugin for opening life sciences files in MIPAV using Bio-Formats.

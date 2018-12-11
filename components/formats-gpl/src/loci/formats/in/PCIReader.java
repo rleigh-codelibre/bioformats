@@ -42,16 +42,18 @@ import loci.formats.FormatException;
 import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.POIService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
-import ome.xml.model.enums.Binning;
-import ome.xml.model.primitives.Timestamp;
 
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.enums.Binning;
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * PCIReader is the file format reader for SimplePCI (Compix) .cxd files.

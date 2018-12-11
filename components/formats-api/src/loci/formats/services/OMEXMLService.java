@@ -38,9 +38,11 @@ import loci.common.services.Service;
 import loci.common.services.ServiceException;
 import loci.formats.CoreMetadata;
 import loci.formats.Modulo;
+
 import ome.xml.meta.MetadataRetrieve;
 import ome.xml.meta.MetadataStore;
 import ome.xml.meta.OMEXMLMetadata;
+
 import ome.xml.model.OMEModelObject;
 
 /**

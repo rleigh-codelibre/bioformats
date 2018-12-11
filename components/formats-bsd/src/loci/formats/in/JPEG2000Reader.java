@@ -47,6 +47,7 @@ import loci.formats.MetadataTools;
 import loci.formats.codec.JPEG2000BoxType;
 import loci.formats.codec.JPEG2000Codec;
 import loci.formats.codec.JPEG2000CodecOptions;
+
 import ome.xml.meta.MetadataStore;
 
 /**

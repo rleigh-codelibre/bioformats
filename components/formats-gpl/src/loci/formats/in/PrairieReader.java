@@ -45,16 +45,18 @@ import loci.formats.in.PrairieMetadata.Frame;
 import loci.formats.in.PrairieMetadata.PFile;
 import loci.formats.in.PrairieMetadata.Sequence;
 import loci.formats.in.PrairieMetadata.ValueTable;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
-import ome.xml.model.primitives.PositiveFloat;
-import ome.xml.model.primitives.Timestamp;
 
 import ome.units.quantity.Length;
 import ome.units.quantity.Power;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.PositiveFloat;
+import ome.xml.model.primitives.Timestamp;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

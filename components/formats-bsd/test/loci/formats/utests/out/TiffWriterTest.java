@@ -42,14 +42,17 @@ import loci.common.Location;
 import loci.common.services.ServiceFactory;
 import loci.formats.FormatException;
 import loci.formats.in.TiffReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.out.TiffWriter;
 import loci.formats.services.OMEXMLService;
 import loci.formats.tiff.IFD;
 import loci.formats.utests.tiff.TiffWriterMock;
+
+import ome.xml.meta.IMetadata;
+
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.PixelType;
 import ome.xml.model.primitives.PositiveInteger;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;

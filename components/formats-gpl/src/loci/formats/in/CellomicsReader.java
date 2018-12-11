@@ -41,10 +41,13 @@ import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.UnsupportedCompressionException;
 import loci.formats.codec.ZlibCodec;
+
+import ome.units.quantity.Length;
+
 import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.enums.NamingConvention;
 import ome.xml.model.primitives.NonNegativeInteger;
-import ome.units.quantity.Length;
 
 /**
  * Reader for Cellomics C01 files.

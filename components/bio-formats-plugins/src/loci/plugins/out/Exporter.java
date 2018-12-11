@@ -70,16 +70,19 @@ import loci.formats.gui.AWTImageTools;
 import loci.formats.gui.ExtensionFileFilter;
 import loci.formats.gui.GUITools;
 import loci.formats.gui.Index16ColorModel;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
 import loci.plugins.LociExporter;
 import loci.plugins.util.ROIHandler;
 import loci.plugins.util.RecordedImageProcessor;
 import loci.plugins.util.WindowTools;
+
 import ome.units.UNITS;
 import ome.units.quantity.Time;
+
+import ome.xml.meta.IMetadata;
 import ome.xml.meta.OMEXMLMetadataRoot;
+
 import ome.xml.model.ROI;
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;

@@ -41,12 +41,14 @@ import loci.common.Location;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import ome.xml.meta.IMetadata;
 import loci.formats.meta.IPyramidStore;
+import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 import ome.xml.meta.MetadataRetrieve;
 import ome.xml.meta.MetadataStore;
 import ome.xml.meta.OMEXMLMetadata;
-import loci.formats.services.OMEXMLService;
+
 import ome.xml.model.enums.*;
 import ome.xml.model.enums.handlers.*;
 import ome.xml.model.primitives.NonNegativeInteger;

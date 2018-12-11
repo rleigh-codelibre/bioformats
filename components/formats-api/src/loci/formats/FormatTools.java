@@ -50,22 +50,8 @@ import loci.common.ReflectedUniverse;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
-import ome.xml.meta.DummyMetadata;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
-
-import ome.xml.model.enums.DimensionOrder;
-import ome.xml.model.enums.EnumerationException;
-
-import ome.xml.model.enums.UnitsLength;
-import ome.xml.model.enums.handlers.UnitsLengthEnumHandler;
-import ome.xml.model.enums.UnitsTime;
-import ome.xml.model.primitives.PrimitiveNumber;
-import ome.xml.model.primitives.PositiveFloat;
-import ome.xml.model.primitives.PositiveInteger;
-import ome.xml.model.primitives.Timestamp;
 
 import ome.units.unit.Unit;
 import ome.units.quantity.Angle;
@@ -77,6 +63,21 @@ import ome.units.quantity.Pressure;
 import ome.units.quantity.Temperature;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.enums.DimensionOrder;
+import ome.xml.model.enums.EnumerationException;
+
+import ome.xml.model.enums.UnitsLength;
+import ome.xml.model.enums.handlers.UnitsLengthEnumHandler;
+import ome.xml.model.enums.UnitsTime;
+import ome.xml.model.primitives.PrimitiveNumber;
+import ome.xml.model.primitives.PositiveFloat;
+import ome.xml.model.primitives.PositiveInteger;
+import ome.xml.model.primitives.Timestamp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

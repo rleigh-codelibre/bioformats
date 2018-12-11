@@ -47,12 +47,13 @@ import org.slf4j.LoggerFactory;
 import loci.common.DataTools;
 import loci.common.RandomAccessInputStream;
 import loci.formats.codec.JPEG2000CodecOptions;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.IFDList;
 import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffCompression;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  * MinimalTiffReader is the superclass for file format readers compatible with

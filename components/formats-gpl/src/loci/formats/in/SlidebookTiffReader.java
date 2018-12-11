@@ -35,11 +35,13 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataStore;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.TiffParser;
+
 import ome.units.UNITS;
 import ome.units.quantity.Length;
+
+import ome.xml.meta.MetadataStore;
 
 /**
  */

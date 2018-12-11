@@ -70,10 +70,11 @@ import loci.formats.in.DynamicMetadataOptions;
 import loci.formats.in.MetadataLevel;
 import loci.formats.in.MetadataOptions;
 import loci.formats.in.OMETiffReader;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.OMEXMLService;
 import loci.formats.services.OMEXMLServiceImpl;
+
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

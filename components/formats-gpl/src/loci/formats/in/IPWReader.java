@@ -31,8 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import ome.xml.model.primitives.Timestamp;
-
 import loci.common.Constants;
 import loci.common.DataTools;
 import loci.common.DateTools;
@@ -46,11 +44,14 @@ import loci.formats.FormatReader;
 import loci.formats.FormatTools;
 import loci.formats.MetadataTools;
 import loci.formats.MissingLibraryException;
-import ome.xml.meta.MetadataStore;
 import loci.formats.services.POIService;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
+
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * IPWReader is the file format reader for Image-Pro Workspace (IPW) files.

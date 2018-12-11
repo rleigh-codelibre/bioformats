@@ -32,10 +32,11 @@ import java.util.List;
 
 import loci.common.DataTools;
 import loci.common.Region;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataStore;
 
 import ome.units.quantity.Length;
+
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataStore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

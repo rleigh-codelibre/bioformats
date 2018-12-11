@@ -25,11 +25,12 @@
 
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
-import ome.xml.meta.DummyMetadata;
-import ome.xml.meta.IMetadata;
 import loci.formats.meta.IPyramidStore;
 import loci.formats.out.PyramidOMETiffWriter;
 import loci.formats.tiff.IFD;
+
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.IMetadata;
 
 import ome.xml.model.primitives.PositiveInteger;
 

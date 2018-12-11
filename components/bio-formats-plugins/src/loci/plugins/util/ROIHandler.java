@@ -49,12 +49,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import loci.formats.MetadataTools;
+import loci.plugins.in.ImporterOptions;
+
+import ome.units.quantity.Length;
+import ome.units.UNITS;
+
 import ome.xml.meta.IMetadata;
 import ome.xml.meta.MetadataStore;
 import ome.xml.meta.OMEXMLMetadata;
-import loci.plugins.in.ImporterOptions;
-import ome.units.quantity.Length;
-import ome.units.UNITS;
+
 import ome.xml.model.Ellipse;
 import ome.xml.model.OME;
 import ome.xml.model.Point;

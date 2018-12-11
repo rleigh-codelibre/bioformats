@@ -71,8 +71,9 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataRetrieve;
 import loci.formats.services.WlzService;
+
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * WlzWriter is the file format writer for Woolz files.

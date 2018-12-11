@@ -41,11 +41,12 @@ import loci.formats.FormatTools;
 import loci.formats.ImageReader;
 import loci.formats.MetadataTools;
 import loci.formats.codec.BitWriter;
-import ome.xml.meta.MetadataStore;
-import ome.xml.meta.OMEXMLMetadata;
 import loci.formats.tiff.IFD;
 import loci.formats.tiff.PhotoInterp;
 import loci.formats.tiff.TiffParser;
+
+import ome.xml.meta.MetadataStore;
+import ome.xml.meta.OMEXMLMetadata;
 
 /**
  * TrestleReader is the file format reader for Trestle slide datasets.

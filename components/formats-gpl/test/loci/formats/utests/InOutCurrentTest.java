@@ -44,11 +44,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import ome.xml.meta.OMEXMLMetadataImpl;
-
 import static org.testng.AssertJUnit.*;
 
+import ome.units.UNITS;
+
+import ome.xml.meta.OMEXMLMetadataImpl;
 import ome.xml.meta.OMEXMLMetadataRoot;
+
 import ome.xml.model.Annotation;
 import ome.xml.model.Arc;
 import ome.xml.model.BooleanAnnotation;
@@ -91,8 +93,6 @@ import ome.xml.model.enums.LaserType;
 import ome.xml.model.enums.NamingConvention;
 import ome.xml.model.enums.PixelType;
 import ome.xml.model.primitives.PositiveInteger;
-
-import ome.units.UNITS;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;

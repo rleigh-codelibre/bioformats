@@ -37,8 +37,9 @@ import loci.common.RandomAccessOutputStream;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
-import ome.xml.meta.MetadataRetrieve;
 import static loci.common.DataTools.unpackBytes;
+
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * V3DrawWriter writes images in the .v3draw format for rapid I/O in <a

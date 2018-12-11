@@ -30,8 +30,9 @@ import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.*;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
+
+import ome.xml.meta.IMetadata;
 
 /**
  * Tests the Bio-Formats I/O logic to and from byte arrays in memory.

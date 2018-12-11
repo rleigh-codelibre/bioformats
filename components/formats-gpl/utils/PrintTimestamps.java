@@ -30,12 +30,14 @@ import loci.common.services.ServiceFactory;
 import loci.formats.FormatReader;
 import loci.formats.IFormatReader;
 import loci.formats.ImageReader;
-import ome.xml.meta.IMetadata;
 import loci.formats.services.OMEXMLService;
 
-import ome.xml.model.primitives.NonNegativeInteger;
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.IMetadata;
+
+import ome.xml.model.primitives.NonNegativeInteger;
 
 /**
  * Uses Bio-Formats to extract timestamp information

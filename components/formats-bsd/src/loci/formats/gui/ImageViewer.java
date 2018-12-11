@@ -81,10 +81,11 @@ import loci.formats.IFormatReader;
 import loci.formats.IFormatWriter;
 import loci.formats.ImageWriter;
 import loci.formats.MetadataTools;
+import loci.formats.services.OMEXMLService;
+
 import ome.xml.meta.IMetadata;
 import ome.xml.meta.MetadataRetrieve;
 import ome.xml.meta.MetadataStore;
-import loci.formats.services.OMEXMLService;
 
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;

@@ -51,18 +51,21 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
 import loci.formats.Modulo;
-import ome.xml.meta.DummyMetadata;
-import ome.xml.meta.IMetadata;
-import ome.xml.meta.MetadataRetrieve;
-import ome.xml.meta.MetadataStore;
 import loci.plugins.Slicer;
 import loci.plugins.util.BFVirtualStack;
 import loci.plugins.util.ImageProcessorReader;
 import loci.plugins.util.LociPrefs;
 import loci.plugins.util.LuraWave;
 import loci.plugins.util.VirtualImagePlus;
+
 import ome.units.UNITS;
 import ome.units.quantity.Time;
+
+import ome.xml.meta.DummyMetadata;
+import ome.xml.meta.IMetadata;
+import ome.xml.meta.MetadataRetrieve;
+import ome.xml.meta.MetadataStore;
+
 import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.primitives.Timestamp;
 

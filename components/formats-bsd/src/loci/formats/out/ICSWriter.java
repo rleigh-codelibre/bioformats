@@ -43,10 +43,11 @@ import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.FormatWriter;
 import loci.formats.MetadataTools;
-import ome.xml.meta.MetadataRetrieve;
 
 import ome.units.quantity.Time;
 import ome.units.UNITS;
+
+import ome.xml.meta.MetadataRetrieve;
 
 /**
  * ICSWriter is the file format writer for ICS files.  It writes ICS version 1
